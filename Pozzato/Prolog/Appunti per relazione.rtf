@@ -1,0 +1,35 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf200
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fmodern\fcharset0 Courier;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 Per la relazione \
+	 A*:\
+		- differenza tra i \'91trasforma\'92 (vedere se applicare l\'92euristica a tutte le azioni)\
+		- discussione sull\'92ottimalit\'e1 (ammissibile e consistente)\
+		- cambiare i dati per considerare situazioni e priorit\'e0 diverse(quanto considero pesante 			salire/scendere, ecc..)\
+		- differenze tra manatthan ed euclidea\
+		- eseguire i diversi test con le combinazioni\
+		- vedere euristiche non consistenti\
+	IDA*:\
+		- confronto dei dati con A*\
+		- fare le stesse considerazioni sulle euristiche\
+		- far vedere i costi dei vari percorsi fatti a mano e far vedere che effettivamente sceglie la 		  strada pi\'f9 corta 	\
+\
+Per le statistiche:\
+\
+\pard\pardeftab720\sl280\partightenfactor0
+
+\f1 \cf2 \expnd0\expndtw0\kerning0
+?- statistics(walltime, [TimeSinceStart | [TimeSinceLastCall]]),\
+   	some_heavy_operation,\
+   	statistics(walltime, [NewTimeSinceStart | [ExecutionTime]]),\
+   	write('Execution took '), write(ExecutionTime), write(' ms.'), nl.\
+\
+oppure\
+\
+?- time(goal()).\
+o\
+?- profile(goal()).}
