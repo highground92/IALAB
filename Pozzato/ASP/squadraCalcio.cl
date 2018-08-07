@@ -1,3 +1,22 @@
+numPartita(1..12).
+squadra(juve;toro;milan;inter).
+day(1..6).
+
+
+{partita(X,Y,S): squadra(X),squadra(Y),X!=Y} ==1 :- numPartita(S).
+{giornata(partita(X1,Y1),partita(X2,Y2),D): partita(X1,Y1,S1),partita(X2,Y2,S2),S1!=S2} ==1 :- day(D).
+
+:- partita(X,Y,S), partita(X,Y,S1), S!=S1.
+:- giornata(X,Y,D1), giornata(X,Y,D2), D1 != D2.
+:- giornata(partita(X1,Y1),partita(X2,Y2),D),X1==X2.
+:- giornata(partita(X1,Y1),partita(X2,Y2),D),X1==Y2.
+:- giornata(partita(X1,Y1),partita(X2,Y2),D),Y1==X2.
+:- giornata(partita(X1,Y1),partita(X2,Y2),D),Y1==Y2.
+%#show partita/3.
+#show giornata/3.
+
+
+
 %persona(a; b; c).
 %tipo(onesto; bugiardo).
 
@@ -52,27 +71,36 @@
 
 %DOMINIO
 squadra(juve;toro;milan;inter).
+%giorno(1..6).
 %REGOLE
 %Partite diverse
-1{giornata(partita(X1,Y1),partita(X2,Y2)):squadra(X2),squadra(Y2)}1:-partita(X1,Y1).
-1{giornata(partita(X1,Y1),partita(X2,Y2)):squadra(X1),squadra(Y1)}1:-partita(X2,Y2).
-1{partita(X,Y):squadra(Y)}1:-squadra(X).
-1{partita(X,Y):squadra(X)}1:-squadra(Y).
+giornata(partita(X1,Y1),partita(X2,Y2)):-partita(X1,Y1),partita(X2,Y2).
+partita(X,Y):-squadra(X),squadra(Y), 1 != #count {partita(X,Y)}.
+%1{giornata(partita(X1,Y1),partita(X2,Y2)):partita(X2,Y2)}1:-partita(X1,Y1), 1 != #count {partita(X1,Y1)}.
+%1{giornata(partita(X1,Y1),partita(X2,Y2)):partita(X1,Y1)}1:-partita(X2,Y2), 1 != #count {partita(X2,Y2)}.
+%giornata(partita(X1,Y1),partita(X2,Y2)):-partita(X1,Y1),partita(X2,Y2).
+%1{partita(X,Y):squadra(X)}1:-squadra(Y).
+%1{partita(X,Y):squadra(Y)}1:-squadra(X).
 
 
 %Cosa NON vuoi avere
-:- partita(X,Y), X == Y.
-:- partita(X1,Y1), partita(X2,Y2), X1==Y2, Y1==X2.
+%:- partita(X,Y), X == Y.
+%:- partita(X1,Y1), partita(X2,Y2), X1==Y2, Y1==X2.
 
-:- giornata(A,B), A==B.
-:- giornata(partita(A,B),partita(C,D)), A==C,A==D,B==C,B==D.
-:- giornata(partita(A,B),partita(C,D)), giornata(partita(B,A),partita(D,C)).
+:- partita(A,A).
+%:- 2 > #count {partita(A,B):squadra(A),squadra(B)}.
+%:- giornata(A,A).
+:- giornata(partita(A,B),partita(A,C)), B!=C.
+:- giornata(partita(A,B),partita(C,A)), B!=C.
+:- giornata(partita(A,B),partita(C,B)), B!=C.
+:- giornata(partita(A,B),partita(B,C)), A!=C.
+%:- 2 < #count {partita(X,Y):squadra(X),squadra(Y)}.
 
 
 %:- giornata(A,B), giornata(A1,B1), A==A1, A==B1, B==A1,B==B1.
 
 
-#show giornata/2.
+%#show giornata/2.
 
 
 %-----------------------------
