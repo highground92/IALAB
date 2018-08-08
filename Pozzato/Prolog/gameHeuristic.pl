@@ -1,36 +1,36 @@
 applicabile(est,Stato):-
-  nth(Stato,PosVuoto,vuoto),
+  nth(Stato,PosVuoto,casella(vuoto,_,_)),
   \+bordosinistro(PosVuoto).
 applicabile(ovest,Stato):-
-  nth(Stato,PosVuoto,vuoto),
+  nth(Stato,PosVuoto,casella(vuoto,_,_)),
   \+bordodestro(PosVuoto).
 applicabile(nord,Stato):-
-  nth(Stato,PosVuoto,vuoto),
+  nth(Stato,PosVuoto,casella(vuoto,_,_)),
   \+bordoinferiore(PosVuoto).
 applicabile(sud,Stato):-
-  nth(Stato,PosVuoto,vuoto),
+  nth(Stato,PosVuoto,casella(vuoto,_,_)),
   \+bordosuperiore(PosVuoto).
 
 trasforma(sud,Stato,NuovoStato,F,G):-
-  nth(Stato,PosVuoto,vuoto),
+  nth(Stato,PosVuoto,casella(vuoto,_,_)),
   PosTessera is PosVuoto-3,
   swap(Stato,PosVuoto,PosTessera,NuovoStato),
   finale(StatoF),
   manhattan(NuovoStato,StatoF,F,G).
 trasforma(ovest,Stato,NuovoStato,F,G):-
-  nth(Stato,PosVuoto,vuoto),
+  nth(Stato,PosVuoto,casella(vuoto,_,_)),
   PosTessera is PosVuoto+1,
   swap(Stato,PosVuoto,PosTessera,NuovoStato),
   finale(StatoF),
   manhattan(NuovoStato,StatoF,F,G).
 trasforma(nord,Stato,NuovoStato,F,G):-
-  nth(Stato,PosVuoto,vuoto),
+  nth(Stato,PosVuoto,casella(vuoto,_,_)),
   PosTessera is PosVuoto+3,
   swap(Stato,PosVuoto,PosTessera,NuovoStato),
   finale(StatoF),
   manhattan(NuovoStato,StatoF,F,G).
 trasforma(est,Stato,NuovoStato,F,G):-
-  nth(Stato,PosVuoto,vuoto),
+  nth(Stato,PosVuoto,casella(vuoto,_,_)),
   PosTessera is PosVuoto-1,
   swap(Stato,PosVuoto,PosTessera,NuovoStato),
   finale(StatoF),
@@ -79,18 +79,19 @@ setElement([Head|Tail],Pos,X,[Head|NuovaTail]):-
   setElement(Tail,Pos1,X,NuovaTail).
 
 % euristica per azioni
-manhattan([casella(N,X1,Y1)|StatoS],[casella(N,X2,Y2)|StatoF],F,C):-
-  manhattan1([casella(N,X1,Y1)|StatoS],[casella(N,X2,Y2)|StatoF],F,C),
+manhattan([casella(N,X1,Y1)|StatoS],[casella(M,X2,Y2)|StatoF],F,C):-
+  manhattan1([casella(N,X1,Y1)|StatoS],[casella(M,X2,Y2)|StatoF],F,C),
   F is C.
 
 manhattan1([],[_],_,C):- C is 0.
 manhattan1([casella(N,X1,Y1)|StatoS],[casella(N,X2,Y2)|StatoF],F,C1):-
   calcolo(X1,X2,Y1,Y2,Res),
-  manhattan(StatoS,StatoF,F,C),
+  finale(StatoF2),
+  manhattan1(StatoS,StatoF2,F,C),
   C1 is C + Res.
 
 manhattan1([casella(N,X1,Y1)|StatoP],[_|StatoF],F,_):-
-  manhattan([casella(N,X1,Y1)|StatoP],StatoF,F,_).
+  manhattan1([casella(N,X1,Y1)|StatoP],StatoF,F,_).
 
 calcolo(X1,X2,Y1,Y2,Res):-
   Res is abs(X1-X2)+ abs(Y1-Y2).
