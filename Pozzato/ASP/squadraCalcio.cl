@@ -1,22 +1,3 @@
-numPartita(1..12).
-squadra(juve;toro;milan;inter).
-day(1..6).
-
-
-{partita(X,Y,S): squadra(X),squadra(Y),X!=Y} ==1 :- numPartita(S).
-{giornata(partita(X1,Y1),partita(X2,Y2),D): partita(X1,Y1,S1),partita(X2,Y2,S2),S1!=S2} ==1 :- day(D).
-
-:- partita(X,Y,S), partita(X,Y,S1), S!=S1.
-:- giornata(X,Y,D1), giornata(X,Y,D2), D1 != D2.
-:- giornata(partita(X1,Y1),partita(X2,Y2),D),X1==X2.
-:- giornata(partita(X1,Y1),partita(X2,Y2),D),X1==Y2.
-:- giornata(partita(X1,Y1),partita(X2,Y2),D),Y1==X2.
-:- giornata(partita(X1,Y1),partita(X2,Y2),D),Y1==Y2.
-%#show partita/3.
-#show giornata/3.
-
-
-
 %persona(a; b; c).
 %tipo(onesto; bugiardo).
 
