@@ -28,17 +28,6 @@
 %:-not somma.
 
 
-%squadra(juve;toro;milan;inter).
-
-
-%1 {partita(S1,S2): squadra(S2) } 1 :- squadracasa(S1).
-%partita(A,B) :- squadra(A), squadra(B), A!=B.
-%partita1(A,_) :- 1=#count{squadra(A):partita(A,_)} 2.
-
-%goal:- partita1(A,B).
-%:- not goal.
-%#show partita/2.
-
 %triple1(TermA, "go:is_a", TermB):- triple(TermA, "go:is_a", TermB), TermA != TermB.
 %triple1(TermA, "go:is_a", TermC) :-
 %  triple(TermA, "go:is_a", TermB),
@@ -52,28 +41,36 @@
 
 %DOMINIO
 squadra(juve;toro;milan;inter).
+giorno(1..12).
 %REGOLE
 %Partite diverse
-1{giornata(partita(X1,Y1),partita(X2,Y2)):squadra(X2),squadra(Y2)}1:-partita(X1,Y1).
-1{giornata(partita(X1,Y1),partita(X2,Y2)):squadra(X1),squadra(Y1)}1:-partita(X2,Y2).
-1{partita(X,Y):squadra(Y)}1:-squadra(X).
-1{partita(X,Y):squadra(X)}1:-squadra(Y).
+%1{giornata(data(N),partita(X1,Y1),partita(X2,Y2)):squadra(X2),squadra(Y2)}1:-partita(X1,Y1),giorno(N).
+%1{giornata(data(N),partita(X1,Y1),partita(X2,Y2)):squadra(X1),squadra(Y1)}1:-partita(X2,Y2),giorno(N).
+%1{campionato(giornata(X1,Y1)):giornata(X1,Y)}12:-giornata(X1,Y1).
+%1{campionato(giornata(X1,Y1)):giornata(X,Y1)}12:-giornata(X1,Y1).
+
+1{giornata(partita(X1,Y1),partita(X2,Y2)):squadra(X2),squadra(Y2)}1:-2>#count{partita(X1,Y1)},partita(X1,Y1).
+1{giornata(partita(X1,Y1),partita(X2,Y2)):squadra(X1),squadra(Y1)}1:-2>#count{partita(X2,Y2)},partita(X2,Y2).
+1{partita(X,Y):squadra(Y)}3:-squadra(X).
+1{partita(X,Y):squadra(X)}3:-squadra(Y).
 
 
 %Cosa NON vuoi avere
-:- partita(X,Y), X == Y.
-:- partita(X1,Y1), partita(X2,Y2), X1==Y2, Y1==X2.
-
-:- giornata(A,B), A==B.
-:- giornata(partita(A,B),partita(C,D)), A==C,A==D,B==C,B==D.
-:- giornata(partita(A,B),partita(C,D)), giornata(partita(B,A),partita(D,C)).
-
-
-%:- giornata(A,B), giornata(A1,B1), A==A1, A==B1, B==A1,B==B1.
-
+%:- partita(A,A).
+%:- partita(A,B), 1==#count{partita(A,B)}.
+:- giornata(A,A).
+%:- giornata(N,_,_), giornata(N,_,_).
+%:- giornata(data(N),partita(A,B),partita(C,D)),giornata(data(N+1),partita(A,B),partita(C1,D1)).
+:- giornata(partita(A,A),partita(C,D)).% Le squadre non possono affrontare se stesse
+:- giornata(partita(A,B),partita(C,C)).% Le squadre non possono affrontare se stesse
+:- giornata(partita(A,B),partita(A,D)).% Una squadra non puó giocare due partite lo stesso giorno
+:- giornata(partita(A,B),partita(C,A)).% Una squadra non puó giocare due partite lo stesso giorno
+:- giornata(partita(A,B),partita(B,D)).% Una squadra non puó giocare due partite lo stesso giorno
+:- giornata(partita(A,B),partita(C,B)).% Una squadra non puó giocare due partite lo stesso giorno
+%:- giornata(data(N),partita(A,B),partita(C,D)), giornata(data(N+1),partita(A,B),partita(E,F)).% Una partita non puó piú essere ripetuta
 
 #show giornata/2.
-
+%#show campionato/1.
 
 %-----------------------------
 %#const n = 8.
