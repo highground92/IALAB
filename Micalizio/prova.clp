@@ -12,7 +12,7 @@
 
 (deftemplate best_state (slot best_cost) (slot best_id))
 
-(deftemplate current (slot id_current) (slot g_cost))
+(deftemplate current (slot id_current) (slot g_cost)(slot father))
 
 (deffacts domain
         (furgone (id 1) (posizione Torino))
@@ -29,16 +29,35 @@
         (tratta (partenza Torino) (arrivo Firenze) (costo 10))
         (best_state (best_cost 0) (best_id 0)) ; É l'area di memoria dove salvo il nodo migliore che andró ad aprire. Lo uso in defrule select
         (setgen 0)                               
-        (current (id_current(gensym*)) (g_cost 0))
+        (current (id_current(gensym*)) (g_cost 0)(father NA))
         )
 
 
-(defrule start
-
+(defrule start 
+  (current (id_current ?id))
 =>
   (printout t "situazione stack main: " (list-focus-stack) crlf)
+  (assert(initial_id ?id))
   (focus EXPAND)
 
+)
+
+(defrule stampa-soluzione (declare (salience 50))
+  ?id_stampa<-(stampa ?id)
+  (combinazione (id ?id) (padre ?father&~NA) (furgone1_partenza ?f1p) (furgone1_arrivo ?f1a) (furgone2_partenza ?f2p) (furgone2_arrivo ?f2a)
+  (costo ?costo))
+=>
+  (printout t "Il passaggio è " ?f1p "-" ?f1a ", " ?f2p "-" ?f2a ", " ?costo crlf)
+  (assert (stampa ?father))
+  (retract ?id_stampa)
+)
+
+(defrule stampa-fine (declare (salience 51))
+  (stampa ?id)
+  (initial_id ?id)
+=>
+  (printout t "FINE" crlf)
+  (halt)
 )
 
 
@@ -72,17 +91,19 @@
 
 (defmodule SELECT (import EXPAND ?ALL) (export ?ALL))
 
-(defrule isgoal (declare (salience 100)) ; controllo se il costo ha superato 100, in quel caso ho raggiunto il goal
-  ?comb<-(combinazione (costo ?cost))
+(defrule isgoal (declare (salience 20)) ; controllo se il costo ha superato 100, in quel caso ho raggiunto il goal
+  ?comb<-(combinazione (id ?id) (costo ?cost))
   (test (> ?cost 100))
 =>
     (printout t "GOAL RAGGIUNTO" crlf)
-    (halt)
+    (assert (stampa ?id))
+    (pop-focus)
+    (pop-focus)
 )
 
 (defrule selezione (declare (salience 50))
   ?d1<-(best_state (best_cost ?bestcost)(best_id ?best_id))
-  ?d2<-(combinazione (costo ?cost) (id ?id) (furgone1_arrivo ?f1arr) (furgone2_arrivo ?f2arr))
+  ?d2<-(combinazione (costo ?cost) (id ?id) (furgone1_arrivo ?f1arr) (furgone2_arrivo ?f2arr)(padre ?father))
   ?furg1<-(furgone(id 1) (posizione ?pos1))
   ?furg2<-(furgone(id 2) (posizione ?pos2))
   ?current<-(current (id_current ?id_current))
@@ -92,7 +113,7 @@
   (modify ?d1 (best_cost ?cost) (best_id ?id))
   (modify ?furg1 (posizione ?f1arr))
   (modify ?furg2 (posizione ?f2arr))
-  (modify ?current (id_current ?id) (g_cost ?cost))
+  (modify ?current (id_current ?id) (g_cost ?cost)(father ?father))
 )
 
 (defrule retract_old_spostamenti (declare (salience 30))
