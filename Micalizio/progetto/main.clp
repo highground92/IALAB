@@ -22,21 +22,20 @@
 
 (deffacts domain
 
-        (route (departure Genova) (arrival Bologna) (km 393) (type_route Ground))
+        (route (departure Torino) (arrival Milano) (km 138) (type_route Ground))
+        (route (departure Torino) (arrival Genova) (km 170) (type_route Ground))
         (route (departure Milano) (arrival Torino) (km 138) (type_route Ground))
-        (route (departure Milano) (arrival Firenze) (km 295) (type_route Ground))
+        (route (departure Milano) (arrival Bologna) (km 206) (type_route Ground))
+        (route (departure Milano) (arrival Venezia) (km 276) (type_route Ground))
+        (route (departure Genova) (arrival Firenze) (km 230) (type_route Ground))
+        (route (departure Genova) (arrival Torino) (km 170) (type_route Ground))
         (route (departure Firenze) (arrival Genova) (km 230) (type_route Ground))
         (route (departure Firenze) (arrival Bologna) (km 101) (type_route Ground))
         (route (departure Bologna) (arrival Firenze) (km 101) (type_route Ground))
-        (route (departure Bologna) (arrival Genova) (km 393) (type_route Ground))
-        (route (departure Torino) (arrival Milano) (km 138) (type_route Ground))
-        (route (departure Torino) (arrival Genova) (km 170) (type_route Ground))
-        (route (departure Torino) (arrival Firenze) (km 400) (type_route Ground))
-        (route (departure Firenze) (arrival Torino) (km 400) (type_route Ground))
+        (route (departure Bologna) (arrival Venezia) (km 158) (type_route Ground))
+        (route (departure Bologna) (arrival Milano) (km 206) (type_route Ground))
         (route (departure Venezia) (arrival Milano) (km 276) (type_route Ground))
         (route (departure Venezia) (arrival Bologna) (km 158) (type_route Ground))
-        (route (departure Milano) (arrival Venezia) (km 276) (type_route Ground))
-        (route (departure Bologna) (arrival Venezia) (km 158) (type_route Ground))
 
 )
 
@@ -58,16 +57,20 @@
 
   (city (id_state 0)(id_city Torino)(requested_goods_quantity 10)(requested_goods_type A)
         ( provided_goods_quantity 5)(provided_goods_type B))
-  (city (id_state 0)(id_city Milano)(requested_goods_quantity 20)(requested_goods_type A)
-        ( provided_goods_quantity 10)(provided_goods_type C))
-  (city (id_state 0)(id_city Bologna)(requested_goods_quantity 10)(requested_goods_type C)
-        ( provided_goods_quantity 5)(provided_goods_type B))
   (city (id_state 0)(id_city Genova)(requested_goods_quantity 5)(requested_goods_type B)
         ( provided_goods_quantity 10)(provided_goods_type A))
-  (city (id_state 0)(id_city Venezia)(requested_goods_quantity 5)(requested_goods_type B)
-        ( provided_goods_quantity 20)(provided_goods_type A))
   (city (id_state 0)(id_city Firenze)(requested_goods_quantity 0)(requested_goods_type NA)
         ( provided_goods_quantity 0)(provided_goods_type NA))
+  (city (id_state 0)(id_city Bologna)(requested_goods_quantity 10)(requested_goods_type C)
+        ( provided_goods_quantity 5)(provided_goods_type B))
+  (city (id_state 0)(id_city Venezia)(requested_goods_quantity 5)(requested_goods_type B)
+        ( provided_goods_quantity 20)(provided_goods_type A))
+  (city (id_state 0)(id_city Milano)(requested_goods_quantity 20)(requested_goods_type A)
+        ( provided_goods_quantity 10)(provided_goods_type C))
+
+
+
+
   )
 
 ; H-cost = (km pesati)*(Merce richiesta - merce consegnata)
