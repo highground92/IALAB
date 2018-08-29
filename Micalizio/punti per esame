@@ -1,0 +1,30 @@
+SE ORIETATO A STATI O LOGIC-ORIENTED
+
+ITERATIVE DEEPENING LABORIOSO MA NON DEVI PENSARE ALL'EURISTICA RISPETTO ALL'A*
+
+MODELLAZIONE -> PENSARE A COME MODELLARE IL MONDO, QUALSI SONO LE VARIBILI DI STATO, QUALI FATTI (LOGICO-ORIENTED), COME MODELLO I COLLEGAMENTI TRA CITTA' (VIA NAVE O AEREI), COME MODELLARE I COSTI (EURISTICA COSTI DELLE AZIONI)
+
+l'algoritmo A* è già dato
+determinare gli stati, le azioni per muoversi, i fatti iniziali con i nostri template dipendenti dal dominio dato
+la persistenza è necessaria implementarla?
+	- ricostruire lo stato successore, tutto ciò che non è stato cambiato prima rimane com'era
+	- c'è nell'iterative deepening
+
+
+PROGETTO
+- produzione del bene A -> messo così è irrisolubile, correggiamo da 5 a 10 per il consumo
+- manca Palermo nella matrice
+- Bari-Napoli -> collegamento  nell'immagine non c'è, ma nella tabella è riportata...è solo una linea guida...ci interessano solo i 
+	tragitti segnati sulla mappa
+- produzione NON ciclica, ma a step, i beni sono già prodotti
+- una città potrebbe fare da magazzino (come modello la capienza delle città?)...a nostra scelta
+- un mezzo può avere un carico eterogeneo e può scaricare solo uno specifico carico o una parte o tutto...a nostra scelta
+- branching factor molto alto come lo spazio di ricerca -> decido come decompongo il problema in sottoproblemi (se non decompo 
+	potrebbe risultare non risolubile), avrò delle regole che decidono come in generale il problema può essere decomposto
+
+- rappresentazione, fatti ordinati/non ordinati:
+	ordinati -> sono più sintetici e sono da preferire quando devo rappresentare dei fatti di 
+	supporto, viene poi buttato via (no rappr. del mondo)
+ 	non ordianti -> sono fondamentali per tracciare conoscenza, per tracciare una semantica ben precisa agli slot, e associo ad ogni slot dei valori di default, dei range, cardinalità, quindi di rapprensentare una parte del mondo
+
+- distanza basata sulla raggiungibilità (no manhattan)
