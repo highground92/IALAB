@@ -1,7 +1,7 @@
 ;Modulo dedito a mantenere la persistenza delle informazioni dopo la decisione di muovere un trasporto (eventuale scarico/carico merci in città)
 (defmodule UPDATESTATE (import MAINEXPANDTRUCK ?ALL) (export ?ALL))
 
-(defrule update-state-cargo-not-empty
+(defrule update-state-cargo-not-empty (declare (salience 100))
   ?state_planning <- (state_planning(id_transport ?id_t)(id_city ?id_city_arrival)
                                     (requested_goods_quantity ?req_quantity)
                                     (goods_quantity ?goodsq)(goods_type ?goodst)
@@ -18,7 +18,7 @@
   (modify ?city(requested_goods_quantity ?req_quantity))
 )
 
-(defrule update-state-cargo-empty-city-full
+(defrule update-state-cargo-empty-city-full (declare (salience 101))
   ?state_planning <- (state_planning(id_transport ?id_t)(id_city ?id_city_arrival)
                                     (requested_goods_quantity ?req_quantity)
                                     (goods_quantity ?goodsq)(goods_type ?goodst)
@@ -38,7 +38,7 @@
                (provided_goods_quantity (- ?prov_goods_q ?capacity)))
 )
 
-(defrule update-state-cargo-empty-city-with-some-goods
+(defrule update-state-cargo-empty-city-with-some-goods (declare (salience 100))
   ?state_planning <- (state_planning(id_transport ?id_t)(id_city ?id_city_arrival)
                                     (requested_goods_quantity ?req_quantity)
                                     (goods_quantity ?goodsq)(goods_type ?goodst)
@@ -49,24 +49,15 @@
   ?transport <- (transport(id_state ?id_current)(id_transport ?id_t)(capacity ?capacity))
   ?city <- (city(id_state ?id_current)(id_city ?id_city_arrival)
                 (provided_goods_type ?prov_goods_type)(provided_goods_quantity ?prov_goods_q))
-  (test (or (= ?goodsq 0)(< ?prov_goods_q ?capacity))) ;caso in cui il furgone è vuoto e la città ha 0 o alcune merci con cui caricarlo (furgone non caricato a pieno)
+  (test (< ?prov_goods_q ?capacity)) ;caso in cui il furgone è vuoto e la città ha 0 o alcune merci con cui caricarlo (furgone non caricato a pieno)
 =>
   (modify ?new_state(g_cost (+ ?old_g_cost ?gcostplanning)))
   (modify ?transport(goods_quantity ?prov_goods_q)(goods_type ?prov_goods_type)(city ?id_city_arrival))
   (modify ?city(requested_goods_quantity ?req_quantity)(provided_goods_quantity 0))
 )
 
-(defmodule CHECKGOAL (import EXPAND ?ALL) (export ?ALL))
+(defrule go-to-nexttruck (declare (salience 10))
 
-(defrule check_goal
-  (city (id_city Torino) (requested_goods_quantity 0)(requested_goods_type NA))
-  (city (id_city Milano) (requested_goods_quantity 0)(requested_goods_type NA))
-  (city (id_city Bologna)(requested_goods_quantity 0)(requested_goods_type NA))
-  (city (id_city Genova) (requested_goods_quantity 0)(requested_goods_type NA))
-  (city (id_city Venezia)(requested_goods_quantity 0)(requested_goods_type NA))
-  (city (id_city Firenze)(requested_goods_quantity 0)(requested_goods_type NA))
 =>
-  (assert (stampa 0))
-  (pop-focus)
-  (pop-focus)
+  (focus NEXTTRUCK)
 )

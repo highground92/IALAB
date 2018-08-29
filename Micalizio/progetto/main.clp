@@ -42,7 +42,7 @@
 (deffacts S0
   (current (id_current 0)(g_cost 0))
 
-  (state(id_state 0)(f_cost 999)(h_cost 999)(g_cost 0))
+  (state(id_state 0)(f_cost 999999)(h_cost 999999)(g_cost 0))
   (transport (id_state 0)(id_transport 1)(transport_type Truck)(type_route Ground)
              (capacity 4)(goods_quantity 0)(goods_type NA)(city Torino))
   (transport (id_state 0)(id_transport 2)(transport_type Truck)(type_route Ground)

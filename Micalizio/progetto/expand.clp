@@ -3,7 +3,7 @@
 (defrule find_new_state
   ?current<-(current (id_current ?id_current_state))
 
-  (state (id_state ?id_current_state))
+  (state (id_state ?id_current_state)(f_cost ?f_cost)(h_cost ?h_cost)(g_cost ?g_cost))
 
   (transport (id_state ?id_current_state)(id_transport 1)(transport_type Truck)
              (type_route Ground)(capacity 4)(goods_quantity ?quantity1)(goods_type ?g_type1)
@@ -40,9 +40,10 @@
         (requested_goods_type ?requested_t6)(provided_goods_quantity ?provided_g6)
         (provided_goods_type ?provided_t6))
 
+
 =>
   (assert
-    (state (id_state (+ ?id_current_state 1)))
+    (state (id_state (+ ?id_current_state 1))(f_cost ?f_cost)(h_cost ?h_cost)(g_cost ?g_cost))
 
     (transport (id_state (+ ?id_current_state 1))(id_transport 1)(transport_type Truck)
                (type_route Ground)(capacity 4)(goods_quantity ?quantity1)(goods_type ?g_type1)
@@ -87,7 +88,6 @@
   ;c) retract di tutti gli state_planning
   (assert (next_truck(id_truck 1)))
   (focus MAINEXPANDTRUCK)
-  (focus CHECKGOAL)
   ;b) creazione stato aggiornato
   ;c) retract di tutti gli state_planning
   ;(focus EXPANDPLANE)

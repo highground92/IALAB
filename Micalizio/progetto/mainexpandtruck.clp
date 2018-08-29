@@ -1,19 +1,38 @@
 (defmodule MAINEXPANDTRUCK (import EXPAND ?ALL) (export ?ALL))
 
-(defrule find_new_truck_state
+(defrule find_new_truck_state (declare (salience 100))
   (next_truck(id_truck ?id_truck))
   ;?sp<-(state_planning(id_transport ?id_truck))
 =>
   (assert (state_planning(id_transport ?id_truck)(f_cost 999999)(h_cost 9999999)(g_cost 9999999))) ; stubby che verrà rimpiazzato subito
   (focus EXPANDTRUCK) ;valuto tutte le possibili azioni per un truck e scelgo la migliore
-  (focus UPDATESTATE) ;in base all'azione scelta, aggiorno lo stato delle città e delle merci
-  (focus NEXTTRUCK)   ;incremento il contatore per il prossimo truck da valutare
+   ;in base all'azione scelta, aggiorno lo stato delle città e delle merci
+   ;incremento il contatore per il prossimo truck da valutare
+)
+
+(defrule is_goal (declare (salience 10))
+  (city (id_city Torino) (requested_goods_quantity 0))
+  (city (id_city Milano) (requested_goods_quantity 0))
+  (city (id_city Bologna)(requested_goods_quantity 0))
+  (city (id_city Genova) (requested_goods_quantity 0))
+  (city (id_city Venezia)(requested_goods_quantity 0))
+  (city (id_city Firenze)(requested_goods_quantity 0))
+=>
+  (assert (stampa 0))
+  (pop-focus)
+  (pop-focus)
+)
+
+(defrule not_yet_goal (declare (salience 9))
+=>
+  (assert (stampa 0))
+  (pop-focus)
 )
 
 (defmodule EXPANDTRUCK (import MAINEXPANDTRUCK ?ALL) (export ?ALL))
 
 ;Caso in cui il furgone è vuoto e valuta di andare in una città che può fornire merci
-(defrule expand-truck-empty-cargo-city-with-goods
+(defrule expand-truck-empty-cargo-city-with-goods (declare (salience 100))
   (next_truck(id_truck ?id_trans))
   (state(id_state ?id_state)(f_cost ?f_cost)(h_cost ?h_cost)(g_cost ?g_cost))
   (transport (id_state ?id_state)(id_transport ?id_trans)(transport_type Truck)
@@ -44,7 +63,7 @@
 )
 
 ;Caso in cui il furgone è vuoto e valuta di andare in una città che non può fornire merci
-(defrule expand-truck-empty-cargo-city-with-no-goods
+(defrule expand-truck-empty-cargo-city-with-no-goods (declare (salience 100))
   (next_truck(id_truck ?id_trans))
   (state(id_state ?id_state)(f_cost ?f_cost)(h_cost ?h_cost)(g_cost ?g_cost))
   (transport (id_state ?id_state)(id_transport ?id_trans)(transport_type Truck)
@@ -73,7 +92,7 @@
 )
 
 ; Controllo se la differenza della quantitá tra merce richiesta della cittá e quella scaricata dal furgone é positiva
-(defrule expand-truck-quantity-pos
+(defrule expand-truck-quantity-pos (declare (salience 100))
   (next_truck(id_truck ?id_trans))
   (state(id_state ?id_state)(f_cost ?f_cost)(h_cost ?h_cost)(g_cost ?g_cost))
   (transport (id_state ?id_state)(id_transport ?id_trans)(transport_type Truck)
@@ -104,7 +123,7 @@
   )
 )
 
-(defrule expand-truck-quantity-neg ; La differenza é negativa
+(defrule expand-truck-quantity-neg (declare (salience 100)) ; La differenza é negativa
   (next_truck(id_truck ?id_trans))
   (state(id_state ?id_state)(f_cost ?f_cost)(h_cost ?h_cost)(g_cost ?g_cost))
   (transport (id_state ?id_state)(id_transport ?id_trans)(transport_type Truck)
@@ -131,7 +150,7 @@
   )
 )
 ;Caso in cui le merci trasportate sul truck sono di tipologia differente da quelle richieste nella città
-(defrule expand-truck-different-type-goods
+(defrule expand-truck-different-type-goods (declare (salience 100))
   (next_truck(id_truck ?id_trans))
   (state(id_state ?id_state)(f_cost ?f_cost)(h_cost ?h_cost)(g_cost ?g_cost))
   (transport (id_state ?id_state)(id_transport ?id_trans)(transport_type Truck)
@@ -160,6 +179,12 @@
   )
 )
 
+(defrule go-to-update (declare (salience 10))
+
+=>
+  (focus UPDATESTATE)
+)
+
 (defmodule NEXTTRUCK (import MAINEXPANDTRUCK ?ALL) (export ?ALL))
 
 (defrule exp-next-truck
@@ -170,6 +195,8 @@
   (modify ?t (id_truck (+ ?id_truck 1)))
   (retract ?sp)
   (pop-focus)
+  (pop-focus)
+  (pop-focus)
 )
 
 (defrule exp-next-truck-end
@@ -179,6 +206,8 @@
 =>
   (retract ?t)
   (retract ?sp)
+  (pop-focus)
+  (pop-focus)
   (pop-focus)
   (pop-focus)
 )
