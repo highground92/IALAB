@@ -1,5 +1,5 @@
 ;Modulo dedito a mantenere la persistenza delle informazioni dopo la decisione di muovere un trasporto (eventuale scarico/carico merci in città)
-(defmodule UPDATESTATE (import MAINEXPANDTRUCK ?ALL) (export ?ALL))
+(defmodule UPDATESTATE (import EXPANDTRUCK ?ALL) (export ?ALL))
 
 (defrule update-state-cargo-not-empty (declare (salience 100))
   ?state_planning <- (state_planning(id_transport ?id_t)(id_city ?id_city_arrival)
@@ -16,6 +16,7 @@
   (modify ?new_state(g_cost (+ ?old_g_cost ?gcostplanning)))
   (modify ?transport(goods_quantity ?goodsq)(goods_type ?goodst)(city ?id_city_arrival))
   (modify ?city(requested_goods_quantity ?req_quantity))
+  (focus NEXTTRUCK)
 )
 
 (defrule update-state-cargo-empty-city-full (declare (salience 101))
@@ -36,6 +37,8 @@
   (modify ?transport(goods_quantity ?capacity)(goods_type ?prov_goods_type)(city ?id_city_arrival))
   (modify ?city(requested_goods_quantity ?req_quantity)
                (provided_goods_quantity (- ?prov_goods_q ?capacity)))
+  (printout t "furgone N " ?id_t " sono entrato in cargo empty city full verso " ?id_city_arrival crlf)
+  (focus NEXTTRUCK)
 )
 
 (defrule update-state-cargo-empty-city-with-some-goods (declare (salience 100))
@@ -54,10 +57,5 @@
   (modify ?new_state(g_cost (+ ?old_g_cost ?gcostplanning)))
   (modify ?transport(goods_quantity ?prov_goods_q)(goods_type ?prov_goods_type)(city ?id_city_arrival))
   (modify ?city(requested_goods_quantity ?req_quantity)(provided_goods_quantity 0))
-)
-
-(defrule go-to-nexttruck (declare (salience 10))
-
-=>
   (focus NEXTTRUCK)
 )
