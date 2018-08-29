@@ -44,7 +44,7 @@
   (test (neq ?id_city ?arrival))
 
   ;Informazioni temporanee da salvare in state
-  ?stateplanning<-(state_planning(id_transport ?id_t)(id_city ?id_city_arrival)
+  ?stateplanning<-(state_planning(id_transport ?id_trans)(id_city ?id_city_arrival)
                                  (requested_goods_quantity ?req_quantity)
                                  (goods_quantity ?goodsq)(goods_type ?goodst)
                                  (f_cost ?fcostplanning)(h_cost ?hcostplanning)
@@ -52,19 +52,20 @@
                   )
   (route
     (departure ?id_city)(arrival ?arrival)(km ?km)(type_route Ground))
-
-  (test (< (+ (* ?km ?rgq) ?km) ?fcostplanning))
   (test (> ?pgq 0))
+
+  (test (< (+ (/ ?km ?pgq) ?km) ?fcostplanning))
+
 =>
   (printout t "Truck " ?id_trans " vado da " ?id_city " a " ?arrival crlf)
-  (printout t "stateplanning PRIMA " ?id_t " " ?id_city_arrival " " ?goodsq " " ?goodst " provided_citta: " ?pgq " tipologia " ?pgt " fcost " ?fcostplanning crlf) 
+  (printout t "stateplanning PRIMA " ?id_trans " " ?id_city_arrival " " ?goodsq " " ?goodst " provided_citta: " ?pgq " tipologia " ?pgt " fcost " ?fcostplanning crlf)
   (modify ?stateplanning (id_transport ?id_trans)(id_city ?arrival)
                          (requested_goods_quantity ?rgq)
                          (goods_quantity 0)(goods_type NA)
-                         (f_cost (+ (* ?km ?rgq) ?km))
-                         (h_cost (* ?km ?rgq))(g_cost ?km)
+                         (f_cost (+ (/ ?km ?pgq) ?km))
+                         (h_cost (/ ?km ?pgq))(g_cost ?km)
   )
-  (printout t "stateplanning DOPO " ?id_trans " " ?arrival " " 0 " " (+ (* ?km ?rgq) ?km) crlf) 
+  (printout t "stateplanning DOPO " ?id_trans " " ?arrival " " 0 " " (+ (/ ?km ?pgq) ?km) crlf)
 
 )
 
@@ -79,7 +80,7 @@
         (requested_goods_type ?good_type)(provided_goods_quantity 0)(provided_goods_type NA))
   (test (neq ?id_city ?arrival))
   ;Informazioni temporanee da salvare in state
-  ?stateplanning<-(state_planning(id_transport ?id_t)(id_city ?id_city_arrival)
+  ?stateplanning<-(state_planning(id_transport ?id_trans)(id_city ?id_city_arrival)
                                  (requested_goods_quantity ?req_quantity)
                                  (goods_quantity ?goodsq)(goods_type ?goodst)
                                  (f_cost ?fcostplanning)(h_cost ?hcostplanning)
@@ -87,15 +88,14 @@
                   )
   (route
     (departure ?id_city)(arrival ?arrival)(km ?km)(type_route Ground))
-  (test (< (+ (* ?km ?rgq 20) ?km) ?fcostplanning))
+  (test (< (+ (* ?km 20) ?km) ?fcostplanning))
 =>
   (modify ?stateplanning (id_transport ?id_trans)(id_city ?arrival)
                          (requested_goods_quantity ?rgq)
                          (goods_quantity 0)(goods_type NA)
-                         (f_cost (+ (* ?km ?rgq 20) ?km))
-                         (h_cost (* ?km ?rgq 20))(g_cost ?km)
+                         (f_cost (+ (* ?km 20) ?km))
+                         (h_cost (* ?km 20))(g_cost ?km)
   )
-
 )
 
 ; Controllo se la differenza della quantitá tra merce richiesta della cittá e quella scaricata dal furgone é positiva
@@ -109,7 +109,7 @@
         (requested_goods_type ?good_type))
   (test (neq ?id_city ?arrival))
   ;Informazioni temporanee da salvare in state
-  ?stateplanning<-(state_planning(id_transport ?id_t)(id_city ?id_city_arrival)
+  ?stateplanning<-(state_planning(id_transport ?id_trans)(id_city ?id_city_arrival)
                                  (requested_goods_quantity ?req_quantity)
                                  (goods_quantity ?goodsq)(goods_type ?goodst)
                                  (f_cost ?fcostplanning)(h_cost ?hcostplanning)
@@ -117,8 +117,10 @@
                   )
   (route
     (departure ?id_city)(arrival ?arrival)(km ?km)(type_route Ground))
-  (test (< (+ (* ?km (- ?rgq ?gq)) ?km) ?fcostplanning)) ; calcolo dell'euristica
-  (test (>= ?rgq ?gq))
+  (test (> ?rgq ?gq))
+  (test (> ?gq 0))
+  (test (< (+ (/ ?km ?gq) ?km) ?fcostplanning)) ; calcolo dell'euristica
+
 =>
   ;(f_cost (+ (* ?km (- ?rgq ?gq1)) ?km))
   ;(h_cost (* ?km (- ?rgq ?gq1)))
@@ -126,8 +128,8 @@
   (modify ?stateplanning (id_transport ?id_trans)(id_city ?arrival)
                          (requested_goods_quantity (- ?rgq ?gq))
                          (goods_quantity 0)(goods_type NA)
-                         (f_cost (+ (* ?km (- ?rgq ?gq)) ?km))
-                         (h_cost (* ?km (- ?rgq ?gq)))(g_cost ?km)
+                         (f_cost (+ (/ ?km ?gq) ?km))
+                         (h_cost (/ ?km ?gq))(g_cost ?km)
   )
 )
 
@@ -140,7 +142,7 @@
   (city (id_state ?id_state)(id_city ?arrival)(requested_goods_quantity ?rgq )
         (requested_goods_type ?good_type))
   (test (neq ?id_city ?arrival))
-  ?stateplanning<-(state_planning(id_transport ?id_t)(id_city ?id_city_arrival)
+  ?stateplanning<-(state_planning(id_transport ?id_trans)(id_city ?id_city_arrival)
                                  (requested_goods_quantity ?req_quantity)
                                  (goods_quantity ?goodsq)(goods_type ?goodst)
                                  (f_cost ?fcostplanning)(h_cost ?hcostplanning)
@@ -148,14 +150,42 @@
                   )
   (route
     (departure ?id_city)(arrival ?arrival)(km ?km)(type_route Ground))
-  (test (< (+ (* ?km (- ?rgq ?gq)) ?km) ?fcostplanning))
   (test (< ?rgq ?gq))
+  (test (< ?km ?fcostplanning))
 =>
   (modify ?stateplanning (id_transport ?id_trans)(id_city ?arrival)
                          (requested_goods_quantity 0)
                          (goods_quantity (- ?gq ?rgq))(goods_type ?good_type)
-                         (f_cost (+ (* ?km (- ?rgq ?gq)) ?km))
-                         (h_cost (* ?km (- ?rgq ?gq)))(g_cost ?km)
+                         (f_cost ?km)
+                         (h_cost 0)(g_cost ?km)
+  )
+)
+
+(defrule expand-truck-quantity-zero (declare (salience 100)) ; La differenza é negativa
+  (next_truck(id_truck ?id_trans))
+  (current (id_current ?id_state))
+  (state(id_state ?id_state)(f_cost ?f_cost)(h_cost ?h_cost)(g_cost ?g_cost))
+  (transport (id_state ?id_state)(id_transport ?id_trans)(transport_type Truck)
+             (type_route Ground)(goods_quantity ?gq)(goods_type ?good_type)(city ?id_city))
+  (city (id_state ?id_state)(id_city ?arrival)(requested_goods_quantity ?rgq )
+        (requested_goods_type ?good_type))
+  (test (neq ?id_city ?arrival))
+  ?stateplanning<-(state_planning(id_transport ?id_trans)(id_city ?id_city_arrival)
+                                 (requested_goods_quantity ?req_quantity)
+                                 (goods_quantity ?goodsq)(goods_type ?goodst)
+                                 (f_cost ?fcostplanning)(h_cost ?hcostplanning)
+                                 (g_cost ?gcostplanning)
+                  )
+  (route
+    (departure ?id_city)(arrival ?arrival)(km ?km)(type_route Ground))
+  (test (= ?rgq ?gq))
+  (test (< ?km ?fcostplanning))
+=>
+  (modify ?stateplanning (id_transport ?id_trans)(id_city ?arrival)
+                         (requested_goods_quantity 0)
+                         (goods_quantity 0)(goods_type NA)
+                         (f_cost ?km)
+                         (h_cost 0)(g_cost ?km)
   )
 )
 ;Caso in cui le merci trasportate sul truck sono di tipologia differente da quelle richieste nella città
@@ -169,7 +199,7 @@
         (requested_goods_type ?city_req_goods_type))
   (test (neq ?id_city ?arrival))
   ;Informazioni temporanee da salvare in state
-  ?stateplanning<-(state_planning(id_transport ?id_t)(id_city ?id_city_arrival)
+  ?stateplanning<-(state_planning(id_transport ?id_trans)(id_city ?id_city_arrival)
                                  (requested_goods_quantity ?req_quantity)
                                  (goods_quantity ?goodsq)(goods_type ?goodst)
                                  (f_cost ?fcostplanning)(h_cost ?hcostplanning)
