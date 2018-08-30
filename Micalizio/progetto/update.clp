@@ -37,7 +37,6 @@
   (modify ?transport(goods_quantity ?capacity)(goods_type ?prov_goods_type)(city ?id_city_arrival))
   (modify ?city(requested_goods_quantity ?req_quantity)
                (provided_goods_quantity (- ?prov_goods_q ?capacity)))
-  (printout t "furgone N " ?id_t " sono entrato in cargo empty city full verso " ?id_city_arrival crlf)
   (focus NEXTTRUCK)
 )
 

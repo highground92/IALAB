@@ -4,7 +4,6 @@
   (next_truck(id_truck ?id_truck))
   ;?sp<-(state_planning(id_transport ?id_truck))
 =>
-  (printout t "changed truck to " ?id_truck crlf)
   (assert (state_planning(id_transport ?id_truck)(f_cost 999999)(h_cost 9999999)(g_cost 9999999))) ; stubby che verrà rimpiazzato subito
   (focus EXPANDTRUCK) ;valuto tutte le possibili azioni per un truck e scelgo la migliore
    ;in base all'azione scelta, aggiorno lo stato delle città e delle merci
@@ -57,15 +56,12 @@
   (test (< (+ (/ ?km ?pgq) ?km) ?fcostplanning))
 
 =>
-  (printout t "Truck " ?id_trans " vado da " ?id_city " a " ?arrival crlf)
-  (printout t "stateplanning PRIMA " ?id_trans " " ?id_city_arrival " " ?goodsq " " ?goodst " provided_citta: " ?pgq " tipologia " ?pgt " fcost " ?fcostplanning crlf)
   (modify ?stateplanning (id_transport ?id_trans)(id_city ?arrival)
                          (requested_goods_quantity ?rgq)
                          (goods_quantity 0)(goods_type NA)
                          (f_cost (+ (/ ?km ?pgq) ?km))
                          (h_cost (/ ?km ?pgq))(g_cost ?km)
   )
-  (printout t "stateplanning DOPO " ?id_trans " " ?arrival " " 0 " " (+ (/ ?km ?pgq) ?km) crlf)
 
 )
 
@@ -223,7 +219,6 @@
   (next_truck (id_truck ?id))
   (state_planning(id_transport ?id))
 =>
-  (printout t "truck " ?id " vado in update" crlf)
   (focus UPDATESTATE)
 )
 
@@ -235,7 +230,6 @@
   (test (< ?id_truck 5))
 =>
   (modify ?t (id_truck (+ ?id_truck 1)))
-  (printout t "nuovo truck è: " (+ ?id_truck 1) crlf)
   (retract ?sp)
 )
 
