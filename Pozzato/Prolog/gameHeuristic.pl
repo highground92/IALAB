@@ -44,9 +44,9 @@ bordosuperiore(Posizione):-Posizione < 3.
 % Gioco dell'otto'
 
 %    _______
-%    |2|8|5|
-%    |6| |1|
-%    |3|7|4|
+%    |1|2|3|
+%    |4|5|6|
+%    |7|8| |
 %
 
 % Stato -> lista di caselle(numero,x,y)
