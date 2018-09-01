@@ -97,7 +97,7 @@ public abstract class BayesianInferenceTest {
 
 		// AIMA3e pg. 523
 		// P(Burglary | JohnCalls = true, MaryCalls = true) = <0.284, 0.716>
-		/*d = bayesInference
+		d = bayesInference
 				.ask(new RandomVariable[] { ExampleRV.BURGLARY_RV },
 						new AssignmentProposition[] {
 								new AssignmentProposition(
@@ -114,7 +114,7 @@ public abstract class BayesianInferenceTest {
 
 		// AIMA3e pg. 528
 		// P(JohnCalls | Burglary = true)
-		d = bayesInference.ask(
+		/*d = bayesInference.ask(
 				new RandomVariable[] { ExampleRV.JOHN_CALLS_RV },
 				new AssignmentProposition[] { new AssignmentProposition(
 						ExampleRV.BURGLARY_RV, true) }, bn);

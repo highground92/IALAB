@@ -154,14 +154,14 @@ public class EliminationAsk implements BayesInference {
 			hidden.removeAll(ap.getScope());
 		}
 
-		/*System.out.println("HIDDEN");
+		System.out.println("HIDDEN");
 		for(RandomVariable h : hidden){
 			System.out.print(h.getName()+" ");
 		}
 		System.out.println("\nEVIDENCE");
 		for(AssignmentProposition ass: e){
 			System.out.println(ass.getTermVariable().getName());
-		}*/
+		}
 
 		Set<Node> parents = new HashSet<Node>();
 		Set<Node> p = null;
@@ -214,14 +214,14 @@ public class EliminationAsk implements BayesInference {
 		// are come across all the factors dependent on them have
 		// been seen so far.
 
-		//List<RandomVariable> order = new ArrayList<RandomVariable>(vars);
+		List<RandomVariable> var = new ArrayList<RandomVariable>(vars);
 		//Collections.reverse(order);
 
-		Graph graph = new Graph(bn);
+		Graph graph = new Graph(bn,var);
 		System.out.println("ACYCLIC GRAPH\n"+graph.toString());
 
-		List<RandomVariable> order = graph.maxCardinality();
-		//List<RandomVariable> order = graph.minNeighbors("MinNeighbors");
+		//List<RandomVariable> order = graph.maxCardinality();
+		List<RandomVariable> order = graph.greedyOrdering("MinNeighbors");
 
 		return order;
 	}
