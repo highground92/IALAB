@@ -44,22 +44,39 @@ public class Graph {
         return nodes;
     }
 
+    /**
+     * MAX-CARDINALITY SEARCH
+     * First heuristic by ordering
+     * @return ordered list of variables
+     */
     public List<RandomVariable> maxCardinality(){
         List<Node> copiaGraph = nodes;
         List<RandomVariable> orderList = new ArrayList<RandomVariable>();
         Node start = maxNeighbors();
         copiaGraph.remove(start);
         orderList.add(start.getRandomVariable());
-        System.out.println("start "+start.getRandomVariable().getName()+" "+start.getMark());
+        //System.out.println("start "+start.getRandomVariable().getName()+" "+start.getMark());
         Set<Node> parent = start.getNeighbors();
         Node next = null;
         for(Node n : parent){
             next = n;
         }
         next.setMark(true);
+        //System.out.println("next "+next.getRandomVariable().getName()+" "+next.getMark());
         copiaGraph.remove(next);
+        //System.out.println("copia "+copiaGraph.toString());
         orderList.add(next.getRandomVariable());
-
+        //System.out.println("order "+orderList.toString());
+        int cardinality = copiaGraph.size();
+        //System.out.println("cardinality "+cardinality);
+        while(cardinality>0){
+            Node n = maxNeighborsMark(copiaGraph);
+            n.setMark(true);
+            //System.out.println("node "+n.getRandomVariable().getName()+" "+n.getMark());
+            orderList.add(n.getRandomVariable());
+            copiaGraph.remove(n);
+            cardinality--;
+        }
         return orderList;
     }
 
@@ -83,18 +100,36 @@ public class Graph {
     }
 
     private Node maxNeighborsMark(List<Node> graph){
-        for(int i=0; i<graph.size(); i++){
-            // da fare, trovare i nodi con il maggior numero di vicini marcati
+        int count=0;
+        int countMax=0;
+        Node node = null;
+        for(Node n : graph){
+            for(Node p : n.getNeighbors()){
+                if(p.getMark())
+                    count++;
+            }
+            if(count >= countMax) {
+                countMax = count;
+                count=0;
+                node = n;
+            }
         }
+        return node;
     }
 
-    public List<RandomVariable> minNeighbors(){
+    /**
+     *
+     * @return
+     */
+    public List<RandomVariable> GreedyOrdering(String heuristic){
         List<RandomVariable> orderList = new ArrayList<RandomVariable>();
-        int cardinality = 0;
-        System.out.println(cardinality);
-        while(cardinality < this.nodes.size()){
-            orderList.add(min());
-            cardinality++;
+        if(heuristic.equals("MinNeighbors")) {
+            int cardinality = 0;
+            System.out.println(cardinality);
+            while (cardinality < this.nodes.size()) {
+                orderList.add(min());
+                cardinality++;
+            }
         }
         return orderList;
     }

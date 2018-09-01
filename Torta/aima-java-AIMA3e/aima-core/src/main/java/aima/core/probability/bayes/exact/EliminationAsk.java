@@ -221,7 +221,7 @@ public class EliminationAsk implements BayesInference {
 		System.out.println("ACYCLIC GRAPH\n"+graph.toString());
 
 		List<RandomVariable> order = graph.maxCardinality();
-		//List<RandomVariable> order = graph.minNeighbors();
+		//List<RandomVariable> order = graph.minNeighbors("MinNeighbors");
 
 		return order;
 	}
