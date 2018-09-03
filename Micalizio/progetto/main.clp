@@ -18,22 +18,31 @@
 (deftemplate next_truck (slot id_truck))
 
 (deftemplate state_planning (slot id_transport)(slot id_city )(slot f_cost)(slot h_cost)(slot g_cost)
-                            (slot requested_goods_quantity)(slot goods_quantity)(slot goods_type))
+                            (slot requested_goods_quantity)(slot requested_goods_type)
+                            (slot provided_goods_quantity)(slot provided_goods_type)
+                            (slot trans_goods_quantity)(slot trans_goods_type))
+
+(deftemplate move_planning (slot id_city_arrival)(slot f_cost)(slot h_cost)(slot g_cost)(slot father))
 
 (deffacts domain
 
         (route (departure Torino) (arrival Milano) (km 138) (type_route Ground))
         (route (departure Torino) (arrival Genova) (km 170) (type_route Ground))
+
         (route (departure Milano) (arrival Torino) (km 138) (type_route Ground))
         (route (departure Milano) (arrival Bologna) (km 206) (type_route Ground))
         (route (departure Milano) (arrival Venezia) (km 276) (type_route Ground))
+
         (route (departure Genova) (arrival Firenze) (km 230) (type_route Ground))
         (route (departure Genova) (arrival Torino) (km 170) (type_route Ground))
+
         (route (departure Firenze) (arrival Genova) (km 230) (type_route Ground))
         (route (departure Firenze) (arrival Bologna) (km 101) (type_route Ground))
+
         (route (departure Bologna) (arrival Firenze) (km 101) (type_route Ground))
         (route (departure Bologna) (arrival Venezia) (km 158) (type_route Ground))
         (route (departure Bologna) (arrival Milano) (km 206) (type_route Ground))
+
         (route (departure Venezia) (arrival Milano) (km 276) (type_route Ground))
         (route (departure Venezia) (arrival Bologna) (km 158) (type_route Ground))
 
@@ -85,6 +94,7 @@
 (defrule stampa-soluzione (declare (salience 50))
   ?id_stampa<-(stampa ?id)
 
+  (state (id_state ?id)(f_cost ?f_cost)(h_cost ?h_cost)(g_cost ?g_cost))
   (transport (id_state ?id)(id_transport 1)(transport_type ?trans_type1)
     (goods_quantity ?quantity1)(goods_type ?g_type1)(city ?trans_city1))
   (transport (id_state ?id)(id_transport 2)(transport_type ?trans_type2)
@@ -116,13 +126,13 @@
         (provided_goods_type ?provided_t6))
 
 =>
-  (printout t " ////////////////////////////////////////////////////////////////////" crlf)
-  (printout t "STATO " ?id crlf)
-  (printout t "trasporto 1 tipo " ?trans_type1 " goods " ?quantity1 " " ?g_type1 " citta " ?trans_city1  crlf)
-  (printout t "trasporto 2 tipo " ?trans_type2 " goods " ?quantity2 " " ?g_type2 " citta " ?trans_city2  crlf)
-  (printout t "trasporto 3 tipo " ?trans_type3 " goods " ?quantity3 " " ?g_type3 " citta " ?trans_city3  crlf)
-  (printout t "trasporto 4 tipo " ?trans_type4 " goods " ?quantity4 " " ?g_type4 " citta " ?trans_city4  crlf)
-  (printout t "trasporto 5 tipo " ?trans_type5 " goods " ?quantity5 " " ?g_type5 " citta " ?trans_city5  crlf)
+  (printout t "∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞" crlf)
+  (printout t "STATO " ?id " f_cost " ?f_cost crlf)
+  (printout t "trasporto 1 tipo " ?trans_type1 " goods " ?quantity1 " " ?g_type1 " citta " ?trans_city1 crlf)
+  (printout t "trasporto 2 tipo " ?trans_type2 " goods " ?quantity2 " " ?g_type2 " citta " ?trans_city2 crlf)
+  (printout t "trasporto 3 tipo " ?trans_type3 " goods " ?quantity3 " " ?g_type3 " citta " ?trans_city3 crlf)
+  (printout t "trasporto 4 tipo " ?trans_type4 " goods " ?quantity4 " " ?g_type4 " citta " ?trans_city4 crlf)
+  (printout t "trasporto 5 tipo " ?trans_type5 " goods " ?quantity5 " " ?g_type5 " citta " ?trans_city5 crlf)
 
   (printout t "citta Torino requested " ?requested_q1 " " ?requested_t1 " provided " ?provided_g1 " " ?provided_t1 crlf)
   (printout t "citta Genova requested " ?requested_q2 " " ?requested_t2 " provided " ?provided_g2 " " ?provided_t2 crlf)
@@ -130,16 +140,15 @@
   (printout t "citta Venezia requested " ?requested_q4 " " ?requested_t4 " provided " ?provided_g4 " " ?provided_t4 crlf)
   (printout t "citta Bologna requested " ?requested_q5 " " ?requested_t5 " provided " ?provided_g5 " " ?provided_t5 crlf)
   (printout t "citta Milano requested " ?requested_q6 " " ?requested_t6 " provided " ?provided_g6 " " ?provided_t6 crlf)
-  (printout t " ////////////////////////////////////////////////////////////////////" crlf)
-
   (assert (stampa (+ ?id 1)))
   (retract ?id_stampa)
 )
 
 (defrule stampa-fine (declare (salience 51))
-  (stampa ?id)
+  ?st<-(stampa ?id)
   (current (id_current ?id))
 
+  (state (id_state ?id)(f_cost ?f_cost)(h_cost ?h_cost)(g_cost ?g_cost))
   (transport (id_state ?id)(id_transport 1)(transport_type ?trans_type1)
     (goods_quantity ?quantity1)(goods_type ?g_type1)(city ?trans_city1))
   (transport (id_state ?id)(id_transport 2)(transport_type ?trans_type2)
@@ -170,8 +179,8 @@
         (requested_goods_type ?requested_t6)( provided_goods_quantity ?provided_g6)
         (provided_goods_type ?provided_t6))
 =>
-  (printout t " ////////////////////////////////////////////////////////////////////" crlf)
-  (printout t "STATO " ?id crlf)
+  (printout t "∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞" crlf)
+  (printout t "STATO " ?id " f_cost " ?f_cost crlf)
   (printout t "trasporto 1 tipo " ?trans_type1 " goods " ?quantity1 " " ?g_type1 " citta " ?trans_city1  crlf)
   (printout t "trasporto 2 tipo " ?trans_type2 " goods " ?quantity2 " " ?g_type2 " citta " ?trans_city2  crlf)
   (printout t "trasporto 3 tipo " ?trans_type3 " goods " ?quantity3 " " ?g_type3 " citta " ?trans_city3  crlf)
@@ -184,8 +193,8 @@
   (printout t "citta Venezia requested " ?requested_q4 " " ?requested_t4 " provided " ?provided_g4 " " ?provided_t4 crlf)
   (printout t "citta Bologna requested " ?requested_q5 " " ?requested_t5 " provided " ?provided_g5 " " ?provided_t5 crlf)
   (printout t "citta Milano requested " ?requested_q6 " " ?requested_t6 " provided " ?provided_g6 " " ?provided_t6 crlf)
-  (printout t " ////////////////////////////////////////////////////////////////////" crlf)
+  (printout t "∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞" crlf)
   (printout t "FINE" crlf)
-  (halt)
+  (retract ?st)
 )
 ;;;;;;;;;;;;;;;;;;;;
