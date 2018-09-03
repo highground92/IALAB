@@ -1,4 +1,4 @@
-(defmodule UNLOADTRANSPORT (import MAINEXPANDTRUCK ?ALL)(export ?ALL))
+(defmodule UNLOADTRANSPORT (import LOADTRANSPORT ?ALL)(export ?ALL))
 
 ; Ho il mezzo scarico e la città mi può rifornire per tutta la mia capacità
 (defrule unload-transport-pos (declare (salience 100))
@@ -56,7 +56,7 @@
                   )
   (test(> ?tgq 0))
   (test(> ?rgq 0))
-  (test(=< ?rgq ?tgq))
+  (test(<= ?rgq ?tgq))
   (test (< (* (- 12 ?tgq) 10) ?fcostplanning))
 
 =>

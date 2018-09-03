@@ -7,7 +7,7 @@
                   (slot provided_goods_type))
 
 (deftemplate transport (slot id_state)(slot id_transport)(slot transport_type)(slot type_route) ;Per il momento si assume un solo tipo di merci trasportato
-                       (slot capacity)(slot goods_quantity)(slot goods_type)(slot city))
+                       (slot capacity)(slot trans_goods_quantity)(slot trans_goods_type)(slot city))
 
 (deftemplate route (slot departure)(slot arrival)(slot km)(slot type_route))
 
@@ -24,6 +24,9 @@
 
 (deftemplate move_planning (slot id_city_arrival)(slot f_cost)(slot h_cost)(slot g_cost)(slot father))
 
+;(deftemplate transport (slot id_state)(slot id_transport)(slot transport_type)(slot type_route) ;Per il momento si assume un solo tipo di merci trasportato
+;                       (slot capacity)(multislot goods_quantity)(multislot goods_type)(slot city))
+;(transport(goods_quantity $?prev ?q $?aft)) Esempio
 (deffacts domain
 
         (route (departure Torino) (arrival Milano) (km 138) (type_route Ground))
@@ -53,15 +56,15 @@
 
   (state(id_state 0)(f_cost 999999)(h_cost 999999)(g_cost 0))
   (transport (id_state 0)(id_transport 1)(transport_type Truck)(type_route Ground)
-             (capacity 4)(goods_quantity 0)(goods_type NA)(city Torino))
+             (capacity 4)(trans_goods_quantity 0)(trans_goods_type NA)(city Torino))
   (transport (id_state 0)(id_transport 2)(transport_type Truck)(type_route Ground)
-             (capacity 4)(goods_quantity 0)(goods_type NA)(city Milano))
+             (capacity 4)(trans_goods_quantity 0)(trans_goods_type NA)(city Milano))
   (transport (id_state 0)(id_transport 3)(transport_type Truck)(type_route Ground)
-             (capacity 4)(goods_quantity 0)(goods_type NA)(city Bologna))
+             (capacity 4)(trans_goods_quantity 0)(trans_goods_type NA)(city Bologna))
   (transport (id_state 0)(id_transport 4)(transport_type Truck)(type_route Ground)
-             (capacity 4)(goods_quantity 0)(goods_type NA)(city Genova))
+             (capacity 4)(trans_goods_quantity 0)(trans_goods_type NA)(city Genova))
   (transport (id_state 0)(id_transport 5)(transport_type Truck)(type_route Ground)
-             (capacity 4)(goods_quantity 0)(goods_type NA)(city Venezia))
+             (capacity 4)(trans_goods_quantity 0)(trans_goods_type NA)(city Venezia))
 
 
   (city (id_state 0)(id_city Torino)(requested_goods_quantity 10)(requested_goods_type A)
@@ -96,15 +99,15 @@
 
   (state (id_state ?id)(f_cost ?f_cost)(h_cost ?h_cost)(g_cost ?g_cost))
   (transport (id_state ?id)(id_transport 1)(transport_type ?trans_type1)
-    (goods_quantity ?quantity1)(goods_type ?g_type1)(city ?trans_city1))
+    (trans_goods_quantity ?quantity1)(trans_goods_type ?g_type1)(city ?trans_city1))
   (transport (id_state ?id)(id_transport 2)(transport_type ?trans_type2)
-    (goods_quantity ?quantity2)(goods_type ?g_type2)(city ?trans_city2))
+    (trans_goods_quantity ?quantity2)(trans_goods_type ?g_type2)(city ?trans_city2))
   (transport (id_state ?id)(id_transport 3)(transport_type ?trans_type3)
-    (goods_quantity ?quantity3)(goods_type ?g_type3)(city ?trans_city3))
+    (trans_goods_quantity ?quantity3)(trans_goods_type ?g_type3)(city ?trans_city3))
   (transport (id_state ?id)(id_transport 4)(transport_type ?trans_type4)
-    (goods_quantity ?quantity4)(goods_type ?g_type4)(city ?trans_city4))
+    (trans_goods_quantity ?quantity4)(trans_goods_type ?g_type4)(city ?trans_city4))
   (transport (id_state ?id)(id_transport 5)(transport_type ?trans_type5)
-    (goods_quantity ?quantity5)(goods_type ?g_type5)(city ?trans_city5))
+    (trans_goods_quantity ?quantity5)(trans_goods_type ?g_type5)(city ?trans_city5))
 
   (city (id_state ?id)(id_city Torino)(requested_goods_quantity ?requested_q1)
         (requested_goods_type ?requested_t1)( provided_goods_quantity ?provided_g1)
@@ -150,15 +153,15 @@
 
   (state (id_state ?id)(f_cost ?f_cost)(h_cost ?h_cost)(g_cost ?g_cost))
   (transport (id_state ?id)(id_transport 1)(transport_type ?trans_type1)
-    (goods_quantity ?quantity1)(goods_type ?g_type1)(city ?trans_city1))
+    (trans_goods_quantity ?quantity1)(trans_goods_type ?g_type1)(city ?trans_city1))
   (transport (id_state ?id)(id_transport 2)(transport_type ?trans_type2)
-    (goods_quantity ?quantity2)(goods_type ?g_type2)(city ?trans_city2))
+    (trans_goods_quantity ?quantity2)(trans_goods_type ?g_type2)(city ?trans_city2))
   (transport (id_state ?id)(id_transport 3)(transport_type ?trans_type3)
-    (goods_quantity ?quantity3)(goods_type ?g_type3)(city ?trans_city3))
+    (trans_goods_quantity ?quantity3)(trans_goods_type ?g_type3)(city ?trans_city3))
   (transport (id_state ?id)(id_transport 4)(transport_type ?trans_type4)
-    (goods_quantity ?quantity4)(goods_type ?g_type4)(city ?trans_city4))
+    (trans_goods_quantity ?quantity4)(trans_goods_type ?g_type4)(city ?trans_city4))
   (transport (id_state ?id)(id_transport 5)(transport_type ?trans_type5)
-    (goods_quantity ?quantity5)(goods_type ?g_type5)(city ?trans_city5))
+    (trans_goods_quantity ?quantity5)(trans_goods_type ?g_type5)(city ?trans_city5))
 
   (city (id_state ?id)(id_city Torino)(requested_goods_quantity ?requested_q1)
         (requested_goods_type ?requested_t1)( provided_goods_quantity ?provided_g1)

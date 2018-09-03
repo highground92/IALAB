@@ -1,7 +1,7 @@
 ;Modulo dedito a mantenere la persistenza delle informazioni dopo la decisione di muovere un trasporto (eventuale scarico/carico merci in città)
-(defmodule UPDATESTATE (import EXPANDTRUCK ?ALL) (export ?ALL))
+(defmodule UPDATESTATE (import LOADTRANSPORT ?ALL)(import UNLOADTRANSPORT ?ALL)(import MOVE ?ALL) (export ?ALL))
 
-(defrule update-state (declare(salience 10))
+(defrule update-state-1 (declare(salience 10))
   (current (id_current ?current))
   ?new_state <- (state(id_state ?current)(g_cost ?old_g_cost))
   ?trans<-(transport (id_state ?current)(id_transport ?id_trans)(transport_type ?tt)

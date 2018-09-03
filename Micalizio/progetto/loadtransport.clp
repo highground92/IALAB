@@ -54,7 +54,7 @@
                                  (g_cost ?gcostplanning)
                   )
   (test(> ?pgq 0))
-  (test(=< ?pgq ?capacity))
+  (test(<= ?pgq ?capacity))
   (test (< (* (- 12 ?pgq) 10) ?fcostplanning))
 
 =>

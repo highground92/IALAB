@@ -6,19 +6,19 @@
   (state (id_state ?id_current_state)(f_cost ?f_cost)(h_cost ?h_cost)(g_cost ?g_cost))
 
   (transport (id_state ?id_current_state)(id_transport 1)(transport_type Truck)
-             (type_route Ground)(capacity 4)(goods_quantity ?quantity1)(goods_type ?g_type1)
+             (type_route Ground)(capacity 4)(trans_goods_quantity ?quantity1)(trans_goods_type ?g_type1)
              (city ?trans_city1))
   (transport (id_state ?id_current_state)(id_transport 2)(transport_type Truck)
-             (type_route Ground)(capacity 4)(goods_quantity ?quantity2)(goods_type ?g_type2)
+             (type_route Ground)(capacity 4)(trans_goods_quantity ?quantity2)(trans_goods_type ?g_type2)
              (city ?trans_city2))
   (transport (id_state ?id_current_state)(id_transport 3)(transport_type Truck)
-             (type_route Ground)(capacity 4)(goods_quantity ?quantity3)(goods_type ?g_type3)
+             (type_route Ground)(capacity 4)(trans_goods_quantity ?quantity3)(trans_goods_type ?g_type3)
              (city ?trans_city3))
   (transport (id_state ?id_current_state)(id_transport 4)(transport_type Truck)
-             (type_route Ground)(capacity 4)(goods_quantity ?quantity4)(goods_type ?g_type4)
+             (type_route Ground)(capacity 4)(trans_goods_quantity ?quantity4)(trans_goods_type ?g_type4)
              (city ?trans_city4))
   (transport (id_state ?id_current_state)(id_transport 5)(transport_type Truck)
-             (type_route Ground)(capacity 4)(goods_quantity ?quantity5)(goods_type ?g_type5)
+             (type_route Ground)(capacity 4)(trans_goods_quantity ?quantity5)(trans_goods_type ?g_type5)
              (city ?trans_city5))
 
   (city (id_state ?id_current_state)(id_city Torino)(requested_goods_quantity ?requested_q1)
@@ -46,19 +46,19 @@
     (state (id_state (+ ?id_current_state 1))(f_cost ?f_cost)(h_cost ?h_cost)(g_cost ?g_cost))
 
     (transport (id_state (+ ?id_current_state 1))(id_transport 1)(transport_type Truck)
-               (type_route Ground)(capacity 4)(goods_quantity ?quantity1)(goods_type ?g_type1)
+               (type_route Ground)(capacity 4)(trans_goods_quantity ?quantity1)(trans_goods_type ?g_type1)
                (city ?trans_city1))
     (transport (id_state (+ ?id_current_state 1))(id_transport 2)(transport_type Truck)
-               (type_route Ground)(capacity 4)(goods_quantity ?quantity2)(goods_type ?g_type2)
+               (type_route Ground)(capacity 4)(trans_goods_quantity ?quantity2)(trans_goods_type ?g_type2)
                (city ?trans_city2))
     (transport (id_state (+ ?id_current_state 1))(id_transport 3)(transport_type Truck)
-               (type_route Ground)(capacity 4)(goods_quantity ?quantity3)(goods_type ?g_type3)
+               (type_route Ground)(capacity 4)(trans_goods_quantity ?quantity3)(trans_goods_type ?g_type3)
                (city ?trans_city3))
     (transport (id_state (+ ?id_current_state 1))(id_transport 4)(transport_type Truck)
-               (type_route Ground)(capacity 4)(goods_quantity ?quantity4)(goods_type ?g_type4)
+               (type_route Ground)(capacity 4)(trans_goods_quantity ?quantity4)(trans_goods_type ?g_type4)
                (city ?trans_city4))
     (transport (id_state (+ ?id_current_state 1))(id_transport 5)(transport_type Truck)
-               (type_route Ground)(capacity 4)(goods_quantity ?quantity5)(goods_type ?g_type5)
+               (type_route Ground)(capacity 4)(trans_goods_quantity ?quantity5)(trans_goods_type ?g_type5)
                (city ?trans_city5))
 
     (city (id_state (+ ?id_current_state 1))(id_city Torino)(requested_goods_quantity ?requested_q1)
@@ -87,7 +87,7 @@
   ;b) creazione stato aggiornato
   ;c) retract di tutti gli state_planning
   (assert (next_truck(id_truck 1)))
-  (printout t " ho fatto asserTttt di truck 1")
+  (printout t " ho fatto asserTttt di truck 1 " crlf)
   (focus MAINEXPANDTRUCK)
   ;b) creazione stato aggiornato
   ;c) retract di tutti gli state_planning
