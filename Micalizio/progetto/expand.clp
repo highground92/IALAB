@@ -82,7 +82,6 @@
   )
 
   (modify ?current(id_current (+ ?id_current_state 1)))
-
   ;(focus EXPANDSHIP)
   ;b) creazione stato aggiornato
   ;c) retract di tutti gli state_planning

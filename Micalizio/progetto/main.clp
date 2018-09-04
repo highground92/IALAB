@@ -24,6 +24,8 @@
 
 (deftemplate move_planning (slot id_city_arrival)(slot f_cost)(slot h_cost)(slot g_cost)(slot father))
 
+(deftemplate action (slot type))
+
 ;(deftemplate transport (slot id_state)(slot id_transport)(slot transport_type)(slot type_route) ;Per il momento si assume un solo tipo di merci trasportato
 ;                       (slot capacity)(multislot goods_quantity)(multislot goods_type)(slot city))
 ;(transport(goods_quantity $?prev ?q $?aft)) Esempio
@@ -84,9 +86,6 @@
 
 
   )
-
-; H-cost = (km pesati)*(Merce richiesta - merce consegnata)
-; G-cost = km pesati       (nave: km*2/3, furgone:km, aereo: km+km*1/4)
 
 (defrule start
   (current (id_current 0))

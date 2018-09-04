@@ -31,8 +31,9 @@
                          (f_cost (* (- 12 ?capacity) 10))
                          (h_cost (* (- 12 ?capacity) 10))(g_cost 0)
   )
-  (assert (load))
-  (focus UPDATE)
+  (assert (action(type load)))
+  (printout t "In load transport pos" crlf)
+  (focus UPDATESTATE)
 )
 
 ; Ho il mezzo scarico e la città mi può rifornire con beni <= alla capacità del mezzo
@@ -67,8 +68,10 @@
                          (f_cost (* (- 12 ?pgq) 10))
                          (h_cost (* (- 12 ?pgq) 10))(g_cost 0)
   )
-  (assert (load))
-  (focus UPDATE)
+  (assert (action(type load)))
+  (printout t "In load transport neg" crlf)
+
+  (focus UPDATESTATE)
 )
 
 ; Ho il mezzo scarico e mi trovo in una città che non mi può rifornire
@@ -91,5 +94,5 @@
              (type_route Ground)(trans_goods_quantity ?tgq)(trans_goods_type ?tgt)(city ?id_city))
   (test (> ?tgq 0))
 =>
-  (focus UNLOAD)
+  (focus UNLOADTRANSPORT)
 )

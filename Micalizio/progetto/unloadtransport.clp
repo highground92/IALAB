@@ -32,8 +32,8 @@
                          (f_cost (* (- 12 ?tgq) 10))
                          (h_cost (* (- 12 ?tgq) 10))(g_cost 0)
   )
-  (assert(unload))
-  (focus UPDATE)
+  (assert (action(type unload)))
+  (focus UPDATESTATE)
 )
 
 ; Ho il mezzo scarico e la città mi può rifornire con beni <= alla capacità del mezzo
@@ -69,8 +69,8 @@
                          (f_cost (* (- 12 ?tgq) 10))
                          (h_cost (* (- 12 ?tgq) 10))(g_cost 0)
   )
-  (assert(unload))
-  (focus UPDATE)
+  (assert (action(type unload)))
+  (focus UPDATESTATE)
 )
 
 ; Trasporto carico ma tipo di merce diverso da quella richiesta
@@ -79,7 +79,10 @@
   (current (id_current ?id_state))
   (transport (id_state ?id_state)(id_transport ?id_trans)(transport_type Truck)(capacity ?capacity)
              (type_route Ground)(trans_goods_quantity ?tgq)(trans_goods_type ?tgt)(city ?id_city))
+  (city (id_state ?id_state)(id_city ?id_city)(requested_goods_quantity ?rgq )
+        (requested_goods_type ?rgt)(provided_goods_quantity ?pgq)(provided_goods_type ?pgt))
   (test (> ?tgq 0))
+  (test (neq ?rgt ?tgt))
 =>
   (focus MOVE)
 )

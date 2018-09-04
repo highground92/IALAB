@@ -1,14 +1,14 @@
 (defmodule NEXTTRUCK (import UPDATESTATE ?ALL) (export ?ALL))
 
 (defrule next-trans-done-load
-  ?tmp<-(load)
+  ?tmp<-(action(type load))
   ?t <- (next_truck(id_truck ?id_truck))
-  ?sp <- (state_planning(id_transport ?id_truck))
+  ;?sp <- (state_planning(id_transport ?id_truck))
   (test (< ?id_truck 5))
 =>
   (modify ?t (id_truck (+ ?id_truck 1)))
   (printout t "nuovo truck è: " (+ ?id_truck 1) crlf)
-  (retract ?sp)
+  ;(retract ?sp)
   (retract ?tmp)
   (pop-focus)
   (pop-focus)
@@ -16,14 +16,14 @@
 )
 
 (defrule next-trans-done-unload
-  ?tmp<-(unload)
+  ?tmp<-(action(type unload))
   ?t <- (next_truck(id_truck ?id_truck))
-  ?sp <- (state_planning(id_transport ?id_truck))
+  ;?sp <- (state_planning(id_transport ?id_truck))
   (test (< ?id_truck 5))
 =>
   (modify ?t (id_truck (+ ?id_truck 1)))
   (printout t "nuovo truck è: " (+ ?id_truck 1) crlf)
-  (retract ?sp)
+  ;(retract ?sp)
   (retract ?tmp)
   (pop-focus)
   (pop-focus)
@@ -32,14 +32,14 @@
 )
 
 (defrule next-trans-done-move
-  ?tmp<-(move)
+  ?tmp<-(action(type move))
   ?t <- (next_truck(id_truck ?id_truck))
-  ?sp <- (state_planning(id_transport ?id_truck))
+  ;?sp <- (state_planning(id_transport ?id_truck))
   (test (< ?id_truck 5))
 =>
   (modify ?t (id_truck (+ ?id_truck 1)))
   (printout t "nuovo truck è: " (+ ?id_truck 1) crlf)
-  (retract ?sp)
+  ;(retract ?sp)
   (retract ?tmp)
   (pop-focus)
   (pop-focus)
@@ -49,26 +49,29 @@
 )
 ;;;;;;;;;;
 (defrule next-trans-end-done-load
-  ?tmp<-(load)
+  ?tmp<-(action(type load))
   ?t <- (next_truck(id_truck ?id_truck))
-  ?sp <- (state_planning(id_transport ?id_truck))
+  ;?sp <- (state_planning(id_transport ?id_truck))
   (test (= ?id_truck 5))
 =>
+(printout t "SONO IN trans end load " crlf)
   (retract ?t)
-  (retract ?sp)
+  ;(retract ?sp)
   (retract ?tmp)
   (pop-focus)
   (pop-focus)
   (pop-focus)
 )
 (defrule next-trans-end-done-unload
-  ?tmp<-(unload)
+  ?tmp<-(action(type unload))
   ?t <- (next_truck(id_truck ?id_truck))
-  ?sp <- (state_planning(id_transport ?id_truck))
+  ;?sp <- (state_planning(id_transport ?id_truck))
   (test (= ?id_truck 5))
 =>
+(printout t "SONO IN trans end unload " crlf)
+
   (retract ?t)
-  (retract ?sp)
+  ;(retract ?sp)
   (retract ?tmp)
   (pop-focus)
   (pop-focus)
@@ -76,13 +79,15 @@
   (pop-focus)
 )
 (defrule next-trans-end-done-move
-  ?tmp<-(move)
+  ?tmp<-(action(type move))
   ?t <- (next_truck(id_truck ?id_truck))
-  ?sp <- (state_planning(id_transport ?id_truck))
+  ;?sp <- (state_planning(id_transport ?id_truck))
   (test (= ?id_truck 5))
 =>
+(printout t "SONO IN trans end move " crlf)
+
   (retract ?t)
-  (retract ?sp)
+  ;(retract ?sp)
   (retract ?tmp)
   (pop-focus)
   (pop-focus)
