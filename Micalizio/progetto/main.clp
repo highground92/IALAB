@@ -15,7 +15,7 @@
 
 (deftemplate current (slot id_current) (slot g_cost))
 
-(deftemplate next_truck (slot id_truck))
+(deftemplate next_trans (slot id_trans)(slot type_trans))
 
 (deftemplate state_planning (slot id_transport)(slot id_city )(slot f_cost)(slot h_cost)(slot g_cost)
                             (slot requested_goods_quantity)(slot requested_goods_type)
@@ -90,7 +90,7 @@
 (defrule start
   (current (id_current 0))
 =>
-  (focus EXPAND)
+  (focus NEWSTATE)
 )
 
 (defrule stampa-soluzione (declare (salience 50))

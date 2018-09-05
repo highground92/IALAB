@@ -1,5 +1,5 @@
 ;Modulo dedito a mantenere la persistenza delle informazioni dopo la decisione di muovere un trasporto (eventuale scarico/carico merci in città)
-(defmodule UPDATESTATE (import LOADTRANSPORT ?ALL)(import UNLOADTRANSPORT ?ALL)(import MOVE ?ALL) (export ?ALL))
+(defmodule UPDATESTATE (import LOAD ?ALL)(import UNLOAD ?ALL)(import MOVE ?ALL) (export ?ALL))
 
 (defrule update-state (declare(salience 10))
   (current (id_current ?current))
@@ -34,5 +34,5 @@
   (retract ?stateplanning)
   (printout t "In update " crlf)
 
-  (focus NEXTTRUCK)
+  (focus NEXTTRANSPORT)
 )

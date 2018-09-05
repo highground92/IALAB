@@ -1,4 +1,4 @@
-(defmodule EXPAND (import MAIN ?ALL) (export ?ALL))
+(defmodule NEWSTATE (import MAIN ?ALL) (export ?ALL))
 
 (defrule find_new_state
   ?current<-(current (id_current ?id_current_state))
@@ -82,16 +82,8 @@
   )
 
   (modify ?current(id_current (+ ?id_current_state 1)))
-  ;(focus EXPANDSHIP)
-  ;b) creazione stato aggiornato
-  ;c) retract di tutti gli state_planning
-  (assert (next_truck(id_truck 1)))
-  (printout t " ho fatto asserTttt di truck 1 " crlf)
-  (focus MAINEXPANDTRUCK)
-  ;b) creazione stato aggiornato
-  ;c) retract di tutti gli state_planning
-  ;(focus EXPANDPLANE)
-  ;b) creazione stato aggiornato
-  ;c) retract di tutti gli state_planning
+
+  (assert (next_trans(id_trans 1)(type_trans Ship)))
+  (focus MAINSHIP)
 
 )
