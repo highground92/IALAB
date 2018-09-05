@@ -1,0 +1,11 @@
+(clear)
+
+(load main.clp)
+(load expand.clp)
+(load mainexpandtruck.clp)
+(load loadtransport.clp)
+(load unloadtransport.clp)
+(load movetransport.clp)
+(load update.clp)
+(load nexttransport.clp)
+(reset)
