@@ -28,7 +28,7 @@
                  (type_route ?tr) (trans_goods_quantity ?goodsq)(trans_goods_type ?goodst)(city ?id_city))
 
   (modify ?city (id_state ?current)(id_city ?id_city)(requested_goods_quantity ?req_quantity)
-                (requested_goods_type ?req_quantity)(provided_goods_quantity ?prov_quantity)
+                (requested_goods_type ?req_type)(provided_goods_quantity ?prov_quantity)
                 (provided_goods_type ?prov_type))
 
   (retract ?stateplanning)

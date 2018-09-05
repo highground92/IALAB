@@ -94,6 +94,7 @@
                                  (g_cost ?gcostplanning)
                    )
   (test(= ?pgq 0))
+  (test(< (+ (* ?km 20) ?km) ?fcostplanning))
 =>
   (modify ?stateplanning (id_transport ?id_trans)(id_city ?arrival)
                          (requested_goods_quantity ?rgq)
@@ -164,6 +165,7 @@
                                  (f_cost ?fcostplanning)(h_cost ?hcostplanning)
                                  (g_cost ?gcostplanning)
                    )
+
   (test(> ?rgq 0))
   (test(> ?tgq 0))
   (test(< ?tgq ?rgq))
@@ -176,8 +178,8 @@
                          (provided_goods_quantity ?pgq)
                          (provided_goods_type ?pgt)
                          (trans_goods_quantity ?tgq)(trans_goods_type ?good_type)
-                         (f_cost (+ (/ ?km ?pgq) ?km))
-                         (h_cost (/ ?km ?pgq))(g_cost ?km)
+                         (f_cost (+ (/ ?km ?tgq) ?km))
+                         (h_cost (/ ?km ?tgq))(g_cost ?km)
   )
 
 )
@@ -219,13 +221,16 @@
 )
 
 
-(defrule default (declare (salience 5))
+(defrule default (declare(salience 5))
+  (next_truck(id_truck ?id))
 =>
 (printout t "DEFAULT!!!!!!!" crlf)
 (assert (action(type move)))
 
 (focus UPDATESTATE)
 )
+
+
 
 
 

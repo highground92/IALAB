@@ -83,6 +83,7 @@
   (city (id_state ?id_state)(id_city ?id_city)(requested_goods_quantity ?rgq )
         (requested_goods_type ?good_type)(provided_goods_quantity 0)(provided_goods_type NA))
 =>
+  (assert (action(type load)))
   (focus MOVE)
 )
 
@@ -94,5 +95,6 @@
              (type_route Ground)(trans_goods_quantity ?tgq)(trans_goods_type ?tgt)(city ?id_city))
   (test (> ?tgq 0))
 =>
+  (assert (action(type load)))
   (focus UNLOADTRANSPORT)
 )
