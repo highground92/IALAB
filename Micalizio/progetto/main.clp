@@ -129,7 +129,7 @@
 
 =>
   (printout t "∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞" crlf)
-  (printout t "STATO " ?id " f_cost " ?f_cost crlf)
+  (printout t "STATO " ?id " f_cost " ?f_cost  " h_cost " ?h_cost " g_cost " ?g_cost crlf)
   (printout t "trasporto 1 tipo " ?trans_type1 " goods " ?quantity1 " " ?g_type1 " citta " ?trans_city1 crlf)
   (printout t "trasporto 2 tipo " ?trans_type2 " goods " ?quantity2 " " ?g_type2 " citta " ?trans_city2 crlf)
   (printout t "trasporto 3 tipo " ?trans_type3 " goods " ?quantity3 " " ?g_type3 " citta " ?trans_city3 crlf)
@@ -182,7 +182,7 @@
         (provided_goods_type ?provided_t6))
 =>
   (printout t "∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞" crlf)
-  (printout t "STATO " ?id " f_cost " ?f_cost crlf)
+  (printout t "STATO " ?id " g_cost " ?g_cost crlf)
   (printout t "trasporto 1 tipo " ?trans_type1 " goods " ?quantity1 " " ?g_type1 " citta " ?trans_city1  crlf)
   (printout t "trasporto 2 tipo " ?trans_type2 " goods " ?quantity2 " " ?g_type2 " citta " ?trans_city2  crlf)
   (printout t "trasporto 3 tipo " ?trans_type3 " goods " ?quantity3 " " ?g_type3 " citta " ?trans_city3  crlf)

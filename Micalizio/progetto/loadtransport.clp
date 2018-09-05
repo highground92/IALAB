@@ -95,6 +95,5 @@
              (type_route Ground)(trans_goods_quantity ?tgq)(trans_goods_type ?tgt)(city ?id_city))
   (test (> ?tgq 0))
 =>
-  (assert (action(type load)))
   (focus UNLOADTRANSPORT)
 )

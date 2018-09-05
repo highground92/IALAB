@@ -3,7 +3,7 @@
 
 (defrule update-state (declare(salience 10))
   (current (id_current ?current))
-  ?new_state <- (state(id_state ?current)(g_cost ?old_g_cost))
+  ?new_state <- (state(id_state ?current)(g_cost ?old_g_cost)(f_cost ?old_f_cost)(h_cost ?old_h_cost))
   ?trans<-(transport (id_state ?current)(id_transport ?id_trans)(transport_type ?tt)
                      (capacity ?capacity)(type_route ?tr)(trans_goods_quantity ?tgq)
                      (trans_goods_type ?tgt)(city ?id_city_t))
@@ -21,7 +21,7 @@
                                  (g_cost ?gcostplanning)
                   )
 =>
-  (modify ?new_state (f_cost ?fcostplanning)(h_cost ?hcostplanning)
+  (modify ?new_state (f_cost (+ ?old_f_cost ?fcostplanning))(h_cost (+ ?old_h_cost ?hcostplanning))
                      (g_cost (+ ?old_g_cost ?gcostplanning)))
 
   (modify ?trans (id_state ?current)(id_transport ?id_trans)(transport_type ?tt)(capacity ?capacity)

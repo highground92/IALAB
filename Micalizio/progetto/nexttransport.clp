@@ -49,7 +49,6 @@
   (pop-focus)
 )
 (defrule next-trans-done-move-2
-  ?tmp1<-(action(type load))
   ?tmp2<-(action(type unload))
   ?tmp3<-(action(type move))
   ?t <- (next_truck(id_truck ?id_truck))
@@ -59,7 +58,6 @@
   (modify ?t (id_truck (+ ?id_truck 1)))
   (printout t "nuovo truck è: " (+ ?id_truck 1) crlf)
   ;(retract ?sp)
-  (retract ?tmp1)
   (retract ?tmp2)
   (retract ?tmp3)
   (pop-focus)
@@ -82,6 +80,7 @@
   (pop-focus)
   (pop-focus)
   (pop-focus)
+  (pop-focus)
 )
 (defrule next-trans-end-done-unload
   ?tmp<-(action(type unload))
@@ -94,6 +93,7 @@
   (retract ?t)
   ;(retract ?sp)
   (retract ?tmp)
+  (pop-focus)
   (pop-focus)
   (pop-focus)
   (pop-focus)
@@ -119,7 +119,6 @@
   (pop-focus)
 )
 (defrule next-trans-end-done-move-2
-  ?tmp1<-(action(type load))
   ?tmp2<-(action(type unload))
   ?tmp3<-(action(type move))
   ?t <- (next_truck(id_truck ?id_truck))
@@ -130,7 +129,6 @@
 
   (retract ?t)
   ;(retract ?sp)
-  (retract ?tmp1)
   (retract ?tmp2)
   (retract ?tmp3)
   (pop-focus)

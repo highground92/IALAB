@@ -204,6 +204,7 @@
                                  (g_cost ?gcostplanning)
                    )
   (test(> ?tgq 0))
+  (test(neq ?tgt ?rgt))
   (test(< (+ (* ?km 20) ?km) ?fcostplanning))
 
 =>
