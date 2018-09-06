@@ -11,7 +11,7 @@
   ?city<-(city (id_state ?current)(id_city ?id_city)(requested_goods_quantity ?rgq)
                (requested_goods_type ?good_type)(provided_goods_quantity ?pgq)(provided_goods_type ?pgt))
 
-  ?stateplanning<-(state_planning(id_transport ?id_trans)(id_city ?id_city)
+  ?stateplanning<-(state_planning(id_transport ?id_trans)(transport_type ?tt)(id_city ?id_city)
                                  (requested_goods_quantity ?req_quantity)
                                  (requested_goods_type ?req_type)
                                  (provided_goods_quantity ?prov_quantity)

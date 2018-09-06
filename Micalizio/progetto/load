@@ -2,9 +2,7 @@
 
 (load main.clp)
 (load newstate.clp)
-(load mainship.clp)
-(load mainplane.clp)
-(load maintruck.clp)
+(load maintransport.clp)
 (load loadtransport.clp)
 (load unloadtransport.clp)
 (load movetransport.clp)

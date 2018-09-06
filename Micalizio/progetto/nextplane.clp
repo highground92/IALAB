@@ -6,7 +6,6 @@
   (test (< ?id_plane 2))
 =>
   (modify ?t (id_trans (+ ?id_plane 1)))
-  (printout t "nuovo truck è: " (+ ?id_plane 1) crlf)
   (retract ?tmp)
   (pop-focus)
   (pop-focus)
@@ -19,7 +18,6 @@
   (test (< ?id_plane 2))
 =>
   (modify ?t (id_trans (+ ?id_plane 1)))
-  (printout t "nuovo truck è: " (+ ?id_plane 1) crlf)
   (retract ?tmp)
   (pop-focus)
   (pop-focus)
@@ -34,7 +32,6 @@
   (test (< ?id_plane 2))
 =>
   (modify ?t (id_trans (+ ?id_plane 1)))
-  (printout t "nuovo truck è: " (+ ?id_plane 1) crlf)
   (retract ?tmp1)
   (retract ?tmp2)
   (pop-focus)
@@ -49,7 +46,6 @@
   (test (< ?id_plane 2))
 =>
   (modify ?t (id_trans (+ ?id_plane 1)))
-  (printout t "nuovo truck è: " (+ ?id_plane 1) crlf)
   (retract ?tmp2)
   (retract ?tmp3)
   (pop-focus)
@@ -67,6 +63,7 @@
 (printout t "SONO IN trans end load " crlf)
   (retract ?t)
   (retract ?tmp)
+  (assert (next_trans(id_trans 1) (type_trans Truck)))
   (pop-focus)
   (pop-focus)
   (pop-focus)
@@ -81,6 +78,7 @@
 
   (retract ?t)
   (retract ?tmp)
+  (assert (next_trans(id_trans 1) (type_trans Truck)))
   (pop-focus)
   (pop-focus)
   (pop-focus)
@@ -98,6 +96,7 @@
   (retract ?t)
   (retract ?tmp1)
   (retract ?tmp2)
+  (assert (next_trans(id_trans 1) (type_trans Truck)))
   (pop-focus)
   (pop-focus)
   (pop-focus)
@@ -115,6 +114,7 @@
   (retract ?t)
   (retract ?tmp2)
   (retract ?tmp3)
+  (assert (next_trans(id_trans 1) (type_trans Truck)))
   (pop-focus)
   (pop-focus)
   (pop-focus)

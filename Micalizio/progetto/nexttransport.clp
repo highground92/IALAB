@@ -6,14 +6,14 @@
   (focus NEXTTRUCK)
 )
 
-(defrule next-trans-truck
+(defrule next-trans-ship
   (next_trans(id_trans ?id_ship)(type_trans Ship))
 =>
   (focus NEXTSHIP)
 )
 
-; (defrule next-trans-truck
-;   (next_trans(id_trans ?id_plane)(type_trans Plane))
-; =>
-;   (focus NEXTPLANE)
-; )
+(defrule next-trans-plane
+   (next_trans(id_trans ?id_plane)(type_trans Plane))
+ =>
+   (focus NEXTPLANE)
+)

@@ -9,7 +9,7 @@
   (city (id_state ?id_state)(id_city ?id_city)(requested_goods_quantity ?rgq )
         (requested_goods_type ?good_type)(provided_goods_quantity ?pgq)(provided_goods_type ?pgt))
 
-  ?stateplanning<-(state_planning(id_transport ?id_trans)(id_city ?id_city_arrival)
+  ?stateplanning<-(state_planning(id_transport ?id_trans)(transport_type ?tt)(id_city ?id_city_arrival)
                                  (requested_goods_quantity ?req_quantity)
                                  (requested_goods_type ?req_type)
                                  (provided_goods_quantity ?prov_quantity)
@@ -23,7 +23,7 @@
   (test(> ?rgq ?tgq))
   (test (< (* (- 12 ?tgq) 10) ?fcostplanning))
 =>
-  (modify ?stateplanning (id_transport ?id_trans)(id_city ?id_city)
+  (modify ?stateplanning (id_transport ?id_trans)(transport_type ?tt)(id_city ?id_city)
                          (requested_goods_quantity (- ?rgq ?tgq))
                          (requested_goods_type ?good_type)
                          (provided_goods_quantity ?pgq)
@@ -45,7 +45,7 @@
   (city (id_state ?id_state)(id_city ?id_city)(requested_goods_quantity ?rgq )
         (requested_goods_type ?good_type)(provided_goods_quantity ?pgq)(provided_goods_type ?pgt))
 
-  ?stateplanning<-(state_planning(id_transport ?id_trans)(id_city ?id_city_arrival)
+  ?stateplanning<-(state_planning(id_transport ?id_trans)(transport_type ?tt)(id_city ?id_city_arrival)
                                  (requested_goods_quantity ?req_quantity)
                                  (requested_goods_type ?req_type)
                                  (provided_goods_quantity ?prov_quantity)
@@ -60,7 +60,7 @@
   (test (< (* (- 12 ?tgq) 10) ?fcostplanning))
 
 =>
-  (modify ?stateplanning (id_transport ?id_trans)(id_city ?id_city)
+  (modify ?stateplanning (id_transport ?id_trans)(transport_type ?tt)(id_city ?id_city)
                          (requested_goods_quantity 0)
                          (requested_goods_type NA)
                          (provided_goods_quantity ?pgq)
@@ -80,7 +80,7 @@
   (city (id_state ?id_state)(id_city ?id_city)(requested_goods_quantity ?rgq )
         (requested_goods_type ?good_type)(provided_goods_quantity ?pgq)(provided_goods_type ?pgt))
 
-  ?stateplanning<-(state_planning(id_transport ?id_trans)(id_city ?id_city_arrival)
+  ?stateplanning<-(state_planning(id_transport ?id_trans)(transport_type ?tt)(id_city ?id_city_arrival)
                                  (requested_goods_quantity ?req_quantity)
                                  (requested_goods_type ?req_type)
                                  (provided_goods_quantity ?prov_quantity)
@@ -95,7 +95,7 @@
   (test (< (* (- 12 ?tgq) 10) ?fcostplanning))
 
 =>
-  (modify ?stateplanning (id_transport ?id_trans)(id_city ?id_city)
+  (modify ?stateplanning (id_transport ?id_trans)(transport_type ?tt)(id_city ?id_city)
                          (requested_goods_quantity 0)
                          (requested_goods_type NA)
                          (provided_goods_quantity ?pgq)

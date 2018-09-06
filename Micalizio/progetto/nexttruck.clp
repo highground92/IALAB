@@ -6,7 +6,6 @@
   (test (< ?id_truck 5))
 =>
   (modify ?t (id_trans (+ ?id_truck 1)))
-  (printout t "nuovo truck è: " (+ ?id_truck 1) crlf)
   (retract ?tmp)
   (pop-focus)
   (pop-focus)
@@ -19,7 +18,6 @@
   (test (< ?id_truck 5))
 =>
   (modify ?t (id_trans (+ ?id_truck 1)))
-  (printout t "nuovo truck è: " (+ ?id_truck 1) crlf)
   (retract ?tmp)
   (pop-focus)
   (pop-focus)
@@ -34,7 +32,6 @@
   (test (< ?id_truck 5))
 =>
   (modify ?t (id_trans (+ ?id_truck 1)))
-  (printout t "nuovo truck è: " (+ ?id_truck 1) crlf)
   (retract ?tmp1)
   (retract ?tmp2)
   (pop-focus)
@@ -49,7 +46,6 @@
   (test (< ?id_truck 5))
 =>
   (modify ?t (id_trans (+ ?id_truck 1)))
-  (printout t "nuovo truck è: " (+ ?id_truck 1) crlf)
   (retract ?tmp2)
   (retract ?tmp3)
   (pop-focus)
