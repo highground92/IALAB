@@ -39,12 +39,12 @@
         (route (departure Milano) (arrival Torino)  (km 138) (type_route Ground))
         (route (departure Milano) (arrival Bologna) (km 206) (type_route Ground))
         (route (departure Milano) (arrival Venezia) (km 276) (type_route Ground))
-        (route (departure Milano) (arrival Napoli)  (km 764) (type_route Ground))
-        (route (departure Milano) (arrival Bari)    (km 711) (type_route Ground))
+        (route (departure Milano) (arrival Napoli)  (km 764) (type_route Air))
+        (route (departure Milano) (arrival Bari)    (km 711) (type_route Air))
 
         (route (departure Genova) (arrival Firenze) (km 230) (type_route Ground))
         (route (departure Genova) (arrival Torino)  (km 170) (type_route Ground))
-        (route (departure Genova) (arrival Palermo) (km 1412) (type_route Ground))
+        (route (departure Genova) (arrival Palermo) (km 1412) (type_route Sea))
 
         (route (departure Firenze) (arrival Genova) (km 230) (type_route Ground))
         (route (departure Firenze) (arrival Bologna)(km 101) (type_route Ground))

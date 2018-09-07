@@ -10,6 +10,7 @@
   (pop-focus)
   (pop-focus)
   (pop-focus)
+  (pop-focus)
 )
 
 (defrule next-trans-done-unload
@@ -19,6 +20,7 @@
 =>
   (modify ?t (id_trans (+ ?id_plane 1)))
   (retract ?tmp)
+  (pop-focus)
   (pop-focus)
   (pop-focus)
   (pop-focus)
@@ -38,6 +40,7 @@
   (pop-focus)
   (pop-focus)
   (pop-focus)
+  (pop-focus)
 )
 (defrule next-trans-done-move-2
   ?tmp2<-(action(type unload))
@@ -48,6 +51,7 @@
   (modify ?t (id_trans (+ ?id_plane 1)))
   (retract ?tmp2)
   (retract ?tmp3)
+  (pop-focus)
   (pop-focus)
   (pop-focus)
   (pop-focus)
