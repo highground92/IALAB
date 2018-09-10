@@ -6,6 +6,8 @@
 (load loadtransport.clp)
 (load unloadtransport.clp)
 (load movetransport.clp)
+(load newdestination.clp)
+(load astar.clp)
 (load update.clp)
 (load nexttransport.clp)
 (load nextship.clp)
