@@ -1,15 +1,34 @@
-(defmodule LOADTRANSPORT (import MAINEXPANDTRUCK ?ALL)(export ?ALL))
+(defmodule LOAD (import MAINTRANSPORT ?ALL)(export ?ALL))
+
+
+;Decido di non caricare se non potrò scaricare in futuro (navi e aerei)
+(defrule no-load (declare (salience 110))
+  (next_trans(id_trans ?id_trans)(type_trans ?tt))
+  (current (id_current ?id_state))
+  (transport (id_state ?id_state)(id_transport ?id_trans)(transport_type ?tt)(capacity ?capacity)
+             (type_route ?tr)(trans_goods_quantity 0)(trans_goods_type NA)(city ?id_city))
+  (route(departure ?id_city)(arrival ?arrival)(km ?km)(type_route ?tr))
+  (city (id_state ?id_state)(id_city ?id_city)(requested_goods_quantity ?rgq1 )
+        (requested_goods_type ?good_type1)(provided_goods_quantity ?pgq1)(provided_goods_type ?pgt1))
+  (city (id_state ?id_state)(id_city ?arrival)(requested_goods_quantity ?rgq2 )
+        (requested_goods_type ?good_type2)(provided_goods_quantity ?pgq2)(provided_goods_type ?pgt2))
+  (test (neq ?tt Truck))
+  (test (neq ?pgt1 ?good_type2))
+=>
+  (assert (action(type load)))
+  (focus MOVE)
+)
 
 ; Ho il mezzo scarico e la città mi può rifornire per tutta la mia capacità
 (defrule load-transport-pos (declare (salience 100))
-  (next_truck(id_truck ?id_trans))
+  (next_trans(id_trans ?id_trans)(type_trans ?tt))
   (current (id_current ?id_state))
-  (transport (id_state ?id_state)(id_transport ?id_trans)(transport_type Truck)(capacity ?capacity)
-             (type_route Ground)(trans_goods_quantity 0)(trans_goods_type NA)(city ?id_city))
+  (transport (id_state ?id_state)(id_transport ?id_trans)(transport_type ?tt)(capacity ?capacity)
+             (type_route ?tr)(trans_goods_quantity 0)(trans_goods_type NA)(city ?id_city))
   (city (id_state ?id_state)(id_city ?id_city)(requested_goods_quantity ?rgq )
         (requested_goods_type ?good_type)(provided_goods_quantity ?pgq)(provided_goods_type ?pgt))
 
-  ?stateplanning<-(state_planning(id_transport ?id_trans)(id_city ?id_city_arrival)
+  ?stateplanning<-(state_planning(id_transport ?id_trans)(transport_type ?tt)(id_city ?id_city_arrival)
                                  (requested_goods_quantity ?req_quantity)
                                  (requested_goods_type ?req_type)
                                  (provided_goods_quantity ?prov_quantity)
@@ -22,7 +41,7 @@
   (test(> ?pgq ?capacity))
   (test (< (* (- 12 ?capacity) 10) ?fcostplanning))
 =>
-  (modify ?stateplanning (id_transport ?id_trans)(id_city ?id_city)
+  (modify ?stateplanning (id_transport ?id_trans)(transport_type ?tt)(id_city ?id_city)
                          (requested_goods_quantity ?rgq)
                          (requested_goods_type ?good_type)
                          (provided_goods_quantity (- ?pgq ?capacity))
@@ -38,14 +57,14 @@
 
 ; Ho il mezzo scarico e la città mi può rifornire con beni <= alla capacità del mezzo
 (defrule load-transport-neg-eq (declare (salience 100))
-  (next_truck(id_truck ?id_trans))
+  (next_trans(id_trans ?id_trans)(type_trans ?tt))
   (current (id_current ?id_state))
-  (transport (id_state ?id_state)(id_transport ?id_trans)(transport_type Truck)(capacity ?capacity)
-             (type_route Ground)(trans_goods_quantity 0)(trans_goods_type NA)(city ?id_city))
+  (transport (id_state ?id_state)(id_transport ?id_trans)(transport_type ?tt)(capacity ?capacity)
+             (type_route ?tr)(trans_goods_quantity 0)(trans_goods_type NA)(city ?id_city))
   (city (id_state ?id_state)(id_city ?id_city)(requested_goods_quantity ?rgq )
         (requested_goods_type ?good_type)(provided_goods_quantity ?pgq)(provided_goods_type ?pgt))
 
-  ?stateplanning<-(state_planning(id_transport ?id_trans)(id_city ?id_city_arrival)
+  ?stateplanning<-(state_planning(id_transport ?id_trans)(transport_type ?tt)(id_city ?id_city_arrival)
                                  (requested_goods_quantity ?req_quantity)
                                  (requested_goods_type ?req_type)
                                  (provided_goods_quantity ?prov_quantity)
@@ -59,7 +78,7 @@
   (test (< (* (- 12 ?pgq) 10) ?fcostplanning))
 
 =>
-  (modify ?stateplanning (id_transport ?id_trans)(id_city ?id_city)
+  (modify ?stateplanning (id_transport ?id_trans)(transport_type ?tt)(id_city ?id_city)
                          (requested_goods_quantity ?rgq)
                          (requested_goods_type ?good_type)
                          (provided_goods_quantity 0)
@@ -76,10 +95,10 @@
 
 ; Ho il mezzo scarico e mi trovo in una città che non mi può rifornire
 (defrule load-transport-zero (declare (salience 80))
-  (next_truck(id_truck ?id_trans))
+  (next_trans(id_trans ?id_trans)(type_trans ?tt))
   (current (id_current ?id_state))
-  (transport (id_state ?id_state)(id_transport ?id_trans)(transport_type Truck)(capacity ?capacity)
-             (type_route Ground)(trans_goods_quantity 0)(trans_goods_type NA)(city ?id_city))
+  (transport (id_state ?id_state)(id_transport ?id_trans)(transport_type ?tt)(capacity ?capacity)
+             (type_route ?tr)(trans_goods_quantity 0)(trans_goods_type NA)(city ?id_city))
   (city (id_state ?id_state)(id_city ?id_city)(requested_goods_quantity ?rgq )
         (requested_goods_type ?good_type)(provided_goods_quantity 0)(provided_goods_type NA))
 =>
@@ -89,11 +108,11 @@
 
 ; Trasporto già caricato quindi non può fare la load(vado in unload)
 (defrule load-transport-no-possible (declare (salience 90))
-  (next_truck(id_truck ?id_trans))
+  (next_trans(id_trans ?id_trans)(type_trans ?tt))
   (current (id_current ?id_state))
-  (transport (id_state ?id_state)(id_transport ?id_trans)(transport_type Truck)(capacity ?capacity)
-             (type_route Ground)(trans_goods_quantity ?tgq)(trans_goods_type ?tgt)(city ?id_city))
+  (transport (id_state ?id_state)(id_transport ?id_trans)(transport_type ?tt)(capacity ?capacity)
+             (type_route ?tr)(trans_goods_quantity ?tgq)(trans_goods_type ?tgt)(city ?id_city))
   (test (> ?tgq 0))
 =>
-  (focus UNLOADTRANSPORT)
+  (focus UNLOAD)
 )

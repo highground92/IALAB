@@ -1,5 +1,5 @@
 ;Modulo dedito a mantenere la persistenza delle informazioni dopo la decisione di muovere un trasporto (eventuale scarico/carico merci in città)
-(defmodule UPDATESTATE (import LOADTRANSPORT ?ALL)(import UNLOADTRANSPORT ?ALL)(import MOVE ?ALL) (export ?ALL))
+(defmodule UPDATESTATE (import LOAD ?ALL)(import UNLOAD ?ALL)(import MOVE ?ALL) (export ?ALL))
 
 (defrule update-state (declare(salience 10))
   (current (id_current ?current))
@@ -11,7 +11,7 @@
   ?city<-(city (id_state ?current)(id_city ?id_city)(requested_goods_quantity ?rgq)
                (requested_goods_type ?good_type)(provided_goods_quantity ?pgq)(provided_goods_type ?pgt))
 
-  ?stateplanning<-(state_planning(id_transport ?id_trans)(id_city ?id_city)
+  ?stateplanning<-(state_planning(id_transport ?id_trans)(transport_type ?tt)(id_city ?id_city)
                                  (requested_goods_quantity ?req_quantity)
                                  (requested_goods_type ?req_type)
                                  (provided_goods_quantity ?prov_quantity)
@@ -34,5 +34,5 @@
   (retract ?stateplanning)
   (printout t "In update " crlf)
 
-  (focus NEXTTRUCK)
+  (focus NEXTTRANSPORT)
 )

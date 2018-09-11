@@ -1,15 +1,15 @@
-(defmodule UNLOADTRANSPORT (import LOADTRANSPORT ?ALL)(export ?ALL))
+(defmodule UNLOAD (import LOAD ?ALL)(export ?ALL))
 
 ; Ho il mezzo scarico e la città mi può rifornire per tutta la mia capacità
 (defrule unload-transport-pos (declare (salience 100))
-  (next_truck(id_truck ?id_trans))
+  (next_trans(id_trans ?id_trans)(type_trans ?tt))
   (current (id_current ?id_state))
-  (transport (id_state ?id_state)(id_transport ?id_trans)(transport_type Truck)(capacity ?capacity)
-             (type_route Ground)(trans_goods_quantity ?tgq)(trans_goods_type ?good_type)(city ?id_city))
+  (transport (id_state ?id_state)(id_transport ?id_trans)(transport_type ?tt)(capacity ?capacity)
+             (type_route ?tr)(trans_goods_quantity ?tgq)(trans_goods_type ?good_type)(city ?id_city))
   (city (id_state ?id_state)(id_city ?id_city)(requested_goods_quantity ?rgq )
         (requested_goods_type ?good_type)(provided_goods_quantity ?pgq)(provided_goods_type ?pgt))
 
-  ?stateplanning<-(state_planning(id_transport ?id_trans)(id_city ?id_city_arrival)
+  ?stateplanning<-(state_planning(id_transport ?id_trans)(transport_type ?tt)(id_city ?id_city_arrival)
                                  (requested_goods_quantity ?req_quantity)
                                  (requested_goods_type ?req_type)
                                  (provided_goods_quantity ?prov_quantity)
@@ -23,7 +23,7 @@
   (test(> ?rgq ?tgq))
   (test (< (* (- 12 ?tgq) 10) ?fcostplanning))
 =>
-  (modify ?stateplanning (id_transport ?id_trans)(id_city ?id_city)
+  (modify ?stateplanning (id_transport ?id_trans)(transport_type ?tt)(id_city ?id_city)
                          (requested_goods_quantity (- ?rgq ?tgq))
                          (requested_goods_type ?good_type)
                          (provided_goods_quantity ?pgq)
@@ -38,14 +38,14 @@
 
 ; Ho il mezzo scarico e la città mi può rifornire con beni <= alla capacità del mezzo
 (defrule unload-transport-neg (declare (salience 100))
-  (next_truck(id_truck ?id_trans))
+  (next_trans(id_trans ?id_trans)(type_trans ?tt))
   (current (id_current ?id_state))
-  (transport (id_state ?id_state)(id_transport ?id_trans)(transport_type Truck)(capacity ?capacity)
-             (type_route Ground)(trans_goods_quantity ?tgq)(trans_goods_type ?good_type)(city ?id_city))
+  (transport (id_state ?id_state)(id_transport ?id_trans)(transport_type ?tt)(capacity ?capacity)
+             (type_route ?tr)(trans_goods_quantity ?tgq)(trans_goods_type ?good_type)(city ?id_city))
   (city (id_state ?id_state)(id_city ?id_city)(requested_goods_quantity ?rgq )
         (requested_goods_type ?good_type)(provided_goods_quantity ?pgq)(provided_goods_type ?pgt))
 
-  ?stateplanning<-(state_planning(id_transport ?id_trans)(id_city ?id_city_arrival)
+  ?stateplanning<-(state_planning(id_transport ?id_trans)(transport_type ?tt)(id_city ?id_city_arrival)
                                  (requested_goods_quantity ?req_quantity)
                                  (requested_goods_type ?req_type)
                                  (provided_goods_quantity ?prov_quantity)
@@ -60,7 +60,7 @@
   (test (< (* (- 12 ?tgq) 10) ?fcostplanning))
 
 =>
-  (modify ?stateplanning (id_transport ?id_trans)(id_city ?id_city)
+  (modify ?stateplanning (id_transport ?id_trans)(transport_type ?tt)(id_city ?id_city)
                          (requested_goods_quantity 0)
                          (requested_goods_type NA)
                          (provided_goods_quantity ?pgq)
@@ -73,14 +73,14 @@
   (focus UPDATESTATE)
 )
 (defrule unload-transport-eq (declare (salience 100))
-  (next_truck(id_truck ?id_trans))
+  (next_trans(id_trans ?id_trans)(type_trans ?tt))
   (current (id_current ?id_state))
-  (transport (id_state ?id_state)(id_transport ?id_trans)(transport_type Truck)(capacity ?capacity)
-             (type_route Ground)(trans_goods_quantity ?tgq)(trans_goods_type ?good_type)(city ?id_city))
+  (transport (id_state ?id_state)(id_transport ?id_trans)(transport_type ?tt)(capacity ?capacity)
+             (type_route ?tr)(trans_goods_quantity ?tgq)(trans_goods_type ?good_type)(city ?id_city))
   (city (id_state ?id_state)(id_city ?id_city)(requested_goods_quantity ?rgq )
         (requested_goods_type ?good_type)(provided_goods_quantity ?pgq)(provided_goods_type ?pgt))
 
-  ?stateplanning<-(state_planning(id_transport ?id_trans)(id_city ?id_city_arrival)
+  ?stateplanning<-(state_planning(id_transport ?id_trans)(transport_type ?tt)(id_city ?id_city_arrival)
                                  (requested_goods_quantity ?req_quantity)
                                  (requested_goods_type ?req_type)
                                  (provided_goods_quantity ?prov_quantity)
@@ -95,7 +95,7 @@
   (test (< (* (- 12 ?tgq) 10) ?fcostplanning))
 
 =>
-  (modify ?stateplanning (id_transport ?id_trans)(id_city ?id_city)
+  (modify ?stateplanning (id_transport ?id_trans)(transport_type ?tt)(id_city ?id_city)
                          (requested_goods_quantity 0)
                          (requested_goods_type NA)
                          (provided_goods_quantity ?pgq)
@@ -110,10 +110,10 @@
 
 ; Trasporto carico ma tipo di merce diverso da quella richiesta
 (defrule unload-transport-no-possible (declare (salience 90))
-  (next_truck(id_truck ?id_trans))
+  (next_trans(id_trans ?id_trans)(type_trans ?tt))
   (current (id_current ?id_state))
-  (transport (id_state ?id_state)(id_transport ?id_trans)(transport_type Truck)(capacity ?capacity)
-             (type_route Ground)(trans_goods_quantity ?tgq)(trans_goods_type ?tgt)(city ?id_city))
+  (transport (id_state ?id_state)(id_transport ?id_trans)(transport_type ?tt)(capacity ?capacity)
+             (type_route ?tr)(trans_goods_quantity ?tgq)(trans_goods_type ?tgt)(city ?id_city))
   (city (id_state ?id_state)(id_city ?id_city)(requested_goods_quantity ?rgq )
         (requested_goods_type ?rgt)(provided_goods_quantity ?pgq)(provided_goods_type ?pgt))
   (test (> ?tgq 0))

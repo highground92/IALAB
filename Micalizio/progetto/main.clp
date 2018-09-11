@@ -15,14 +15,16 @@
 
 (deftemplate current (slot id_current) (slot g_cost))
 
-(deftemplate next_truck (slot id_truck))
+(deftemplate next_trans (slot id_trans)(slot type_trans))
 
-(deftemplate state_planning (slot id_transport)(slot id_city )(slot f_cost)(slot h_cost)(slot g_cost)
+(deftemplate state_planning (slot id_transport)(slot transport_type)(slot id_city )(slot f_cost)(slot h_cost)(slot g_cost)
                             (slot requested_goods_quantity)(slot requested_goods_type)
                             (slot provided_goods_quantity)(slot provided_goods_type)
                             (slot trans_goods_quantity)(slot trans_goods_type))
 
 (deftemplate move_planning (slot id_city_arrival)(slot f_cost)(slot h_cost)(slot g_cost)(slot father))
+
+(deftemplate new-destination (slot id_city)(slot distance))
 
 (deftemplate action (slot type))
 
@@ -31,26 +33,137 @@
 ;(transport(goods_quantity $?prev ?q $?aft)) Esempio
 (deffacts domain
 
-        (route (departure Torino) (arrival Milano) (km 138) (type_route Ground))
-        (route (departure Torino) (arrival Genova) (km 170) (type_route Ground))
+        (route (departure Torino) (arrival Milano)  (km 138) (type_route Ground))
+        (route (departure Torino) (arrival Genova)  (km 170) (type_route Ground))
+        (route (departure Torino) (arrival Roma)    (km 669) (type_route Air))
+        (route (departure Torino) (arrival Palermo) (km 1596) (type_route Air))
 
-        (route (departure Milano) (arrival Torino) (km 138) (type_route Ground))
+        (route (departure Torino) (arrival Venezia) (km 405) (type_route NA))
+        (route (departure Torino) (arrival Bologna) (km 327) (type_route NA))
+        (route (departure Torino) (arrival Firenze) (km 400) (type_route NA))
+        (route (departure Torino) (arrival Napoli)  (km 869) (type_route NA))
+        (route (departure Torino) (arrival Bari)    (km 998) (type_route NA))
+        (route (departure Torino) (arrival Reggio)  (km 1312) (type_route NA))
+
+        (route (departure Milano) (arrival Torino)  (km 138) (type_route Ground))
         (route (departure Milano) (arrival Bologna) (km 206) (type_route Ground))
         (route (departure Milano) (arrival Venezia) (km 276) (type_route Ground))
+        (route (departure Milano) (arrival Napoli)  (km 764) (type_route Air))
+        (route (departure Milano) (arrival Bari)    (km 711) (type_route Air))
+
+        (route (departure Milano) (arrival Genova)  (km 253) (type_route NA))
+        (route (departure Milano) (arrival Firenze) (km 295) (type_route NA))
+        (route (departure Milano) (arrival Roma)    (km 564) (type_route NA))
+        (route (departure Milano) (arrival Reggio)  (km 1208) (type_route NA))
+        (route (departure Milano) (arrival Palermo) (km 1476) (type_route NA))
 
         (route (departure Genova) (arrival Firenze) (km 230) (type_route Ground))
-        (route (departure Genova) (arrival Torino) (km 170) (type_route Ground))
+        (route (departure Genova) (arrival Torino)  (km 170) (type_route Ground))
+        (route (departure Genova) (arrival Palermo) (km 1412) (type_route Sea))
+
+        (route (departure Genova) (arrival Milano)  (km 253) (type_route NA))
+        (route (departure Genova) (arrival Bologna) (km 393) (type_route NA))
+        (route (departure Genova) (arrival Venezia) (km 402) (type_route NA))
+        (route (departure Genova) (arrival Roma)    (km 507) (type_route NA))
+        (route (departure Genova) (arrival Napoli)  (km 707) (type_route NA))
+        (route (departure Genova) (arrival Bari)    (km 407) (type_route NA))
+        (route (departure Genova) (arrival Reggio)  (km 1150) (type_route NA))
 
         (route (departure Firenze) (arrival Genova) (km 230) (type_route Ground))
-        (route (departure Firenze) (arrival Bologna) (km 101) (type_route Ground))
+        (route (departure Firenze) (arrival Bologna)(km 101) (type_route Ground))
+        (route (departure Firenze) (arrival Roma)   (km 268) (type_route Ground))
+
+        (route (departure Firenze) (arrival Torino)  (km 400) (type_route NA))
+        (route (departure Firenze) (arrival Milano)  (km 295) (type_route NA))
+        (route (departure Firenze) (arrival Venezia) (km 258) (type_route NA))
+        (route (departure Firenze) (arrival Napoli)  (km 468) (type_route NA))
+        (route (departure Firenze) (arrival Bari)    (km 662) (type_route NA))
+        (route (departure Firenze) (arrival Reggio)  (km 912) (type_route NA))
+        (route (departure Firenze) (arrival Palermo) (km 1185) (type_route NA))
 
         (route (departure Bologna) (arrival Firenze) (km 101) (type_route Ground))
         (route (departure Bologna) (arrival Venezia) (km 158) (type_route Ground))
-        (route (departure Bologna) (arrival Milano) (km 206) (type_route Ground))
+        (route (departure Bologna) (arrival Milano)  (km 206) (type_route Ground))
 
-        (route (departure Venezia) (arrival Milano) (km 276) (type_route Ground))
+        (route (departure Bologna) (arrival Torino) (km 327) (type_route NA))
+        (route (departure Bologna) (arrival Genova) (km 393) (type_route NA))
+        (route (departure Bologna) (arrival Roma)   (km 370) (type_route NA))
+        (route (departure Bologna) (arrival Napoli) (km 570) (type_route NA))
+        (route (departure Bologna) (arrival Bari)   (km 1026) (type_route NA))
+        (route (departure Bologna) (arrival Reggio) (km 1014) (type_route NA))
+        (route (departure Bologna) (arrival Palermo)(km 1288) (type_route NA))
+
+        (route (departure Venezia) (arrival Milano)  (km 276) (type_route Ground))
         (route (departure Venezia) (arrival Bologna) (km 158) (type_route Ground))
+        (route (departure Venezia) (arrival Bari)    (km 754) (type_route Sea))
 
+        (route (departure Venezia) (arrival Torino)  (km 405) (type_route NA))
+        (route (departure Venezia) (arrival Genova)  (km 402) (type_route NA))
+        (route (departure Venezia) (arrival Firenze) (km 258) (type_route NA))
+        (route (departure Venezia) (arrival Roma)    (km 527) (type_route NA))
+        (route (departure Venezia) (arrival Napoli)  (km 727) (type_route NA))
+        (route (departure Venezia) (arrival Reggio)  (km 1171) (type_route NA))
+        (route (departure Venezia) (arrival Palermo) (km 1431) (type_route NA))
+
+        (route (departure Roma) (arrival Firenze) (km 268) (type_route Ground))
+        (route (departure Roma) (arrival Napoli)  (km 219) (type_route Ground))
+        (route (departure Roma) (arrival Torino)  (km 669) (type_route Air))
+
+        (route (departure Roma) (arrival Milano)  (km 564) (type_route NA))
+        (route (departure Roma) (arrival Venezia) (km 527) (type_route NA))
+        (route (departure Roma) (arrival Bologna) (km 370) (type_route NA))
+        (route (departure Roma) (arrival Genova)  (km 507) (type_route NA))
+        (route (departure Roma) (arrival Bari)    (km 412) (type_route NA))
+        (route (departure Roma) (arrival Reggio)  (km 662) (type_route NA))
+        (route (departure Roma) (arrival Palermo) (km 932) (type_route NA))
+
+        (route (departure Napoli) (arrival Roma)   (km 219) (type_route Ground))
+        (route (departure Napoli) (arrival Bari)   (km 255) (type_route Ground))
+        (route (departure Napoli) (arrival Reggio) (km 462) (type_route Ground))
+        (route (departure Napoli) (arrival Palermo)(km 740) (type_route Sea))
+        (route (departure Napoli) (arrival Milano) (km 764) (type_route Air))
+
+        (route (departure Napoli) (arrival Torino)  (km 869) (type_route NA))
+        (route (departure Napoli) (arrival Genova)  (km 707) (type_route NA))
+        (route (departure Napoli) (arrival Venezia) (km 727) (type_route NA))
+        (route (departure Napoli) (arrival Bologna) (km 570) (type_route NA))
+        (route (departure Napoli) (arrival Firenze) (km 468) (type_route NA))
+
+        (route (departure Bari) (arrival Napoli)  (km 255) (type_route Ground))  
+        (route (departure Bari) (arrival Venezia) (km 754) (type_route Sea)) 
+        (route (departure Bari) (arrival Milano)  (km 711) (type_route Air))
+
+        (route (departure Bari) (arrival Torino)  (km 998) (type_route NA))
+        (route (departure Bari) (arrival Genova)  (km 407) (type_route NA))
+        (route (departure Bari) (arrival Bologna) (km 1026) (type_route NA))
+        (route (departure Bari) (arrival Firenze) (km 662) (type_route NA))
+        (route (departure Bari) (arrival Roma)    (km 412) (type_route NA))
+        (route (departure Bari) (arrival Reggio)  (km 439) (type_route NA))
+        (route (departure Bari) (arrival Palermo) (km 762) (type_route NA))
+
+        (route (departure Reggio) (arrival Napoli)(km 462) (type_route Ground))
+
+        (route (departure Reggio) (arrival Torino) (km 1312) (type_route NA)) 
+        (route (departure Reggio) (arrival Milano) (km 1208) (type_route NA)) 
+        (route (departure Reggio) (arrival Venezia)(km 1171) (type_route NA)) 
+        (route (departure Reggio) (arrival Genova) (km 1150) (type_route NA)) 
+        (route (departure Reggio) (arrival Bologna)(km 1014) (type_route NA)) 
+        (route (departure Reggio) (arrival Firenze)(km 912) (type_route NA)) 
+        (route (departure Reggio) (arrival Roma)   (km 662) (type_route NA)) 
+        (route (departure Reggio) (arrival Bari)   (km 439) (type_route NA)) 
+        (route (departure Reggio) (arrival Palermo)(km 257) (type_route NA)) 
+
+        (route (departure Palermo) (arrival Napoli) (km 740) (type_route Sea)) 
+        (route (departure Palermo) (arrival Genova) (km 1412) (type_route Sea)) 
+        (route (departure Palermo) (arrival Torino) (km 1596) (type_route Air))
+
+        (route (departure Palermo) (arrival Milano)  (km 1476) (type_route NA))
+        (route (departure Palermo) (arrival Venezia) (km 1431) (type_route NA))
+        (route (departure Palermo) (arrival Bologna) (km 1288) (type_route NA))
+        (route (departure Palermo) (arrival Firenze) (km 1185) (type_route NA))
+        (route (departure Palermo) (arrival Roma)    (km 932) (type_route NA))
+        (route (departure Palermo) (arrival Bari)    (km 762) (type_route NA))
+        (route (departure Palermo) (arrival Reggio)  (km 257) (type_route NA))
 )
 
 (deffacts S0
@@ -58,39 +171,55 @@
 
   (state(id_state 0)(f_cost 999999)(h_cost 999999)(g_cost 0))
   (transport (id_state 0)(id_transport 1)(transport_type Truck)(type_route Ground)
-             (capacity 4)(trans_goods_quantity 0)(trans_goods_type NA)(city Torino))
+             (capacity 4)(trans_goods_quantity 0)(trans_goods_type NA)(city Bologna))
   (transport (id_state 0)(id_transport 2)(transport_type Truck)(type_route Ground)
-             (capacity 4)(trans_goods_quantity 0)(trans_goods_type NA)(city Milano))
+             (capacity 4)(trans_goods_quantity 0)(trans_goods_type NA)(city Bologna))
   (transport (id_state 0)(id_transport 3)(transport_type Truck)(type_route Ground)
              (capacity 4)(trans_goods_quantity 0)(trans_goods_type NA)(city Bologna))
   (transport (id_state 0)(id_transport 4)(transport_type Truck)(type_route Ground)
-             (capacity 4)(trans_goods_quantity 0)(trans_goods_type NA)(city Genova))
+             (capacity 4)(trans_goods_quantity 0)(trans_goods_type NA)(city Roma))
   (transport (id_state 0)(id_transport 5)(transport_type Truck)(type_route Ground)
-             (capacity 4)(trans_goods_quantity 0)(trans_goods_type NA)(city Venezia))
+             (capacity 4)(trans_goods_quantity 0)(trans_goods_type NA)(city Roma))
+
+  (transport (id_state 0)(id_transport 1)(transport_type Plane)(type_route Air)
+           (capacity 7)(trans_goods_quantity 0)(trans_goods_type NA)(city Palermo))
+  (transport (id_state 0)(id_transport 2)(transport_type Plane)(type_route Air)
+           (capacity 7)(trans_goods_quantity 0)(trans_goods_type NA)(city Milano))
+
+  (transport (id_state 0)(id_transport 1)(transport_type Ship)(type_route Sea)
+             (capacity 11)(trans_goods_quantity 0)(trans_goods_type NA)(city Genova))
+  (transport (id_state 0)(id_transport 2)(transport_type Ship)(type_route Sea)
+             (capacity 11)(trans_goods_quantity 0)(trans_goods_type NA)(city Venezia))
 
 
-  (city (id_state 0)(id_city Torino)(requested_goods_quantity 10)(requested_goods_type A)
-        ( provided_goods_quantity 5)(provided_goods_type B))
+  (city (id_state 0)(id_city Torino)(requested_goods_quantity 20)(requested_goods_type A)
+        ( provided_goods_quantity 10)(provided_goods_type B))
   (city (id_state 0)(id_city Genova)(requested_goods_quantity 5)(requested_goods_type B)
+        ( provided_goods_quantity 10)(provided_goods_type C))
+  (city (id_state 0)(id_city Palermo)(requested_goods_quantity 5)(requested_goods_type C)
         ( provided_goods_quantity 10)(provided_goods_type A))
+  (city (id_state 0)(id_city Bologna)(requested_goods_quantity 10)(requested_goods_type C)
+        ( provided_goods_quantity 10)(provided_goods_type B))
+  (city (id_state 0)(id_city Venezia)(requested_goods_quantity 5)(requested_goods_type B)
+        ( provided_goods_quantity 10)(provided_goods_type C))
+  (city (id_state 0)(id_city Milano)(requested_goods_quantity 30)(requested_goods_type A)
+        ( provided_goods_quantity 5)(provided_goods_type C))
+  (city (id_state 0)(id_city Roma)(requested_goods_quantity 5)(requested_goods_type C)
+        ( provided_goods_quantity 10)(provided_goods_type A))
+  (city (id_state 0)(id_city Napoli)(requested_goods_quantity 5)(requested_goods_type C)
+        ( provided_goods_quantity 5)(provided_goods_type B))
+  (city (id_state 0)(id_city Bari)(requested_goods_quantity 5)(requested_goods_type B)
+        ( provided_goods_quantity 10)(provided_goods_type A))
+  (city (id_state 0)(id_city Reggio)(requested_goods_quantity 10)(requested_goods_type B)
+        ( provided_goods_quantity 20)(provided_goods_type A))
   (city (id_state 0)(id_city Firenze)(requested_goods_quantity 0)(requested_goods_type NA)
         ( provided_goods_quantity 0)(provided_goods_type NA))
-  (city (id_state 0)(id_city Bologna)(requested_goods_quantity 10)(requested_goods_type C)
-        ( provided_goods_quantity 5)(provided_goods_type B))
-  (city (id_state 0)(id_city Venezia)(requested_goods_quantity 5)(requested_goods_type B)
-        ( provided_goods_quantity 20)(provided_goods_type A))
-  (city (id_state 0)(id_city Milano)(requested_goods_quantity 20)(requested_goods_type A)
-        ( provided_goods_quantity 10)(provided_goods_type C))
-
-
-
-
   )
 
 (defrule start
   (current (id_current 0))
 =>
-  (focus EXPAND)
+  (focus NEWSTATE)
 )
 
 (defrule stampa-soluzione (declare (salience 50))
