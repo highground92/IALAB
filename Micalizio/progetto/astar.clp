@@ -64,19 +64,22 @@
       (current (id_current ?id_state))
       (transport (id_state ?id_state)(id_transport ?id_trans)(transport_type ?tt)(city ?id_city_t))
 
-      (stampa ?id)
+?f1<- (stampa ?id)
 
       (node_star (ident ?id) (father ?id-father) (fcost ?fcost) (gcost ?gcost) (city ?city-name))
       (node_star (ident ?id-father)(city ?id_city_t))
 
-?f1<- (new-destination(id_city ?id_city_destination)(distance ?distance))
+?f2<- (new-destination(id_city ?id_city_destination)(distance ?distance))
+
+?f3<- (current_star (curr ?c))
 
 => 
   (assert (move_to_city ?city-name (- ?fcost ?gcost)))
 
   (printout t " A_Star eseguita, muovo " ?id_trans " " ?tt " da " ?id_city_t " a " ?city-name crlf)
-
   (retract ?f1)
+  (retract ?f2)
+  (retract ?f3)
 
   (pop-focus)
 
@@ -136,24 +139,6 @@
       (assert (temp-cost (cost 999999999)))
 )
 
-      ;(if (eq ?arrival ?id_city_destination)
-      ;    then
-      ;      (assert (exec ?curr ?new move ?arrival)
-      ;            (newnode (ident ?new) (gcost (+ ?g ?km)) 
-      ;            (fcost (+ ?g ?km))
-      ;            (father ?curr)(city ?arrival))
-      ;      )
-      ;      (retract ?f1)
-      ;    else
-      ;      (assert (exec ?curr ?new move ?arrival)
-      ;            (newnode (ident ?new) (gcost (+ ?g ?km)) 
-      ;            (fcost (+ ?km_to_goal ?g ?km))
-      ;            (father ?curr)(city ?arrival))
-      ;      )
-      ;      (retract ?f1)
-      ;        )
-
-
 (defrule next-phase (declare (salience 100))
   (newnode (ident ?new))
 =>
@@ -189,54 +174,11 @@
 ?f4 <-   (temp-cost (cost ?temp-cost)(node ?new-curr))
 
 =>
-  
+    (printout t "current è " ?new-curr crlf)
     (modify ?f1 (curr ?new-curr))
     (modify ?f2 (open no))
     (retract ?f4)
 )
-
-;(defrule change-current (declare (salience 25))
-
-;?f1 <-   (current_star (curr ?curr))
-
-;?f2 <-   (node_star (ident ?curr) (fcost ?curr-f-cost))
-
-;?f3 <-   (temp-cost (cost ?temp-cost))
-
-;   =>    
-
-;         (do-for-all-facts ((?f node_star)) (and (neq ?f:open no)(neq ?f:ident ?curr)) 
-;            (if (< ?f:fcost ?temp-cost)
-;              then
-;                (modify ?f3 (cost ?f:fcost))
-;                (modify ?f1 (curr ?f:ident))
-;                (modify ?f2 (open no))
-;              else
-;                (printout t "else " crlf)
-;            )
-;          )
-;         (retract ?f3)
-;)
-
-
-;(defrule change-current (declare (salience 25))
-
-;?f1 <-   (current_star ?curr)
-
-;?f2 <-   (node_star (ident ?curr))
-
-;         (node_star (ident ?best&:(neq ?best ?curr)) (fcost ?bestcost) (open yes))
-
-;         (not (node_star (ident ?id&:(and(neq ?id ?curr)(neq ?id ?best))) (fcost ?gg&:(< ?gg ?bestcost)) (open yes)))
-
-;   =>    (assert (current_star ?best) )
-
-;         (printout t "best: " ?best " curr: " ?curr " bestcost: " ?bestcost crlf)
-
-;         (retract ?f1)
-
-;         (modify ?f2 (open no))
-;)
 
 
 (defrule open-empty (declare (salience 25))

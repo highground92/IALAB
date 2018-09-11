@@ -38,6 +38,7 @@
                          (h_cost ?hcost)(g_cost ?km)
   )
   (retract ?f1)
+  (assert (action(type move)))
   (focus UPDATESTATE)
   
 )
