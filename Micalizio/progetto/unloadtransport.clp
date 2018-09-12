@@ -1,6 +1,6 @@
 (defmodule UNLOAD (import LOAD ?ALL)(export ?ALL))
 
-; Ho il mezzo scarico e la città mi può rifornire per tutta la mia capacità
+; Ho il mezzo carico e posso scaricare tutto il mio carico
 (defrule unload-transport-pos (declare (salience 100))
   (next_trans(id_trans ?id_trans)(type_trans ?tt))
   (current (id_current ?id_state))
@@ -36,7 +36,7 @@
   (focus UPDATESTATE)
 )
 
-; Ho il mezzo scarico e la città mi può rifornire con beni <= alla capacità del mezzo
+; Ho il mezzo carico e la città richiede una quantità minore di quella sul mezzo
 (defrule unload-transport-neg (declare (salience 100))
   (next_trans(id_trans ?id_trans)(type_trans ?tt))
   (current (id_current ?id_state))
@@ -58,7 +58,6 @@
   (test(> ?rgq 0))
   (test(< ?rgq ?tgq))
   (test (< (* (- 12 ?tgq) 10) ?fcostplanning))
-
 =>
   (modify ?stateplanning (id_transport ?id_trans)(transport_type ?tt)(id_city ?id_city)
                          (requested_goods_quantity 0)
@@ -72,6 +71,8 @@
   (assert (action(type unload)))
   (focus UPDATESTATE)
 )
+
+; Ho un mezzo carico e la città richiede esattamente quanto ho nel mezzo
 (defrule unload-transport-eq (declare (salience 100))
   (next_trans(id_trans ?id_trans)(type_trans ?tt))
   (current (id_current ?id_state))
@@ -93,7 +94,6 @@
   (test(> ?rgq 0))
   (test(= ?rgq ?tgq))
   (test (< (* (- 12 ?tgq) 10) ?fcostplanning))
-
 =>
   (modify ?stateplanning (id_transport ?id_trans)(transport_type ?tt)(id_city ?id_city)
                          (requested_goods_quantity 0)
@@ -108,7 +108,7 @@
   (focus UPDATESTATE)
 )
 
-; Trasporto carico ma tipo di merce diverso da quella richiesta
+; Trasporto carico ma il tipo di merce è diverso da quella richiesta
 (defrule unload-transport-no-possible (declare (salience 90))
   (next_trans(id_trans ?id_trans)(type_trans ?tt))
   (current (id_current ?id_state))
