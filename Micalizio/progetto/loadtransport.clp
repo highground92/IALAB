@@ -1,7 +1,7 @@
 (defmodule LOAD (import MAINTRANSPORT ?ALL)(export ?ALL))
 
-
-;Decido di non caricare se non potrò scaricare in futuro (navi e aerei)
+;Decido di non caricare se non potrò scaricare in futuro (per navi e aerei)
+; TODo Da ricontrollare e probabilmente mettere il controllo con la route_id
 (defrule no-load (declare (salience 110))
   (next_trans(id_trans ?id_trans)(type_trans ?tt))
   (current (id_current ?id_state))
@@ -51,7 +51,6 @@
                          (h_cost (* (- 12 ?capacity) 10))(g_cost 0)
   )
   (assert (action(type load)))
-  (printout t "In load transport pos" crlf)
   (focus UPDATESTATE)
 )
 
@@ -76,7 +75,6 @@
   (test(> ?pgq 0))
   (test(<= ?pgq ?capacity))
   (test (< (* (- 12 ?pgq) 10) ?fcostplanning))
-
 =>
   (modify ?stateplanning (id_transport ?id_trans)(transport_type ?tt)(id_city ?id_city)
                          (requested_goods_quantity ?rgq)
@@ -88,9 +86,18 @@
                          (h_cost (* (- 12 ?pgq) 10))(g_cost 0)
   )
   (assert (action(type load)))
-  (printout t "In load transport neg" crlf)
-
   (focus UPDATESTATE)
+)
+
+; Trasporto già caricato quindi non può fare la load(vado in unload)
+(defrule load-transport-no-possible (declare (salience 90))
+  (next_trans(id_trans ?id_trans)(type_trans ?tt))
+  (current (id_current ?id_state))
+  (transport (id_state ?id_state)(id_transport ?id_trans)(transport_type ?tt)(capacity ?capacity)
+             (type_route ?tr)(trans_goods_quantity ?tgq)(trans_goods_type ?tgt)(city ?id_city))
+  (test (> ?tgq 0))
+=>
+  (focus UNLOAD)
 )
 
 ; Ho il mezzo scarico e mi trovo in una città che non mi può rifornire
@@ -104,15 +111,4 @@
 =>
   (assert (action(type load)))
   (focus MOVE)
-)
-
-; Trasporto già caricato quindi non può fare la load(vado in unload)
-(defrule load-transport-no-possible (declare (salience 90))
-  (next_trans(id_trans ?id_trans)(type_trans ?tt))
-  (current (id_current ?id_state))
-  (transport (id_state ?id_state)(id_transport ?id_trans)(transport_type ?tt)(capacity ?capacity)
-             (type_route ?tr)(trans_goods_quantity ?tgq)(trans_goods_type ?tgt)(city ?id_city))
-  (test (> ?tgq 0))
-=>
-  (focus UNLOAD)
 )

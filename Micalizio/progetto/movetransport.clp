@@ -1,5 +1,6 @@
 (defmodule MOVE (import LOAD ?ALL)(import UNLOAD ?ALL) (export ?ALL))
 
+; Non ho trovato nessuna destinazione quindi rimango fermo
 (defrule no-move (declare(salience 106))
 ?f1<- (new-destination (id_city ?id_city)(distance 9999999))
 
@@ -23,7 +24,6 @@
 (test (= ?tgq 0))
 
 =>
-
   (modify ?stateplanning (id_transport ?id_trans)(transport_type ?tt)(id_city ?id_city)
                          (requested_goods_quantity ?rgq)
                          (requested_goods_type ?rgt)
@@ -39,12 +39,14 @@
   (focus UPDATESTATE)
 )
 
+; Applico A* per cercare il percorso per la nuova città
 (defrule move-find-path-full (declare(salience 105))
   (new-destination (id_city ?id_city)(distance ?distance))
 =>
   (focus ASTAR)
 )
 
+; A* ha trovato la città migliore in cui muoversi
 (defrule a-star-applied (declare(salience 101))
   ?f1<-(move_to_city ?id ?hcost)
   (current (id_current ?id_state))
@@ -64,9 +66,7 @@
                                  (f_cost ?fcostplanning)(h_cost ?hcostplanning)
                                  (g_cost ?gcostplanning)
                   )
-
 =>
-
   (modify ?stateplanning (id_transport ?id_trans)(transport_type ?tt)(id_city ?id)
                          (requested_goods_quantity ?rgq)
                          (requested_goods_type ?rgt)
@@ -79,10 +79,9 @@
   (retract ?f1)
   (assert (action(type move)))
   (focus UPDATESTATE)
-  
 )
 
-; Furgone vuoto e c'è una città adiacente che mi può completamente rifornire
+; Mezzo vuoto e c'è una città adiacente che lo può completamente rifornire
 (defrule move-empty-cargo-full (declare (salience 100))
   (next_trans(id_trans ?id_trans)(type_trans ?tt))
   (current (id_current ?id_state))
@@ -105,7 +104,6 @@
   (test(> ?pgq 0))
   (test(>= ?pgq ?capacity))
   (test(< (+ (/ ?km ?pgq) ?km) ?fcostplanning))
-
 =>
   (modify ?stateplanning (id_transport ?id_trans)(transport_type ?tt)(id_city ?arrival)
                          (requested_goods_quantity ?rgq)
@@ -116,12 +114,10 @@
                          (f_cost (+ (/ ?km ?pgq) ?km))
                          (h_cost (/ ?km ?pgq))(g_cost ?km)
   )
-
   (assert (no-a-star))
-
 )
 
-;;;;;;;;;;;;;;;;;
+; Il mezzo è carico e c'è una città adiacente che può completamente rifornire
 (defrule move-full-cargo-pos (declare (salience 100))
   (next_trans(id_trans ?id_trans)(type_trans ?tt))
   (current (id_current ?id_state))
@@ -161,7 +157,8 @@
   (assert (no-a-star))
 
 )
-; Furgone vuoto e c'è una città adiacente che mi può rifornire non completamente (devo controllare le città successive)
+
+; Mezzo vuoto e c'è una città adiacente che lo può rifornire non completamente
 (defrule move-empty-cargo-some (declare (salience 90))
   (next_trans(id_trans ?id_trans)(type_trans ?tt))
   (current (id_current ?id_state))
@@ -184,7 +181,6 @@
   (test(> ?pgq 0))
   (test(< ?pgq ?capacity))
   (test(< (+ (/ ?km ?pgq) ?km) ?fcostplanning))
-
 =>
   (modify ?stateplanning (id_transport ?id_trans)(transport_type ?tt)(id_city ?arrival)
                          (requested_goods_quantity ?rgq)
@@ -195,13 +191,10 @@
                          (f_cost (+ (/ ?km ?pgq) ?km))
                          (h_cost (/ ?km ?pgq))(g_cost ?km)
   )
-
   (assert (no-a-star))
-
 )
 
-; ;;;;;;;;;;;;;;;
-
+; Il mezzo è carico e c'è una città adiacente che può parzialmente rifornire
 (defrule move-full-cargo-neg (declare (salience 90))
   (next_trans(id_trans ?id_trans)(type_trans ?tt))
   (current (id_current ?id_state))
@@ -227,7 +220,6 @@
   (test(< ?tgq ?rgq))
   (test(neq ?tr NA))
   (test(< (+ (/ ?km ?tgq) ?km) ?fcostplanning))
-
 =>
   (modify ?stateplanning (id_transport ?id_trans)(transport_type ?tt)(id_city ?arrival)
                          (requested_goods_quantity ?rgq)
@@ -238,11 +230,10 @@
                          (f_cost (+ (/ ?km ?tgq) ?km))
                          (h_cost (/ ?km ?tgq))(g_cost ?km)
   )
-
   (assert (no-a-star))
-
 )
 
+; Non ho nessuna città adiacente che soddisfa i requisiti, quindi applico A*
 (defrule move-cargo-a-star (declare (salience 80))
   (not (no-a-star))
   (next_trans(id_trans ?id_trans)(type_trans ?tt))
@@ -260,13 +251,12 @@
   (focus NEWDESTINATION)
 )
 
-(defrule default (declare(salience 5))
+; Ho scelto che movimento fare
+(defrule move-chosen (declare(salience 5))
   (next_trans(id_trans ?id)(type_trans ?tt))
-?f1<-(no-a-star)
+  ?f1<-(no-a-star)
 =>
-(printout t "DEFAULT!!!!!!!" crlf)
-(assert (action(type move)))
-(retract ?f1)
-
-(focus UPDATESTATE)
+  (assert (action(type move)))
+  (retract ?f1)
+  (focus UPDATESTATE)
 )
