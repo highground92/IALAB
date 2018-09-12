@@ -1,5 +1,44 @@
 (defmodule MOVE (import LOAD ?ALL)(import UNLOAD ?ALL) (export ?ALL))
 
+(defrule no-move (declare(salience 106))
+?f1<- (new-destination (id_city ?id_city)(distance 9999999))
+
+  (current (id_current ?id_state))
+  (next_trans(id_trans ?id_trans)(type_trans ?tt))
+  (transport (id_state ?id_state)(id_transport ?id_trans)(transport_type ?tt)(capacity ?capacity)
+           (type_route ?tr)(trans_goods_quantity ?tgq)(trans_goods_type ?tgt)(city ?id_city))
+  (city (id_state ?id_state)(id_city ?id_city)(requested_goods_quantity ?rgq)(requested_goods_type ?rgt)
+        (provided_goods_quantity ?pgq)(provided_goods_type ?pgt))
+
+  ?stateplanning<-(state_planning(id_transport ?id_trans)(transport_type ?tt)(id_city ?id_city_planning)
+                                 (requested_goods_quantity ?req_quantity)
+                                 (requested_goods_type ?req_type)
+                                 (provided_goods_quantity ?prov_quantity)
+                                 (provided_goods_type ?prov_type)
+                                 (trans_goods_quantity ?goodsq)(trans_goods_type ?goodst)
+                                 (f_cost ?fcostplanning)(h_cost ?hcostplanning)
+                                 (g_cost ?gcostplanning)
+                  )
+?f2<- (no-a-star)
+(test (= ?tgq 0))
+
+=>
+
+  (modify ?stateplanning (id_transport ?id_trans)(transport_type ?tt)(id_city ?id_city)
+                         (requested_goods_quantity ?rgq)
+                         (requested_goods_type ?rgt)
+                         (provided_goods_quantity ?pgq)
+                         (provided_goods_type ?pgt)
+                         (trans_goods_quantity ?tgq)(trans_goods_type ?tgt)
+                         (f_cost 0)
+                         (h_cost 0)(g_cost 0)
+  )
+  (retract ?f1)
+  (retract ?f2)
+  (assert (action(type move)))
+  (focus UPDATESTATE)
+)
+
 (defrule move-find-path-full (declare(salience 105))
   (new-destination (id_city ?id_city)(distance ?distance))
 =>

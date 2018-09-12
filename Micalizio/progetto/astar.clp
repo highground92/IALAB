@@ -55,7 +55,6 @@
 )
 
 
-
 (defrule stampa-fine
 
 (declare (salience 102))
@@ -80,6 +79,8 @@
   (retract ?f1)
   (retract ?f2)
   (retract ?f3)
+
+  (do-for-all-facts ((?f node_star)) TRUE (retract ?f))
 
   (pop-focus)
 
