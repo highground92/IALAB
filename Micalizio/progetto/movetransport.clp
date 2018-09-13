@@ -39,7 +39,7 @@
   (focus UPDATESTATE)
 )
 
-; Applico A* per cercare il percorso per la nuova città
+; Applico A* per cercare il percorso più breve per la nuova destinazione
 (defrule move-find-path-full (declare(salience 105))
   (new-destination (id_city ?id_city)(distance ?distance))
 =>
@@ -251,7 +251,7 @@
   (focus NEWDESTINATION)
 )
 
-; Ho scelto che movimento fare
+; Ho scelto che movimento fare applicando una scelta greedy
 (defrule move-chosen (declare(salience 5))
   (next_trans(id_trans ?id)(type_trans ?tt))
   ?f1<-(no-a-star)

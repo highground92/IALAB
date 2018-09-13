@@ -24,8 +24,6 @@
                             (slot provided_goods_quantity)(slot provided_goods_type)
                             (slot trans_goods_quantity)(slot trans_goods_type))
 
-;(deftemplate move_planning (slot id_city_arrival)(slot f_cost)(slot h_cost)(slot g_cost)(slot father))
-
 (deftemplate new-destination (slot id_city)(slot distance))
 
 (deftemplate action (slot type))
@@ -221,7 +219,7 @@
   (focus NEWSTATE)
 )
 
-(defrule stampa-soluzione (declare (salience 50))
+(defrule print-solution (declare (salience 50))
   ?id_stampa<-(stampa ?id)
 
   (state (id_state ?id)(f_cost ?f_cost)(h_cost ?h_cost)(g_cost ?g_cost))
@@ -307,7 +305,7 @@
   (retract ?id_stampa)
 )
 
-(defrule stampa-fine (declare (salience 51))
+(defrule print-end (declare (salience 51))
   ?st<-(stampa ?id)
   (current (id_current ?id))
 
