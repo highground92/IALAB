@@ -133,6 +133,16 @@ public class Graph {
                 var = min();
                 bn.getNode(var).setMark(true);
                 orderList.add(var);
+                //da controllare
+                for(Node node : bn.getNode(var).getNeighbors()){
+                    for(Node n : bn.getNode(var).getNeighbors()){
+                        if(n != node){
+                            if(!n.getNeighbors().contains(node))
+                                n.getNeighbors().add(node);
+                        }
+                    }
+                }
+                //stop controllo
                 cardinality++;
             }
         }

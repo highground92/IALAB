@@ -260,8 +260,8 @@ public class EliminationAsk implements BayesInference {
 		Graph graph = new Graph(bn,var);
 		System.out.println("ACYCLIC GRAPH\n"+graph.toString());
 
-		List<RandomVariable> order = graph.maxCardinality();
-		//List<RandomVariable> order = graph.greedyOrdering("MinNeighbors");
+		//List<RandomVariable> order = graph.maxCardinality();
+		List<RandomVariable> order = graph.greedyOrdering("MinNeighbors");
 
 		return order;
 	}
@@ -322,6 +322,7 @@ public class EliminationAsk implements BayesInference {
 				summedOutFactors.add(f);
 			}
 		}
+
 		//inference MAP
 		summedOutFactors.add(pointwiseProduct(toMultiply).sumMaxMAP(var));
 
@@ -345,10 +346,10 @@ public class EliminationAsk implements BayesInference {
 		}
 
 		//sumOut
-		summedOutFactors.add(pointwiseProduct(toMultiply).sumOut(var));
+		//summedOutFactors.add(pointwiseProduct(toMultiply).sumOut(var));
 
 		//inference MPE
-		//summedOutFactors.add(pointwiseProduct(toMultiply).sumMax(var));
+		summedOutFactors.add(pointwiseProduct(toMultiply).sumMax(var));
 
 		return summedOutFactors;
 	}

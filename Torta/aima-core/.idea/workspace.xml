@@ -15,26 +15,11 @@
       <file leaf-file-name="BayesianInferenceTest.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/aima/test/core/unit/probability/bayes/exact/BayesianInferenceTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" column="38" selection-start-line="5" selection-start-column="38" selection-end-line="5" selection-end-column="38" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CategoricalDistribution.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/aima/core/probability/CategoricalDistribution.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="17" column="26" lean-forward="true" selection-start-line="17" selection-start-column="26" selection-end-line="17" selection-end-column="26" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="EliminationAskTest.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/aima/test/core/unit/probability/bayes/exact/EliminationAskTest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="14" column="40" lean-forward="true" selection-start-line="14" selection-start-column="40" selection-end-line="14" selection-end-column="40" />
+            <state>
+              <caret line="58" column="52" selection-start-line="58" selection-start-column="52" selection-end-line="58" selection-end-column="52" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -42,8 +27,8 @@
       <file leaf-file-name="BayesNetExampleFactory.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/aima/core/probability/example/BayesNetExampleFactory.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1785">
-              <caret line="157" lean-forward="true" selection-start-line="157" selection-end-line="157" />
+            <state relative-caret-position="-136">
+              <caret line="114" column="44" lean-forward="true" selection-start-line="114" selection-start-column="44" selection-end-line="114" selection-end-column="44" />
             </state>
           </provider>
         </entry>
@@ -51,21 +36,10 @@
       <file leaf-file-name="EliminationAsk.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/aima/core/probability/bayes/exact/EliminationAsk.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="283" column="22" selection-start-line="283" selection-start-column="22" selection-end-line="283" selection-end-column="22" />
+            <state relative-caret-position="323">
+              <caret line="263" column="52" selection-start-line="263" selection-start-column="52" selection-end-line="263" selection-end-column="52" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#2415#2431#0" expanded="true" />
-                <element signature="e#2478#2494#0" expanded="true" />
-                <element signature="e#2956#2964#0" expanded="true" />
-                <element signature="e#3836#3844#0" expanded="true" />
-                <element signature="e#7038#7044#0" expanded="true" />
-                <element signature="e#8932#8948#0" expanded="true" />
-                <element signature="e#9612#9635#0" expanded="true" />
-                <element signature="e#10595#10603#0" expanded="true" />
-                <element signature="e#10648#10656#0" expanded="true" />
-                <element signature="e#11167#11175#0" expanded="true" />
-                <element signature="e#11220#11228#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -74,8 +48,8 @@
       <file leaf-file-name="Factor.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/aima/core/probability/Factor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="316">
-              <caret line="81" column="16" selection-start-line="81" selection-start-column="16" selection-end-line="81" selection-end-column="16" />
+            <state relative-caret-position="273">
+              <caret line="81" column="11" selection-start-line="81" selection-start-column="11" selection-end-line="81" selection-end-column="11" />
             </state>
           </provider>
         </entry>
@@ -83,8 +57,8 @@
       <file leaf-file-name="ProbabilityTable.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/aima/core/probability/util/ProbabilityTable.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="476">
-              <caret line="267" column="18" lean-forward="true" selection-start-line="267" selection-start-column="18" selection-end-line="267" selection-end-column="18" />
+            <state relative-caret-position="697">
+              <caret line="325" column="26" selection-start-line="325" selection-start-column="26" selection-end-line="325" selection-end-column="26" />
               <folding>
                 <element signature="e#1953#1954#0" expanded="true" />
                 <element signature="e#2011#2012#0" expanded="true" />
@@ -93,11 +67,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Graph.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Graph.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/aima/core/probability/bayes/exact/Graph.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="40" selection-start-line="4" selection-start-column="40" selection-end-line="4" selection-end-column="40" />
+            <state relative-caret-position="205">
+              <caret line="139" column="64" lean-forward="true" selection-start-line="139" selection-start-column="64" selection-end-line="139" selection-end-column="64" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -105,8 +82,8 @@
       <file leaf-file-name="AbstractNode.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/aima/core/probability/bayes/impl/AbstractNode.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="543">
-              <caret line="90" column="9" lean-forward="true" selection-start-line="90" selection-start-column="9" selection-end-line="90" selection-end-column="9" />
+            <state relative-caret-position="1411">
+              <caret line="104" column="23" selection-start-line="104" selection-start-column="23" selection-end-line="104" selection-end-column="23" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -146,10 +123,10 @@
       <list>
         <option value="$PROJECT_DIR$/src/main/java/aima/core/probability/bayes/Node.java" />
         <option value="$PROJECT_DIR$/src/main/java/aima/core/probability/bayes/impl/AbstractNode.java" />
-        <option value="$PROJECT_DIR$/src/test/java/aima/test/core/unit/probability/bayes/exact/BayesianInferenceTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/aima/core/probability/Factor.java" />
         <option value="$PROJECT_DIR$/src/main/java/aima/core/probability/util/ProbabilityTable.java" />
         <option value="$PROJECT_DIR$/src/main/java/aima/core/probability/bayes/exact/Graph.java" />
+        <option value="$PROJECT_DIR$/src/test/java/aima/test/core/unit/probability/bayes/exact/BayesianInferenceTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/aima/core/probability/bayes/exact/EliminationAsk.java" />
       </list>
     </option>
@@ -169,7 +146,7 @@
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="-12" />
     <option name="y" value="-12" />
     <option name="width" value="1755" />
@@ -356,8 +333,8 @@
         </subPane>
       </pane>
       <pane id="PackagesPane" />
-      <pane id="AndroidView" />
       <pane id="Scope" />
+      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -476,44 +453,49 @@
       <workItem from="1536651378032" duration="10433000" />
       <workItem from="1536762366759" duration="10888000" />
       <workItem from="1536848864774" duration="4521000" />
-      <workItem from="1537272619454" duration="5361000" />
+      <workItem from="1537272619454" duration="6730000" />
+      <workItem from="1537456016202" duration="401000" />
+      <workItem from="1537876950671" duration="6382000" />
+      <workItem from="1538033557046" duration="2224000" />
+      <workItem from="1539014395838" duration="183000" />
+      <workItem from="1539692695305" duration="4659000" />
     </task>
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="EliminationAskTest - 2018.09.13 at 17h 32m 40s.xml">
-      <configuration name="EliminationAskTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="EliminationAskTest - 2018.09.13 at 17h 33m 39s.xml">
-      <configuration name="EliminationAskTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="EliminationAskTest - 2018.09.13 at 17h 34m 57s.xml">
-      <configuration name="EliminationAskTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="EliminationAskTest - 2018.09.13 at 17h 37m 42s.xml">
-      <configuration name="EliminationAskTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="EliminationAskTest - 2018.09.13 at 17h 39m 15s.xml">
-      <configuration name="EliminationAskTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="EliminationAskTest - 2018.09.13 at 17h 42m 48s.xml">
-      <configuration name="EliminationAskTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="EliminationAskTest - 2018.09.13 at 17h 44m 01s.xml">
-      <configuration name="EliminationAskTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="EliminationAskTest - 2018.09.18 at 15h 11m 43s.xml">
-      <configuration name="EliminationAskTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="EliminationAskTest - 2018.09.18 at 15h 13m 36s.xml">
-      <configuration name="EliminationAskTest" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="EliminationAskTest - 2018.09.18 at 15h 41m 04s.xml">
+      <configuration name="EliminationAskTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="EliminationAskTest - 2018.09.20 at 17h 08m 00s.xml">
+      <configuration name="EliminationAskTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="EliminationAskTest - 2018.09.25 at 14h 43m 35s.xml">
+      <configuration name="EliminationAskTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="EliminationAskTest - 2018.09.25 at 14h 51m 12s.xml">
+      <configuration name="EliminationAskTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="EliminationAskTest - 2018.09.25 at 15h 55m 30s.xml">
+      <configuration name="EliminationAskTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="EliminationAskTest - 2018.09.27 at 10h 23m 58s.xml">
+      <configuration name="EliminationAskTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="EliminationAskTest - 2018.09.27 at 10h 33m 55s.xml">
+      <configuration name="EliminationAskTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="EliminationAskTest - 2018.09.27 at 10h 34m 45s.xml">
+      <configuration name="EliminationAskTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="EliminationAskTest - 2018.09.27 at 10h 41m 44s.xml">
+      <configuration name="EliminationAskTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="EliminationAskTest - 2018.10.16 at 15h 19m 48s.xml">
       <configuration name="EliminationAskTest" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="55764000" />
+    <option name="totallyTimeSpent" value="70982000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
@@ -529,12 +511,13 @@
       <window_info anchor="right" id="Maven Projects" order="3" weight="0.32955465" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.28801432" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.11985689" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23643725" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.23157895" />
       <window_info anchor="right" id="Database" order="3" />
+      <window_info anchor="right" id="SciView" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="UI Designer" order="2" />
@@ -550,30 +533,30 @@
     </layout>
     <layout-to-restore>
       <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Capture Analysis" order="4" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.8103757" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="right" id="Database" order="6" />
+      <window_info anchor="bottom" id="Version Control" order="10" show_stripe_button="false" />
+      <window_info anchor="right" id="Theme Preview" order="5" />
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.23643725" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="right" id="Theme Preview" order="5" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.8103757" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info id="UI Designer" order="4" />
+      <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39892665" />
-      <window_info anchor="right" id="Database" order="6" />
       <window_info anchor="right" id="Palette&#9;" order="7" />
       <window_info anchor="bottom" id="Terminal" order="8" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="Version Control" order="10" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info id="Capture Tool" order="5" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Messages" order="11" weight="0.3291592" />
       <window_info anchor="right" id="Maven Projects" order="8" weight="0.32955465" />
       <window_info id="Favorites" order="6" side_tool="true" />
@@ -636,17 +619,6 @@
           <caret line="139" column="29" selection-start-line="139" selection-start-column="29" selection-end-line="139" selection-end-column="29" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2415#2431#0" expanded="true" />
-            <element signature="e#2478#2494#0" expanded="true" />
-            <element signature="e#2956#2964#0" expanded="true" />
-            <element signature="e#3836#3844#0" expanded="true" />
-            <element signature="e#7038#7044#0" expanded="true" />
-            <element signature="e#8932#8948#0" expanded="true" />
-            <element signature="e#9612#9635#0" expanded="true" />
-            <element signature="e#10595#10603#0" expanded="true" />
-            <element signature="e#10648#10656#0" expanded="true" />
-            <element signature="e#11167#11175#0" expanded="true" />
-            <element signature="e#11220#11228#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -696,17 +668,6 @@
           <caret line="274" column="8" lean-forward="true" selection-start-line="274" selection-start-column="8" selection-end-line="274" selection-end-column="8" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2415#2431#0" expanded="true" />
-            <element signature="e#2478#2494#0" expanded="true" />
-            <element signature="e#2956#2964#0" expanded="true" />
-            <element signature="e#3836#3844#0" expanded="true" />
-            <element signature="e#7038#7044#0" expanded="true" />
-            <element signature="e#8932#8948#0" expanded="true" />
-            <element signature="e#9612#9635#0" expanded="true" />
-            <element signature="e#10595#10603#0" expanded="true" />
-            <element signature="e#10648#10656#0" expanded="true" />
-            <element signature="e#11167#11175#0" expanded="true" />
-            <element signature="e#11220#11228#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -763,17 +724,6 @@
           <caret line="213" lean-forward="true" selection-start-line="213" selection-end-line="213" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2415#2431#0" expanded="true" />
-            <element signature="e#2478#2494#0" expanded="true" />
-            <element signature="e#2956#2964#0" expanded="true" />
-            <element signature="e#3836#3844#0" expanded="true" />
-            <element signature="e#7038#7044#0" expanded="true" />
-            <element signature="e#8932#8948#0" expanded="true" />
-            <element signature="e#9612#9635#0" expanded="true" />
-            <element signature="e#10595#10603#0" expanded="true" />
-            <element signature="e#10648#10656#0" expanded="true" />
-            <element signature="e#11167#11175#0" expanded="true" />
-            <element signature="e#11220#11228#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -830,17 +780,6 @@
           <caret line="279" column="23" lean-forward="true" selection-start-line="279" selection-start-column="23" selection-end-line="279" selection-end-column="23" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2415#2431#0" expanded="true" />
-            <element signature="e#2478#2494#0" expanded="true" />
-            <element signature="e#2956#2964#0" expanded="true" />
-            <element signature="e#3836#3844#0" expanded="true" />
-            <element signature="e#7038#7044#0" expanded="true" />
-            <element signature="e#8932#8948#0" expanded="true" />
-            <element signature="e#9612#9635#0" expanded="true" />
-            <element signature="e#10595#10603#0" expanded="true" />
-            <element signature="e#10648#10656#0" expanded="true" />
-            <element signature="e#11167#11175#0" expanded="true" />
-            <element signature="e#11220#11228#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -897,17 +836,6 @@
           <caret line="274" column="33" lean-forward="true" selection-start-line="274" selection-start-column="33" selection-end-line="274" selection-end-column="33" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2415#2431#0" expanded="true" />
-            <element signature="e#2478#2494#0" expanded="true" />
-            <element signature="e#2956#2964#0" expanded="true" />
-            <element signature="e#3836#3844#0" expanded="true" />
-            <element signature="e#7038#7044#0" expanded="true" />
-            <element signature="e#8932#8948#0" expanded="true" />
-            <element signature="e#9612#9635#0" expanded="true" />
-            <element signature="e#10595#10603#0" expanded="true" />
-            <element signature="e#10648#10656#0" expanded="true" />
-            <element signature="e#11167#11175#0" expanded="true" />
-            <element signature="e#11220#11228#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -975,66 +903,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/aima/core/probability/example/BayesNetExampleFactory.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/aima/core/probability/CategoricalDistribution.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1785">
-          <caret line="157" lean-forward="true" selection-start-line="157" selection-end-line="157" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/aima/core/probability/Factor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="316">
-          <caret line="81" column="16" selection-start-line="81" selection-start-column="16" selection-end-line="81" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/aima/core/probability/bayes/exact/Graph.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="40" selection-start-line="4" selection-start-column="40" selection-end-line="4" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/aima/core/probability/bayes/impl/AbstractNode.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="543">
-          <caret line="90" column="9" lean-forward="true" selection-start-line="90" selection-start-column="9" selection-end-line="90" selection-end-column="9" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/aima/core/probability/util/ProbabilityTable.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="267" column="18" lean-forward="true" selection-start-line="267" selection-start-column="18" selection-end-line="267" selection-end-column="18" />
-          <folding>
-            <element signature="e#1953#1954#0" expanded="true" />
-            <element signature="e#2011#2012#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/aima/core/probability/bayes/exact/EliminationAsk.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="283" column="22" selection-start-line="283" selection-start-column="22" selection-end-line="283" selection-end-column="22" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2415#2431#0" expanded="true" />
-            <element signature="e#2478#2494#0" expanded="true" />
-            <element signature="e#2956#2964#0" expanded="true" />
-            <element signature="e#3836#3844#0" expanded="true" />
-            <element signature="e#7038#7044#0" expanded="true" />
-            <element signature="e#8932#8948#0" expanded="true" />
-            <element signature="e#9612#9635#0" expanded="true" />
-            <element signature="e#10595#10603#0" expanded="true" />
-            <element signature="e#10648#10656#0" expanded="true" />
-            <element signature="e#11167#11175#0" expanded="true" />
-            <element signature="e#11220#11228#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="90">
+          <caret line="17" column="26" lean-forward="true" selection-start-line="17" selection-start-column="26" selection-end-line="17" selection-end-column="26" />
         </state>
       </provider>
     </entry>
@@ -1045,17 +917,68 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/aima/test/core/unit/probability/bayes/exact/BayesianInferenceTest.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/aima/core/probability/bayes/impl/AbstractNode.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="38" selection-start-line="5" selection-start-column="38" selection-end-line="5" selection-end-column="38" />
+        <state relative-caret-position="1411">
+          <caret line="104" column="23" selection-start-line="104" selection-start-column="23" selection-end-line="104" selection-end-column="23" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/aima/core/probability/CategoricalDistribution.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/aima/core/probability/example/BayesNetExampleFactory.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="17" column="26" lean-forward="true" selection-start-line="17" selection-start-column="26" selection-end-line="17" selection-end-column="26" />
+        <state relative-caret-position="-136">
+          <caret line="114" column="44" lean-forward="true" selection-start-line="114" selection-start-column="44" selection-end-line="114" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/aima/test/core/unit/probability/bayes/exact/BayesianInferenceTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret line="58" column="52" selection-start-line="58" selection-start-column="52" selection-end-line="58" selection-end-column="52" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/aima/core/probability/bayes/exact/EliminationAsk.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="263" column="52" selection-start-line="263" selection-start-column="52" selection-end-line="263" selection-end-column="52" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/aima/core/probability/util/ProbabilityTable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="697">
+          <caret line="325" column="26" selection-start-line="325" selection-start-column="26" selection-end-line="325" selection-end-column="26" />
+          <folding>
+            <element signature="e#1953#1954#0" expanded="true" />
+            <element signature="e#2011#2012#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/aima/core/probability/Factor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="273">
+          <caret line="81" column="11" selection-start-line="81" selection-start-column="11" selection-end-line="81" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/aima/core/probability/bayes/exact/Graph.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="205">
+          <caret line="139" column="64" lean-forward="true" selection-start-line="139" selection-start-column="64" selection-end-line="139" selection-end-column="64" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
