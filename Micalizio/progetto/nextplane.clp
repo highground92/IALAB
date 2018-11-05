@@ -1,3 +1,4 @@
+;Si aggiorna il contatore del mezzo e in base ai moduli attraversati si decide quante pop-focus applicare
 (defmodule NEXTPLANE (import NEXTTRANSPORT ?ALL) (export ?ALL))
 
 ;

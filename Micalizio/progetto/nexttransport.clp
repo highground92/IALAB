@@ -1,3 +1,4 @@
+;Modulo che si occupa di scegliere il prossimo mezzo
 (defmodule NEXTTRANSPORT (import UPDATESTATE ?ALL) (export ?ALL))
 
 ;

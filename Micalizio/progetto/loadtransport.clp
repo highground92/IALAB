@@ -1,19 +1,15 @@
 (defmodule LOAD (import MAINTRANSPORT ?ALL)(export ?ALL))
 
 ;Decido di non caricare se non potrò scaricare in futuro (per navi e aerei)
-; TODo Da ricontrollare e probabilmente mettere il controllo con la route_id
 (defrule no-load (declare (salience 110))
   (next_trans(id_trans ?id_trans)(type_trans ?tt))
   (current (id_current ?id_state))
   (transport (id_state ?id_state)(id_transport ?id_trans)(transport_type ?tt)(capacity ?capacity)
-             (type_route ?tr)(trans_goods_quantity 0)(trans_goods_type NA)(city ?id_city))
-  (route(departure ?id_city)(arrival ?arrival)(km ?km)(type_route ?tr))
-  (city (id_state ?id_state)(id_city ?id_city)(requested_goods_quantity ?rgq1 )
+             (type_route ?tr)(trans_goods_quantity 0)(trans_goods_type NA)(city ?id_city)(route_id ?route_id))
+  (city (id_state ?id_state)(id_city ?id_city)(requested_goods_quantity ?rgq1)
         (requested_goods_type ?good_type1)(provided_goods_quantity ?pgq1)(provided_goods_type ?pgt1))
-  (city (id_state ?id_state)(id_city ?arrival)(requested_goods_quantity ?rgq2 )
-        (requested_goods_type ?good_type2)(provided_goods_quantity ?pgq2)(provided_goods_type ?pgt2))
+  (not (city (id_state ?id_state)(id_city ?arrival&:(neq ?arrival ?id_city))(requested_goods_type ?pgt1)(route_id $?before ?route_id $?after)))
   (test (neq ?tt Truck))
-  (test (neq ?pgt1 ?good_type2))
 =>
   (assert (action(type load)))
   (focus MOVE)

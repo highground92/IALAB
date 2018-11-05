@@ -24,8 +24,6 @@
                             (slot provided_goods_quantity)(slot provided_goods_type)
                             (slot trans_goods_quantity)(slot trans_goods_type))
 
-;(deftemplate move_planning (slot id_city_arrival)(slot f_cost)(slot h_cost)(slot g_cost)(slot father))
-
 (deftemplate new-destination (slot id_city)(slot distance))
 
 (deftemplate action (slot type))
@@ -170,15 +168,15 @@
 
   (state(id_state 0)(f_cost 999999)(h_cost 999999)(g_cost 0))
   (transport (id_state 0)(id_transport 1)(transport_type Truck)(type_route Ground)
-             (capacity 4)(trans_goods_quantity 0)(trans_goods_type NA)(city Bologna)(route_id t1))
+             (capacity 4)(trans_goods_quantity 0)(trans_goods_type NA)(city Torino)(route_id t1))
   (transport (id_state 0)(id_transport 2)(transport_type Truck)(type_route Ground)
-             (capacity 4)(trans_goods_quantity 0)(trans_goods_type NA)(city Bologna)(route_id t1))
+             (capacity 4)(trans_goods_quantity 0)(trans_goods_type NA)(city Milano)(route_id t1))
   (transport (id_state 0)(id_transport 3)(transport_type Truck)(type_route Ground)
              (capacity 4)(trans_goods_quantity 0)(trans_goods_type NA)(city Bologna)(route_id t1))
   (transport (id_state 0)(id_transport 4)(transport_type Truck)(type_route Ground)
              (capacity 4)(trans_goods_quantity 0)(trans_goods_type NA)(city Roma)(route_id t1))
   (transport (id_state 0)(id_transport 5)(transport_type Truck)(type_route Ground)
-             (capacity 4)(trans_goods_quantity 0)(trans_goods_type NA)(city Roma)(route_id t1))
+             (capacity 4)(trans_goods_quantity 0)(trans_goods_type NA)(city Reggio)(route_id t1))
 
   (transport (id_state 0)(id_transport 1)(transport_type Plane)(type_route Air)
            (capacity 7)(trans_goods_quantity 0)(trans_goods_type NA)(city Palermo)(route_id a1))
@@ -221,7 +219,7 @@
   (focus NEWSTATE)
 )
 
-(defrule stampa-soluzione (declare (salience 50))
+(defrule print-solution (declare (salience 50))
   ?id_stampa<-(stampa ?id)
 
   (state (id_state ?id)(f_cost ?f_cost)(h_cost ?h_cost)(g_cost ?g_cost))
@@ -307,7 +305,7 @@
   (retract ?id_stampa)
 )
 
-(defrule stampa-fine (declare (salience 51))
+(defrule print-end (declare (salience 51))
   ?st<-(stampa ?id)
   (current (id_current ?id))
 
