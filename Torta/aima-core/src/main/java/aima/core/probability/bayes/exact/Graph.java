@@ -12,27 +12,30 @@ import java.util.*;
 
 public class Graph {
 
-    private List<Node> nodes = new ArrayList<Node>();
+    private List<Node> graph = new ArrayList<Node>();
     private BayesianNetwork bn;
 
     public Graph(BayesianNetwork bn, List<RandomVariable> var){
         this.bn = bn;
-        this.nodes = buildAcyclicGraph(bn,var);
+        this.graph = buildMoralGraph(bn,var);
     }
 
-    private List<Node> buildAcyclicGraph(BayesianNetwork bn, List<RandomVariable> var){
+    private List<Node> buildMoralGraph(BayesianNetwork bn, List<RandomVariable> var){
         Set<Node> neighbors;
         Set<Node> parents;
         Set<Node> children;
         for(RandomVariable v : var) {
+            // per il nodo corrente aggiungo ai suoi vicini i suoi genitori
             neighbors = new HashSet<Node>();
             parents = bn.getNode(v).getParents();
             for (Node n : parents) {
                 neighbors.add(n);
             }
             children = bn.getNode(v).getChildren();
+            // per il nodo corrente aggiungo ai suoi vicini i suoi figli
             for (Node n : children) {
                 neighbors.add(n);
+                // unisco i genitori di un nodo (come da algoritmo), controllo che il figlio che ho ha altri genitori
                 for(Node c : n.getParents()){
                     if(!c.getRandomVariable().getName().equals(v.getName()))
                         neighbors.add(c);
@@ -40,9 +43,9 @@ public class Graph {
             }
             bn.getNode(v).setNeighbors(neighbors);
             bn.getNode(v).setMark(false);
-            nodes.add(bn.getNode(v));
+            graph.add(bn.getNode(v));
         }
-        return nodes;
+        return graph;
     }
 
     /**
@@ -51,50 +54,42 @@ public class Graph {
      * @return ordered list of variables
      */
     public List<RandomVariable> maxCardinality(){
-        List<Node> copiaGraph = nodes;
+        List<Node> copiaGraph = graph;
         List<RandomVariable> orderList = new ArrayList<RandomVariable>();
-        Node start = maxNeighbors();
-        start.setMark(true);
-        copiaGraph.remove(start);
-        orderList.add(start.getRandomVariable());
-        //System.out.println("start "+start.getRandomVariable().getName()+" "+start.getMark());
-        Set<Node> parent = start.getNeighbors();
-        Node next = null;
-        for(Node n : parent){
-            if(this.nodes.contains(n))
-                next = n;
-        }
-        next.setMark(true);
-        //System.out.println("next "+next.getRandomVariable().getName()+" "+next.getMark());
-        copiaGraph.remove(next);
-        //System.out.println("copia "+copiaGraph.toString());
-        orderList.add(next.getRandomVariable());
-        //System.out.println("order "+orderList.toString());
-        int cardinality = copiaGraph.size();
-        //System.out.println("cardinality "+cardinality);
-        while(cardinality>0){
-            Node n = maxNeighborsMark(copiaGraph);
-            n.setMark(true);
-            //System.out.println("node "+n.getRandomVariable().getName()+" "+n.getMark());
-            orderList.add(n.getRandomVariable());
-            copiaGraph.remove(n);
-            cardinality--;
+        if(!copiaGraph.isEmpty()){
+            Node start = maxNeighbors();//getRandomNode()
+            start.setMark(true);
+            orderList.add(start.getRandomVariable());
+            copiaGraph.remove(start);
+            while(!copiaGraph.isEmpty()) {
+                //System.out.println("start "+start.getRandomVariable().getName()+" "+start.getMark());
+                List<Node> neighbors = getUnmarkedNeighbors(start);
+                Node nextNode = maxMarkNeighbors(neighbors);
+                if(nextNode == null){
+                    start.setMark(true);
+                    orderList.add(start.getRandomVariable());
+                    copiaGraph.remove(start);
+                }
+                else{
+                    nextNode.setMark(true);
+                    orderList.add(nextNode.getRandomVariable());
+                    copiaGraph.remove(nextNode);
+                    start = nextNode;
+                }
+            }
         }
         return orderList;
     }
 
     private Node maxNeighbors(){
-        RandomVariable bestMax = null;
         Node best = null;
         int numBestMax = 0;
         int numMax;
-        for(int i=0; i<this.nodes.size(); i++){
-            bestMax = this.nodes.get(i).getRandomVariable();
-            if(!this.nodes.get(i).getMark()) {
-                numMax = this.nodes.get(i).getNeighbors().size();
-                if (numMax >= numBestMax) {
-                    bestMax = this.nodes.get(i).getRandomVariable();
-                    best = this.nodes.get(i);
+        for(int i=0; i<this.graph.size(); i++) {
+            if (!this.graph.get(i).getMark()) {
+                numMax = this.graph.get(i).getNeighbors().size();
+                if (numMax > numBestMax) {
+                    best = this.graph.get(i);
                     numBestMax = numMax;
                 }
             }
@@ -102,20 +97,33 @@ public class Graph {
         return best;
     }
 
-    private Node maxNeighborsMark(List<Node> graph){
+    private List<Node> getUnmarkedNeighbors(Node currentNode){
+        List<Node> unmarkedNeighbors = new ArrayList<>();
+        for(Node t : currentNode.getNeighbors()){
+            if(!t.getMark())
+                unmarkedNeighbors.add(t);
+        }
+        return unmarkedNeighbors;
+    }
+
+    private Node maxMarkNeighbors(List<Node> neighbours){
         int count=0;
         int countMax=0;
         Node node = null;
-        for(Node n : graph){
+        for(Node n : neighbours){
             for(Node p : n.getNeighbors()){
                 if(p.getMark())
                     count++;
             }
             if(count > countMax) {
                 countMax = count;
-                count=0;
                 node = n;
             }
+            else if(count == countMax){
+                    if(node.getNeighbors().size() < n.getNeighbors().size())
+                        node = n;
+            }
+            count=0;
         }
         return node;
     }
@@ -129,7 +137,7 @@ public class Graph {
         RandomVariable var = null;
         if(heuristic.equals("MinNeighbors")) {
             int cardinality = 0;
-            while (cardinality < this.nodes.size()) {
+            while (cardinality < this.graph.size()) {
                 var = min();
                 bn.getNode(var).setMark(true);
                 orderList.add(var);
@@ -153,11 +161,11 @@ public class Graph {
         RandomVariable bestMin = null;
         int numBestMin = Integer.MAX_VALUE;
         int numMin;
-        for(int i=0; i<this.nodes.size(); i++){
-            if(!this.nodes.get(i).getMark()) {
-                numMin= this.nodes.get(i).getNeighbors().size();
+        for(int i=0; i<this.graph.size(); i++){
+            if(!this.graph.get(i).getMark()) {
+                numMin= this.graph.get(i).getNeighbors().size();
                 if (numMin < numBestMin) {
-                    bestMin = this.nodes.get(i).getRandomVariable();
+                    bestMin = this.graph.get(i).getRandomVariable();
                     numBestMin = numMin;
                 }
             }
@@ -167,7 +175,7 @@ public class Graph {
 
     public String toString(){
         String graph = "";
-        for(Node n : this.nodes){
+        for(Node n : this.graph){
             graph += n.getRandomVariable().getName()+" {";
             for(Node neighbors : n.getNeighbors()){
                 graph += " "+neighbors.getRandomVariable().getName();
