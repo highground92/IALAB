@@ -100,8 +100,8 @@ public class EliminationAsk implements BayesInference {
 		Factor product = pointwiseProduct(factors);
 
 		// return NORMALIZE(POINTWISE-PRODUCT(factors))
-		return ((ProbabilityTable) product.pointwiseProductPOS(_identity, X))
-				.normalize();
+		return ((ProbabilityTable) product.pointwiseProductPOS(_identity, X)).normalize();
+		//return null;
 	}
 
 	private CategoricalDistribution eliminationAskSMAP(final RandomVariable[] X,
@@ -255,15 +255,15 @@ public class EliminationAsk implements BayesInference {
 		// been seen so far.
 
 		List<RandomVariable> var = new ArrayList<RandomVariable>(vars);
-		//Collections.reverse(var);
+		Collections.reverse(var);
 
-		Graph graph = new Graph(bn,var);
-		System.out.println("ACYCLIC GRAPH\n"+graph.toString());
+		//Graph graph = new Graph(bn,var);
+		//System.out.println("ACYCLIC GRAPH\n"+graph.toString());
 
 		//List<RandomVariable> order = graph.maxCardinality();
-		List<RandomVariable> order = graph.greedyOrdering("MinNeighbors");
+		//List<RandomVariable> order = graph.greedyOrdering("MinNeighbors");
 
-		return order;
+		return var;
 	}
 
 	//

@@ -1,5 +1,6 @@
 package aima.test.core.unit.probability.bayes.exact;
 
+import aima.core.probability.bayes.exact.BayesianMain;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -11,6 +12,11 @@ import aima.core.probability.bayes.BayesianNetwork;
 import aima.core.probability.example.BayesNetExampleFactory;
 import aima.core.probability.example.ExampleRV;
 import aima.core.probability.proposition.AssignmentProposition;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.HashMap;
 
 /**
  *
@@ -71,11 +77,62 @@ public abstract class BayesianInferenceTest {
 	}*/
 
 	@Test
-	public void testInferenceOnBurglaryAlarmNetwork() {
-		BayesianNetwork bn = BayesNetExampleFactory
-				.constructBurglaryAlarmNetwork();
+	public void testInferenceOnBurglaryAlarmNetwork() throws IOException {
+		/*BayesianNetwork bn = BayesNetExampleFactory
+				.constructBurglaryAlarmNetwork();*/
 
-		// AIMA3e. pg. 514
+		BayesianNetwork bn = BayesianMain.buildNetwork();
+
+		FileReader file = new FileReader("./ReteBayesiana.txt");
+		BufferedReader rete = new BufferedReader(file);
+		String delims = "[ ]+";
+		String[] split;
+		String line = rete.readLine();
+		int nVar = 0;
+		String qVar = "";
+		HashMap<String, Boolean> var = new HashMap<>();
+		while (line != null) {
+			nVar++;
+			split = line.split(delims);
+			if(nVar == 1)
+				qVar = split[1];
+			else {
+				if (!qVar.equalsIgnoreCase(split[0])) {
+					if (!split[1].equalsIgnoreCase("________"))
+						var.put(split[0], Boolean.parseBoolean(split[1]));
+				}
+			}
+			line = rete.readLine();
+		}
+
+		rete.close();
+		file.close();
+
+		RandomVariable[] query = new RandomVariable[1];
+		AssignmentProposition[] assig = new AssignmentProposition[var.size()];
+
+		int i=0;
+		for(RandomVariable v : bn.getVariablesInTopologicalOrder()){
+			if(v.getName().equalsIgnoreCase(qVar))
+				query[0] = v;
+			else {
+				if(var.get(v.getName()) != null) {
+					assig[i] = new AssignmentProposition(v, var.get(v.getName()));
+					i++;
+				}
+			}
+		}
+
+		System.out.println(query[0]);
+		for(int j=0; j<assig.length; j++)
+			System.out.println(assig[j].toString());
+		System.out.println();
+
+		CategoricalDistribution d = bayesInference.ask(query,assig, bn);
+
+		System.out.println("P(dysp | a, ~s, ~b, x)=" + d + "\n\n");
+		//System.out.println("P(Cancer | x, ~d)=" + d + "\n\n");
+
 		/*CategoricalDistribution d = bayesInference
 				.ask(new RandomVariable[] { ExampleRV.ALARM_RV },
 						new AssignmentProposition[] {
@@ -87,17 +144,11 @@ public abstract class BayesianInferenceTest {
 										ExampleRV.JOHN_CALLS_RV, true),
 								new AssignmentProposition(
 										ExampleRV.MARY_CALLS_RV, true) }, bn);
-
-		System.out.println("P(Alarm | ~b, ~e, j, m)=" + d + "\n\n");
-		Assert.assertEquals(2, d.getValues().length);
-		Assert.assertEquals(0.5577689243027888, d.getValues()[0],
-				ProbabilityModel.DEFAULT_ROUNDING_THRESHOLD);
-		Assert.assertEquals(0.44223107569721115, d.getValues()[1],
-				ProbabilityModel.DEFAULT_ROUNDING_THRESHOLD);*/
+		System.out.println("P(Alarm | ~b, ~e, j, m)=" + d + "\n\n");*/
 
 		// AIMA3e pg. 523
 		// P(Burglary | JohnCalls = true, MaryCalls = true) = <0.284, 0.716>
-		CategoricalDistribution d = bayesInference
+		/*CategoricalDistribution d = bayesInference
 				.ask(new RandomVariable[] { ExampleRV.BURGLARY_RV },
 						new AssignmentProposition[] {
 								new AssignmentProposition(
@@ -110,7 +161,7 @@ public abstract class BayesianInferenceTest {
 		Assert.assertEquals(0.2841718353643929, d.getValues()[0],
 				ProbabilityModel.DEFAULT_ROUNDING_THRESHOLD);
 		Assert.assertEquals(0.7158281646356071, d.getValues()[1],
-				ProbabilityModel.DEFAULT_ROUNDING_THRESHOLD);
+				ProbabilityModel.DEFAULT_ROUNDING_THRESHOLD);*/
 
 		// AIMA3e pg. 528
 		// P(JohnCalls | Burglary = true)

@@ -23,7 +23,7 @@ public class RandVar implements RandomVariable, TermProposition {
 	private Set<RandomVariable> scope = new HashSet<RandomVariable>();
 
 	public RandVar(String name, Domain domain) {
-		ProbUtil.checkValidRandomVariableName(name);
+		//ProbUtil.checkValidRandomVariableName(name);
 		if (null == domain) {
 			throw new IllegalArgumentException(
 					"Domain of RandomVariable must be specified.");
