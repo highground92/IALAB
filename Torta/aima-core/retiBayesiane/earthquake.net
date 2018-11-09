@@ -1,0 +1,93 @@
+net
+{
+	propagationenginegenerator1791944048146838126L = "edu.ucla.belief.approx.BeliefPropagationSettings@23ad711b";
+	recoveryenginegenerator6944530267470113528l = "edu.ucla.util.SettingsImpl@43100cfe";
+	jenginegenerator6060830225489488864L = "edu.ucla.belief.inference.JoinTreeSettings@3ef4f931";
+	node_size = (130.0 55.0);
+}
+
+node variable3
+{
+	states = ("yes" "no" );
+	position = (114 -345);
+	diagnosistype = "AUXILIARY";
+	DSLxSUBMODEL = "Root Submodel";
+	ismapvariable = "true";
+	ID = "variable3";
+	label = "JohnCalls";
+	DSLxEXTRA_DEFINITIONxDIAGNOSIS_TYPE = "AUXILIARY";
+	excludepolicy = "include whole CPT";
+}
+node variable4
+{
+	states = ("yes" "no" );
+	position = (443 -348);
+	diagnosistype = "AUXILIARY";
+	DSLxSUBMODEL = "Root Submodel";
+	ismapvariable = "true";
+	ID = "variable4";
+	label = "MaryCalls";
+	DSLxEXTRA_DEFINITIONxDIAGNOSIS_TYPE = "AUXILIARY";
+	excludepolicy = "include whole CPT";
+}
+node variable1
+{
+	states = ("yes" "no" );
+	position = (418 -110);
+	diagnosistype = "AUXILIARY";
+	DSLxSUBMODEL = "Root Submodel";
+	ismapvariable = "false";
+	ID = "variable1";
+	label = "Earthquare";
+	DSLxEXTRA_DEFINITIONxDIAGNOSIS_TYPE = "AUXILIARY";
+	excludepolicy = "include whole CPT";
+}
+node variable0
+{
+	states = ("yes" "no" );
+	position = (111 -105);
+	diagnosistype = "AUXILIARY";
+	DSLxSUBMODEL = "Root Submodel";
+	ismapvariable = "false";
+	ID = "variable0";
+	label = "Burglary";
+	DSLxEXTRA_DEFINITIONxDIAGNOSIS_TYPE = "AUXILIARY";
+	excludepolicy = "include whole CPT";
+}
+node variable2
+{
+	states = ("yes" "no" );
+	position = (270 -227);
+	diagnosistype = "AUXILIARY";
+	DSLxSUBMODEL = "Root Submodel";
+	ismapvariable = "false";
+	ID = "variable2";
+	label = "Alarm";
+	DSLxEXTRA_DEFINITIONxDIAGNOSIS_TYPE = "AUXILIARY";
+	excludepolicy = "include whole CPT";
+}
+potential ( variable3 | variable2 )
+{
+	data = ((	0.9	0.1	)
+		(	0.05	0.95	));
+}
+potential ( variable4 | variable2 )
+{
+	data = ((	0.7	0.3	)
+		(	0.01	0.99	));
+}
+potential ( variable1 | )
+{
+	data = (	0.002	0.998	);
+}
+potential ( variable0 | )
+{
+	data = (	0.001	0.999	);
+}
+potential ( variable2 | variable0 variable1 )
+{
+	data = (((	0.95	0.05	)
+		(	0.94	0.06	))
+		((	0.29	0.71	)
+		(	0.001	0.999	)));
+}
