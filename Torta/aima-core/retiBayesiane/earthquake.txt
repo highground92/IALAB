@@ -1,0 +1,6 @@
+query Burglary
+Burglary ________
+Earthquake ________
+Alarm ________
+JohnCalls True
+MaryCalls True

@@ -1,5 +1,6 @@
 package aima.core.probability.bayes;
 
+import java.util.List;
 import java.util.Set;
 
 import aima.core.probability.RandomVariable;
@@ -66,6 +67,10 @@ public interface Node {
 	void setNeighbors(Set<Node> node);
 
 	Set<Node> getNeighbors();
+
+	void setParents(Set<Node> parents);
+
+	void setChildren(Set<Node> children);
 
 	void setMark(boolean m);
 

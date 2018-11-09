@@ -18,6 +18,7 @@ import aima.core.probability.bayes.impl.FullCPTNode;
  *
  */
 public class DynamicBayesNetExampleFactory {
+
 	/**
 	 * Return a Dynamic Bayesian Network of the Umbrella World Network.
 	 * 

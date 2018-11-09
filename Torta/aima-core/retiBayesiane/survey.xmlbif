@@ -3,7 +3,7 @@
 <!--
   Bayesian network in XMLBIF v0.3 (BayesNet Interchange Format)
   Produced by SamIam http://reasoning.cs.ucla.edu/samiam
-  Output created 8-nov-2018 12.00.20
+  Output created 9-nov-2018 21.53.13
 -->
 
 <BIF VERSION="0.3">
@@ -11,25 +11,10 @@
   <NAME>bayesiannetwork</NAME>
 
   <VARIABLE TYPE="nature">
-    <NAME>E</NAME>
-    <OUTCOME>high</OUTCOME>
-    <OUTCOME>uni</OUTCOME>
-    <PROPERTY>position = (109, -171)</PROPERTY>
-  </VARIABLE>
-
-  <VARIABLE TYPE="nature">
     <NAME>O</NAME>
     <OUTCOME>emp</OUTCOME>
     <OUTCOME>self</OUTCOME>
-    <PROPERTY>position = (355, -10)</PROPERTY>
-  </VARIABLE>
-
-  <VARIABLE TYPE="nature">
-    <NAME>A</NAME>
-    <OUTCOME>young</OUTCOME>
-    <OUTCOME>adult</OUTCOME>
-    <OUTCOME>old</OUTCOME>
-    <PROPERTY>position = (19, -289)</PROPERTY>
+    <PROPERTY>position = (600, 105)</PROPERTY>
   </VARIABLE>
 
   <VARIABLE TYPE="nature">
@@ -37,22 +22,59 @@
     <OUTCOME>car</OUTCOME>
     <OUTCOME>train</OUTCOME>
     <OUTCOME>other</OUTCOME>
-    <PROPERTY>position = (164, -12)</PROPERTY>
-  </VARIABLE>
-
-  <VARIABLE TYPE="nature">
-    <NAME>S</NAME>
-    <OUTCOME>M</OUTCOME>
-    <OUTCOME>F</OUTCOME>
-    <PROPERTY>position = (280, -230)</PROPERTY>
+    <PROPERTY>position = (336, 192)</PROPERTY>
   </VARIABLE>
 
   <VARIABLE TYPE="nature">
     <NAME>R</NAME>
     <OUTCOME>small</OUTCOME>
     <OUTCOME>big</OUTCOME>
-    <PROPERTY>position = (14, -37)</PROPERTY>
+    <OBSERVED>0</OBSERVED>
+    <PROPERTY>position = (186, 81)</PROPERTY>
   </VARIABLE>
+
+  <VARIABLE TYPE="nature">
+    <NAME>E</NAME>
+    <OUTCOME>high</OUTCOME>
+    <OUTCOME>uni</OUTCOME>
+    <PROPERTY>position = (315, -46)</PROPERTY>
+  </VARIABLE>
+
+  <VARIABLE TYPE="nature">
+    <NAME>S</NAME>
+    <OUTCOME>M</OUTCOME>
+    <OUTCOME>F</OUTCOME>
+    <OBSERVED>1</OBSERVED>
+    <PROPERTY>position = (516, -163)</PROPERTY>
+  </VARIABLE>
+
+  <VARIABLE TYPE="nature">
+    <NAME>A</NAME>
+    <OUTCOME>young</OUTCOME>
+    <OUTCOME>adult</OUTCOME>
+    <OUTCOME>old</OUTCOME>
+    <OBSERVED>0</OBSERVED>
+    <PROPERTY>position = (153, -170)</PROPERTY>
+  </VARIABLE>
+
+  <DEFINITION>
+    <FOR>O</FOR>
+    <GIVEN>E</GIVEN>
+    <TABLE>0.96 0.04 0.92 0.08 </TABLE>
+  </DEFINITION>
+
+  <DEFINITION>
+    <FOR>T</FOR>
+    <GIVEN>O</GIVEN>
+    <GIVEN>R</GIVEN>
+    <TABLE>0.48 0.42 0.1 0.58 0.24 0.18 0.56 0.36 0.08 0.7000000000000001 0.21 0.09000000000000001 </TABLE>
+  </DEFINITION>
+
+  <DEFINITION>
+    <FOR>R</FOR>
+    <GIVEN>E</GIVEN>
+    <TABLE>0.25 0.75 0.2 0.8 </TABLE>
+  </DEFINITION>
 
   <DEFINITION>
     <FOR>E</FOR>
@@ -62,32 +84,13 @@
   </DEFINITION>
 
   <DEFINITION>
-    <FOR>O</FOR>
-    <GIVEN>E</GIVEN>
-    <TABLE>0.96 0.04 0.92 0.08 </TABLE>
-  </DEFINITION>
-
-  <DEFINITION>
-    <FOR>A</FOR>
-    <TABLE>0.3 0.5 0.2 </TABLE>
-  </DEFINITION>
-
-  <DEFINITION>
-    <FOR>T</FOR>
-    <GIVEN>O</GIVEN>
-    <GIVEN>R</GIVEN>
-    <TABLE>0.4799999999999999 0.41999999999999993 0.09999999999999999 0.58 0.24 0.18 0.56 0.36 0.08 0.7 0.20999999999999996 0.09 </TABLE>
-  </DEFINITION>
-
-  <DEFINITION>
     <FOR>S</FOR>
     <TABLE>0.6 0.4 </TABLE>
   </DEFINITION>
 
   <DEFINITION>
-    <FOR>R</FOR>
-    <GIVEN>E</GIVEN>
-    <TABLE>0.25 0.75 0.2 0.8 </TABLE>
+    <FOR>A</FOR>
+    <TABLE>0.3 0.5 0.2 </TABLE>
   </DEFINITION>
 
 </NETWORK>

@@ -17,25 +17,22 @@ public class Graph {
 
     public Graph(BayesianNetwork bn, List<RandomVariable> var){
         this.bn = bn;
-        this.graph = buildMoralGraph(bn,var);
+        this.graph = buildAcyclicGraph(bn,var);
     }
 
-    private List<Node> buildMoralGraph(BayesianNetwork bn, List<RandomVariable> var){
+    private List<Node> buildAcyclicGraph(BayesianNetwork bn, List<RandomVariable> var){
         Set<Node> neighbors;
         Set<Node> parents;
         Set<Node> children;
         for(RandomVariable v : var) {
-            // per il nodo corrente aggiungo ai suoi vicini i suoi genitori
             neighbors = new HashSet<Node>();
             parents = bn.getNode(v).getParents();
             for (Node n : parents) {
                 neighbors.add(n);
             }
             children = bn.getNode(v).getChildren();
-            // per il nodo corrente aggiungo ai suoi vicini i suoi figli
             for (Node n : children) {
                 neighbors.add(n);
-                // unisco i genitori di un nodo (come da algoritmo), controllo che il figlio che ho ha altri genitori
                 for(Node c : n.getParents()){
                     if(!c.getRandomVariable().getName().equals(v.getName()))
                         neighbors.add(c);
@@ -57,38 +54,29 @@ public class Graph {
         List<Node> copiaGraph = graph;
         List<RandomVariable> orderList = new ArrayList<RandomVariable>();
         if(!copiaGraph.isEmpty()){
-            Node start = maxNeighbors();//getRandomNode()
-            start.setMark(true);
-            orderList.add(start.getRandomVariable());
-            copiaGraph.remove(start);
-            while(!copiaGraph.isEmpty()) {
-                //System.out.println("start "+start.getRandomVariable().getName()+" "+start.getMark());
-                List<Node> neighbors = getUnmarkedNeighbors(start);
-                Node nextNode = maxMarkNeighbors(neighbors);
-                if(nextNode == null){
-                    start.setMark(true);
-                    orderList.add(start.getRandomVariable());
-                    copiaGraph.remove(start);
-                }
-                else{
-                    nextNode.setMark(true);
-                    orderList.add(nextNode.getRandomVariable());
-                    copiaGraph.remove(nextNode);
-                    start = nextNode;
-                }
+            for(Node node : copiaGraph){
+                Node X = maxNeighborsMark(copiaGraph);
+                orderList.add(0,X.getRandomVariable());
+                X.setMark(true);
             }
         }
+        System.out.println("PRINT PRINT PRINT PRINT");
+        System.out.println(orderList);
+        System.out.println("FINE");
         return orderList;
     }
 
     private Node maxNeighbors(){
+        RandomVariable bestMax = null;
         Node best = null;
         int numBestMax = 0;
         int numMax;
-        for(int i=0; i<this.graph.size(); i++) {
-            if (!this.graph.get(i).getMark()) {
+        for(int i=0; i<this.graph.size(); i++){
+            bestMax = this.graph.get(i).getRandomVariable();
+            if(!this.graph.get(i).getMark()) {
                 numMax = this.graph.get(i).getNeighbors().size();
-                if (numMax > numBestMax) {
+                if (numMax >= numBestMax) {
+                    bestMax = this.graph.get(i).getRandomVariable();
                     best = this.graph.get(i);
                     numBestMax = numMax;
                 }
@@ -97,33 +85,22 @@ public class Graph {
         return best;
     }
 
-    private List<Node> getUnmarkedNeighbors(Node currentNode){
-        List<Node> unmarkedNeighbors = new ArrayList<>();
-        for(Node t : currentNode.getNeighbors()){
-            if(!t.getMark())
-                unmarkedNeighbors.add(t);
-        }
-        return unmarkedNeighbors;
-    }
-
-    private Node maxMarkNeighbors(List<Node> neighbours){
+    private Node maxNeighborsMark(List<Node> graph){
         int count=0;
         int countMax=0;
         Node node = null;
-        for(Node n : neighbours){
-            for(Node p : n.getNeighbors()){
-                if(p.getMark())
-                    count++;
+        for(Node n : graph){
+            if (!n.getMark()) {
+                for (Node p : n.getNeighbors()) {
+                    if (p.getMark())
+                        count++;
+                }
+                if (count >= countMax) {
+                    countMax = count;
+                    node = n;
+                }
+                count = 0;
             }
-            if(count > countMax) {
-                countMax = count;
-                node = n;
-            }
-            else if(count == countMax){
-                    if(node.getNeighbors().size() < n.getNeighbors().size())
-                        node = n;
-            }
-            count=0;
         }
         return node;
     }
@@ -135,35 +112,81 @@ public class Graph {
     public List<RandomVariable> greedyOrdering(String heuristic){
         List<RandomVariable> orderList = new ArrayList<RandomVariable>();
         RandomVariable var = null;
-        if(heuristic.equals("MinNeighbors")) {
-            int cardinality = 0;
-            while (cardinality < this.graph.size()) {
-                var = min();
-                bn.getNode(var).setMark(true);
-                orderList.add(var);
-                //da controllare
-                for(Node node : bn.getNode(var).getNeighbors()){
-                    for(Node n : bn.getNode(var).getNeighbors()){
-                        if(n != node){
-                            if(!n.getNeighbors().contains(node))
-                                n.getNeighbors().add(node);
-                        }
+        int cardinality = 0;
+        while (cardinality < this.graph.size()) {
+            if(heuristic.equals("MinNeighbors")) {
+                var = minNeighbors();
+            } else if (heuristic.equals("MinWeight")) {
+                var = minWeight();
+            } else if (heuristic.equals("MinFill")){
+                var = minFill();
+            }
+            bn.getNode(var).setMark(true);
+            orderList.add(var);
+            for(Node node : bn.getNode(var).getNeighbors()){
+                for(Node n : bn.getNode(var).getNeighbors()){
+                    if(n != node){
+                        if(!n.getNeighbors().contains(node))
+                            n.getNeighbors().add(node);
                     }
                 }
-                //stop controllo
-                cardinality++;
             }
+            cardinality++;
         }
+
         return orderList;
     }
 
-    private RandomVariable min(){
+    private RandomVariable minNeighbors(){
         RandomVariable bestMin = null;
         int numBestMin = Integer.MAX_VALUE;
         int numMin;
         for(int i=0; i<this.graph.size(); i++){
             if(!this.graph.get(i).getMark()) {
                 numMin= this.graph.get(i).getNeighbors().size();
+                if (numMin < numBestMin) {
+                    bestMin = this.graph.get(i).getRandomVariable();
+                    numBestMin = numMin;
+                }
+            }
+        }
+        return bestMin;
+    }
+
+    private RandomVariable minWeight(){
+        RandomVariable bestMin = null;
+        int numBestMin = Integer.MAX_VALUE;
+        int numMin;
+        for(int i=0; i<this.graph.size(); i++){
+            if(!this.graph.get(i).getMark()) {
+                numMin= this.graph.get(i).getRandomVariable().getDomain().size();
+                if (numMin < numBestMin) {
+                    bestMin = this.graph.get(i).getRandomVariable();
+                    numBestMin = numMin;
+                }
+            }
+        }
+        return bestMin;
+    }
+
+    private RandomVariable minFill(){
+        RandomVariable bestMin = null;
+        int numBestMin = Integer.MAX_VALUE;
+        int numMin = 0;
+        Set<Node> neighboursList = null;
+        for(int i=0; i<this.graph.size(); i++){
+            if(!this.graph.get(i).getMark()) {
+                neighboursList = this.graph.get(i).getNeighbors();
+                for (Node n1 : neighboursList){
+                    for(Node n2 : neighboursList){
+                        if (!n1.getRandomVariable().getName().equals(n2.getRandomVariable().getName())){
+                            if (!n1.getNeighbors().contains(n2)){
+                                numMin++;
+                            }
+                        }
+                    }
+                }
+                numMin= numMin/2;
                 if (numMin < numBestMin) {
                     bestMin = this.graph.get(i).getRandomVariable();
                     numBestMin = numMin;

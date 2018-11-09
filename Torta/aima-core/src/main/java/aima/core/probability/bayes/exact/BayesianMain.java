@@ -7,9 +7,9 @@ import aima.core.probability.bayes.FiniteNode;
 import aima.core.probability.bayes.Node;
 import aima.core.probability.bayes.impl.BayesNet;
 import aima.core.probability.bayes.impl.FullCPTNode;
-import aima.core.probability.domain.BooleanDomain;
-import aima.core.probability.domain.Domain;
+import aima.core.probability.domain.*;
 import aima.core.probability.util.RandVar;
+import org.encog.ml.bayesian.BayesianChoice;
 import org.encog.ml.bayesian.BayesianEvent;
 import org.encog.ml.bayesian.BayesianNetwork;
 import org.encog.ml.bayesian.bif.BIFUtil;
@@ -31,15 +31,19 @@ public class BayesianMain {
         be[be.length-1]=temp;
     }
 
+    private static void save(ArrayList<String> label) throws IOException {
+        FileWriter output = new FileWriter("./retiBayesiane/earthquake.txt");
+        BufferedWriter out = new BufferedWriter(output);
+        out.append("query\n");
+        for(String str : label)
+            out.append(str+" ________\n");
+        out.close();
+        output.close();
+    }
+
     public static aima.core.probability.bayes.BayesianNetwork buildNetwork() throws IOException {
 
-        // DA FAR GIRARE SOLO QUANDO LEGGO LA RETE LA PRIMA VOLTA
-
-        /*FileWriter output = new FileWriter("./ReteBayesiana.txt");
-        BufferedWriter out = new BufferedWriter(output);
-        out.append("query\n");*/
-
-        BayesianNetwork bn = BIFUtil.readBIF("./retiBayesiane/asia.xmlbif");
+        BayesianNetwork bn = BIFUtil.readBIF("./retiBayesiane/survey.xmlbif");
         /*System.out.println(bn.toString());
         System.out.println("GETCONTENTS");
         System.out.println(bn.getContents());
@@ -52,12 +56,26 @@ public class BayesianMain {
         List<FiniteNode> nodeList = new ArrayList<>();
         ArrayList<String> nodeNamesList = new ArrayList<>();
         Node[] ancestors;
+        double[] values = null;
+        String[] choices = null;
+        ArrayList<String> nodeLabel = new ArrayList<>();
         for (BayesianEvent e : bn.getEvents()) {
             if (!e.hasParents()) {
-                FiniteNode node = new FullCPTNode(new RandVar(e.getLabel(), new BooleanDomain()),
-                        new double[]{e.getTable().getLines().get(0).getProbability(), e.getTable().getLines().get(1).getProbability()});
+                values = new double[e.getTable().getLines().size()];
+                int z = 0;
+                for (TableLine tl : e.getTable().getLines()) {
+                    values[z] = tl.getProbability();
+                    z++;
+                }
+                choices = new String[e.getChoices().size()];
+                int q = 0;
+                for(BayesianChoice bc : e.getChoices()){
+                    choices[q] = bc.getLabel();
+                    q++;
+                }
+                FiniteNode node = new FullCPTNode(new RandVar(e.getLabel(), new ArbitraryTokenDomain(choices)), values);
                 nodeNamesList.add(node.getRandomVariable().getName());
-                //out.append(node.getRandomVariable().getName()+" ________\n");
+                nodeLabel.add(node.getRandomVariable().getName());
                 nodeList.add(node);
             }
         }
@@ -100,17 +118,28 @@ public class BayesianMain {
                             }
                         }
                     }
-                    double[] values = new double[e.getTable().getMaxLines()];
+                    values = new double[e.getTable().getLines().size()];
                     int z = 0;
                     for (TableLine tl : e.getTable().getLines()) {
                         values[z] = tl.getProbability();
                         z++;
                     }
+                    if(e.getLabel().equals("E")){
+                        for(int t=0; t<values.length; t++)
+                            System.out.println(values[t]);
+                    }
+                    choices = new String[e.getChoices().size()];
+                    int q = 0;
+                    for(BayesianChoice bc : e.getChoices()){
+                        choices[q] = bc.getLabel();
+                        q++;
+                    }
+
                     //System.out.println("creo nodo " + e.getLabel());
-                    FiniteNode node = new FullCPTNode(new RandVar(e.getLabel(), new BooleanDomain()), values, parents);
+                    FiniteNode node = new FullCPTNode(new RandVar(e.getLabel(), new ArbitraryTokenDomain(choices)), values, parents);
                     nodeList.add(node);
                     nodeNamesList.add(node.getRandomVariable().getName());
-                    //out.append(node.getRandomVariable().getName()+" ________\n");
+                    nodeLabel.add(node.getRandomVariable().getName());
                     k++;
                 } else {
                     moveToLastPosition(eventsArray, k);
@@ -123,8 +152,7 @@ public class BayesianMain {
         aima.core.probability.bayes.BayesianNetwork network = new BayesNet(ancestors);
         System.out.println("Nodi: "+network.getVariablesInTopologicalOrder()+"\n");
 
-        //out.close();
-        //output.close();
+        //save(nodeLabel);
 
         return network;
 

@@ -1,9 +1,0 @@
-query dysp
-asia true
-smoke false
-tub ________
-bronc false
-lung ________
-either ________
-xray true
-dysp ________

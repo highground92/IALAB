@@ -1,9 +1,6 @@
 package aima.core.probability.bayes.impl;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.*;
 
 import aima.core.probability.RandomVariable;
 import aima.core.probability.bayes.ConditionalProbabilityDistribution;
@@ -99,6 +96,16 @@ public abstract class AbstractNode implements Node {
 	@Override
 	public void setMark(boolean m){
 		this.mark = m;
+	}
+
+	public void setParents(Set<Node> parents){
+		this.parents = parents;
+	}
+
+	public void setChildren(Set<Node> children) {
+		for(Node n : children){
+			this.addChild(n);
+		}
 	}
 
 	@Override
