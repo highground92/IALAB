@@ -130,10 +130,8 @@ public abstract class BayesianInferenceTest {
 		System.out.println();
 
 		CategoricalDistribution d = bayesInference.ask(query,assig, bn);
-		//<0.95, 0.05, 0.94, 0.06, 0.29, 0.71, 0.001, 0.999>
-		//<0.5565220621571877, 0.4434779378428123>
-		//System.out.println("P(Burglary | JohnCalls = true, MaryCalls = true)=" + d + "\n\n");
-		System.out.println("P(Cancer | x, ~d)=" + d + "\n\n");
+		//System.out.println("P(Alarm | j, m)=" + d + "\n\n");
+		System.out.println("P(E | A = young, S = F, R = small)=" + d + "\n\n");
 
 		/*CategoricalDistribution d = bayesInference
 				.ask(new RandomVariable[] { ExampleRV.ALARM_RV },

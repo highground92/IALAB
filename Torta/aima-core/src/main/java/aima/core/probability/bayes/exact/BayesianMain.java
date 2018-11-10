@@ -59,6 +59,7 @@ public class BayesianMain {
         double[] values = null;
         String[] choices = null;
         ArrayList<String> nodeLabel = new ArrayList<>();
+        int offset;
         for (BayesianEvent e : bn.getEvents()) {
             if (!e.hasParents()) {
                 values = new double[e.getTable().getLines().size()];
@@ -118,16 +119,32 @@ public class BayesianMain {
                             }
                         }
                     }
+                    offset = e.getChoices().size();
+                    //System.out.println("offset: "+offset);
                     values = new double[e.getTable().getLines().size()];
-                    int z = 0;
-                    for (TableLine tl : e.getTable().getLines()) {
-                        values[z] = tl.getProbability();
-                        z++;
+                    int x=0;
+                    for (int z=0; z<e.getTable().getLines().size(); z++) {
+                        //System.out.println(e.getLabel()+" "+z);
+                        values[z] = e.getTable().getLines().get(x).getProbability();
+                        //System.out.println("resto "+z%offset);
+                        if((z+1)%offset==0)
+                            z+=offset;
+                        x++;
                     }
-                    if(e.getLabel().equals("E")){
+                    System.out.println("----------------------------");
+                    x=e.getTable().getLines().size()/2;
+                    for (int z=offset; z<e.getTable().getLines().size(); z++) {
+                        //System.out.println(z);
+                        values[z] = e.getTable().getLines().get(x).getProbability();
+                        if((z+1)%offset==0)
+                            z+=offset;
+                        x++;
+                    }
+                    /*if(e.getLabel().equals("T")){
+                        System.out.println(e.getTable().getLines().size());
                         for(int t=0; t<values.length; t++)
                             System.out.println(values[t]);
-                    }
+                    }*/
                     choices = new String[e.getChoices().size()];
                     int q = 0;
                     for(BayesianChoice bc : e.getChoices()){
