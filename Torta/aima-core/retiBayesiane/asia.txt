@@ -1,0 +1,9 @@
+query dysp
+asia ________
+smoke yes
+tub ________
+bronc no
+lung ________
+either yes
+xray ________
+dysp ________

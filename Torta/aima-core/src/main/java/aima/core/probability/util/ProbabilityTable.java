@@ -267,7 +267,7 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 
 	//nuovo metodo
 	@Override
-	public Factor sumMax(RandomVariable... vars){
+	public Factor maxOut(RandomVariable... vars){
 		Set<RandomVariable> soutVars = new LinkedHashSet<RandomVariable>(
 				this.randomVarInfo.keySet());
 		for (RandomVariable rv : vars) {
@@ -290,8 +290,8 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 						i++;
 					}
 
-					System.out.println(summedMax.getValues()[summedMax.getIndex(termValues)]);
-					System.out.println(probability);
+					System.out.println("1° "+summedMax.getValues()[summedMax.getIndex(termValues)]);
+					System.out.println("2° "+probability);
 
 					summedMax.getValues()[summedMax.getIndex(termValues)] =
 							Math.max(summedMax.getValues()[summedMax.getIndex(termValues)], probability);

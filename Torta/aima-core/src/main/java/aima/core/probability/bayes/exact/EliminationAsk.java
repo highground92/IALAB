@@ -260,10 +260,11 @@ public class EliminationAsk implements BayesInference {
 		Graph graph = new Graph(bn,var);
 		System.out.println("ACYCLIC GRAPH\n"+graph.toString());
 
-		List<RandomVariable> order = graph.maxCardinality();
-		//List<RandomVariable> order = graph.greedyOrdering("MinNeighbors");
+		//List<RandomVariable> order = graph.maxCardinality();
+		List<RandomVariable> order = graph.greedyOrdering("MinNeighbors");
 		//List<RandomVariable> order = graph.greedyOrdering("MinWeight");
 		//List<RandomVariable> order = graph.greedyOrdering("MinFill");
+		//List<RandomVariable> order = graph.greedyOrdering("minWeightFill");
 
 		return order;
 	}
@@ -332,7 +333,7 @@ public class EliminationAsk implements BayesInference {
 
 	private List<Factor> sumOut(RandomVariable var, List<Factor> factors,
 								BayesianNetwork bn) {
-		List<Factor> summedOutFactors = new ArrayList<Factor>();
+		List<Factor> maxedOutFactors = new ArrayList<Factor>();
 		List<Factor> toMultiply = new ArrayList<Factor>();
 		for (Factor f : factors) {
 			System.out.println("factor: "+f);
@@ -342,17 +343,17 @@ public class EliminationAsk implements BayesInference {
 			} else {
 				// This factor does not contain the variable
 				// so no need to sum out - see AIMA3e pg. 527.
-				summedOutFactors.add(f);
+				maxedOutFactors.add(f);
 			}
 		}
 
 		//sumOut
-		summedOutFactors.add(pointwiseProduct(toMultiply).sumOut(var));
+		//summedOutFactors.add(pointwiseProduct(toMultiply).sumOut(var));
 
 		//inference MPE
-		//summedOutFactors.add(pointwiseProduct(toMultiply).sumMax(var));
+		maxedOutFactors.add(pointwiseProduct(toMultiply).maxOut(var));
 
-		return summedOutFactors;
+		return maxedOutFactors;
 	}
 
 	private Factor pointwiseProduct(List<Factor> factors) {

@@ -77,7 +77,7 @@ public interface Factor {
 	Factor sumOut(RandomVariable... vars);
 
 	//nuovo metodo
-	Factor sumMax(RandomVariable... vars);
+	Factor maxOut(RandomVariable... vars);
 
 	Factor sumMaxMAP(RandomVariable... vars);
 

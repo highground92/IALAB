@@ -120,6 +120,8 @@ public class Graph {
                 var = minWeight();
             } else if (heuristic.equals("MinFill")){
                 var = minFill();
+            } else if (heuristic.equals("minWeightFill")){
+                var =  minWeightFill();
             }
             bn.getNode(var).setMark(true);
             orderList.add(var);
@@ -190,6 +192,34 @@ public class Graph {
                 if (numMin < numBestMin) {
                     bestMin = this.graph.get(i).getRandomVariable();
                     numBestMin = numMin;
+                }
+            }
+        }
+        return bestMin;
+    }
+
+    private RandomVariable minWeightFill(){
+        RandomVariable bestMin = null;
+        int bestMinSumWeigth = Integer.MAX_VALUE;
+        int sumWeigth = 0;
+        Set<Node> neighboursList = null;
+        for(int i=0; i<this.graph.size(); i++){
+            if(!this.graph.get(i).getMark()) {
+                neighboursList = this.graph.get(i).getNeighbors();
+                for (Node n1 : neighboursList){
+                    int n1Weigth = n1.getRandomVariable().getDomain().size();
+                    for(Node n2 : neighboursList){
+                        if (!n1.getRandomVariable().getName().equals(n2.getRandomVariable().getName())){
+                            if (!n1.getNeighbors().contains(n2)){
+                                sumWeigth += n1Weigth * n2.getRandomVariable().getDomain().size();
+                            }
+                        }
+                    }
+                }
+                //numMin= numMin/2;
+                if (sumWeigth < bestMinSumWeigth) {
+                    bestMin = this.graph.get(i).getRandomVariable();
+                    bestMinSumWeigth = sumWeigth;
                 }
             }
         }

@@ -32,7 +32,7 @@ public class BayesianMain {
     }
 
     private static void save(ArrayList<String> label) throws IOException {
-        FileWriter output = new FileWriter("./retiBayesiane/earthquake.txt");
+        FileWriter output = new FileWriter("./retiBayesiane/asia.txt");
         BufferedWriter out = new BufferedWriter(output);
         out.append("query\n");
         for(String str : label)
@@ -43,7 +43,7 @@ public class BayesianMain {
 
     public static aima.core.probability.bayes.BayesianNetwork buildNetwork() throws IOException {
 
-        BayesianNetwork bn = BIFUtil.readBIF("./retiBayesiane/survey.xmlbif");
+        BayesianNetwork bn = BIFUtil.readBIF("./retiBayesiane/asia.xmlbif");
         /*System.out.println(bn.toString());
         System.out.println("GETCONTENTS");
         System.out.println(bn.getContents());
