@@ -253,8 +253,8 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 						termValues[i] = possibleWorld.get(rv);
 						i++;
 					}
-					System.out.println(summedOut.getValues()[summedOut.getIndex(termValues)]);
-					System.out.println(probability);
+					//System.out.println(summedOut.getValues()[summedOut.getIndex(termValues)]);
+					//0.01System.out.println(probability);
 
 					summedOut.getValues()[summedOut.getIndex(termValues)] += probability;
 				}
@@ -290,8 +290,8 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 						i++;
 					}
 
-					System.out.println("1° "+summedMax.getValues()[summedMax.getIndex(termValues)]);
-					System.out.println("2° "+probability);
+					//System.out.println("1° "+summedMax.getValues()[summedMax.getIndex(termValues)]);
+					//System.out.println("2° "+probability);
 
 					summedMax.getValues()[summedMax.getIndex(termValues)] =
 							Math.max(summedMax.getValues()[summedMax.getIndex(termValues)], probability);

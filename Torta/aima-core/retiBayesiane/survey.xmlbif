@@ -3,27 +3,12 @@
 <!--
   Bayesian network in XMLBIF v0.3 (BayesNet Interchange Format)
   Produced by SamIam http://reasoning.cs.ucla.edu/samiam
-  Output created 10-nov-2018 12.50.58
+  Output created 13-nov-2018 20.37.53
 -->
 
 <BIF VERSION="0.3">
 <NETWORK>
   <NAME>bayesiannetwork</NAME>
-
-  <VARIABLE TYPE="nature">
-    <NAME>T</NAME>
-    <OUTCOME>car</OUTCOME>
-    <OUTCOME>train</OUTCOME>
-    <OUTCOME>other</OUTCOME>
-    <PROPERTY>position = (336, 192)</PROPERTY>
-  </VARIABLE>
-
-  <VARIABLE TYPE="nature">
-    <NAME>E</NAME>
-    <OUTCOME>high</OUTCOME>
-    <OUTCOME>uni</OUTCOME>
-    <PROPERTY>position = (315, -46)</PROPERTY>
-  </VARIABLE>
 
   <VARIABLE TYPE="nature">
     <NAME>A</NAME>
@@ -35,18 +20,11 @@
   </VARIABLE>
 
   <VARIABLE TYPE="nature">
-    <NAME>S</NAME>
-    <OUTCOME>M</OUTCOME>
-    <OUTCOME>F</OUTCOME>
-    <OBSERVED>1</OBSERVED>
-    <PROPERTY>position = (516, -163)</PROPERTY>
-  </VARIABLE>
-
-  <VARIABLE TYPE="nature">
-    <NAME>O</NAME>
-    <OUTCOME>emp</OUTCOME>
-    <OUTCOME>self</OUTCOME>
-    <PROPERTY>position = (600, 105)</PROPERTY>
+    <NAME>T</NAME>
+    <OUTCOME>car</OUTCOME>
+    <OUTCOME>train</OUTCOME>
+    <OUTCOME>other</OUTCOME>
+    <PROPERTY>position = (336, 192)</PROPERTY>
   </VARIABLE>
 
   <VARIABLE TYPE="nature">
@@ -57,11 +35,49 @@
     <PROPERTY>position = (186, 81)</PROPERTY>
   </VARIABLE>
 
+  <VARIABLE TYPE="nature">
+    <NAME>S</NAME>
+    <OUTCOME>M</OUTCOME>
+    <OUTCOME>F</OUTCOME>
+    <OBSERVED>1</OBSERVED>
+    <PROPERTY>position = (516, -163)</PROPERTY>
+  </VARIABLE>
+
+  <VARIABLE TYPE="nature">
+    <NAME>E</NAME>
+    <OUTCOME>high</OUTCOME>
+    <OUTCOME>uni</OUTCOME>
+    <PROPERTY>position = (315, -46)</PROPERTY>
+  </VARIABLE>
+
+  <VARIABLE TYPE="nature">
+    <NAME>O</NAME>
+    <OUTCOME>emp</OUTCOME>
+    <OUTCOME>self</OUTCOME>
+    <PROPERTY>position = (600, 105)</PROPERTY>
+  </VARIABLE>
+
+  <DEFINITION>
+    <FOR>A</FOR>
+    <TABLE>0.3 0.5 0.2 </TABLE>
+  </DEFINITION>
+
   <DEFINITION>
     <FOR>T</FOR>
     <GIVEN>O</GIVEN>
     <GIVEN>R</GIVEN>
-    <TABLE>0.48000000000000004 0.42000000000000004 0.10000000000000002 0.58 0.24 0.18 0.56 0.36 0.08 0.7000000000000001 0.21 0.09000000000000001 </TABLE>
+    <TABLE>0.4799999999999999 0.41999999999999993 0.09999999999999999 0.58 0.24 0.18 0.56 0.36 0.08 0.7000000000000001 0.21 0.09000000000000001 </TABLE>
+  </DEFINITION>
+
+  <DEFINITION>
+    <FOR>R</FOR>
+    <GIVEN>E</GIVEN>
+    <TABLE>0.25 0.75 0.2 0.8 </TABLE>
+  </DEFINITION>
+
+  <DEFINITION>
+    <FOR>S</FOR>
+    <TABLE>0.6 0.4 </TABLE>
   </DEFINITION>
 
   <DEFINITION>
@@ -72,25 +88,9 @@
   </DEFINITION>
 
   <DEFINITION>
-    <FOR>A</FOR>
-    <TABLE>0.3 0.5 0.2 </TABLE>
-  </DEFINITION>
-
-  <DEFINITION>
-    <FOR>S</FOR>
-    <TABLE>0.6 0.4 </TABLE>
-  </DEFINITION>
-
-  <DEFINITION>
     <FOR>O</FOR>
     <GIVEN>E</GIVEN>
     <TABLE>0.96 0.04 0.92 0.08 </TABLE>
-  </DEFINITION>
-
-  <DEFINITION>
-    <FOR>R</FOR>
-    <GIVEN>E</GIVEN>
-    <TABLE>0.25 0.75 0.2 0.8 </TABLE>
   </DEFINITION>
 
 </NETWORK>

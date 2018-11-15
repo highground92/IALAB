@@ -216,7 +216,7 @@ public class Graph {
                         }
                     }
                 }
-                //numMin= numMin/2;
+                sumWeigth= sumWeigth/2;
                 if (sumWeigth < bestMinSumWeigth) {
                     bestMin = this.graph.get(i).getRandomVariable();
                     bestMinSumWeigth = sumWeigth;

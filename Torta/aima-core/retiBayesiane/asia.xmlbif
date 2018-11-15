@@ -3,7 +3,7 @@
 <!--
   Bayesian network in XMLBIF v0.3 (BayesNet Interchange Format)
   Produced by SamIam http://reasoning.cs.ucla.edu/samiam
-  Output created 8-nov-2018 12.04.11
+  Output created 13-nov-2018 20.37.50
 -->
 
 <BIF VERSION="0.3">
@@ -25,6 +25,14 @@
   </VARIABLE>
 
   <VARIABLE TYPE="nature">
+    <NAME>lung</NAME>
+    <OUTCOME>yes</OUTCOME>
+    <OUTCOME>no</OUTCOME>
+    <OBSERVED>0</OBSERVED>
+    <PROPERTY>position = (59, -108)</PROPERTY>
+  </VARIABLE>
+
+  <VARIABLE TYPE="nature">
     <NAME>xray</NAME>
     <OUTCOME>yes</OUTCOME>
     <OUTCOME>no</OUTCOME>
@@ -42,28 +50,24 @@
     <NAME>either</NAME>
     <OUTCOME>yes</OUTCOME>
     <OUTCOME>no</OUTCOME>
+    <OBSERVED>0</OBSERVED>
     <PROPERTY>position = (41, -237)</PROPERTY>
-  </VARIABLE>
-
-  <VARIABLE TYPE="nature">
-    <NAME>bronc</NAME>
-    <OUTCOME>yes</OUTCOME>
-    <OUTCOME>no</OUTCOME>
-    <PROPERTY>position = (228, -18)</PROPERTY>
-  </VARIABLE>
-
-  <VARIABLE TYPE="nature">
-    <NAME>lung</NAME>
-    <OUTCOME>yes</OUTCOME>
-    <OUTCOME>no</OUTCOME>
-    <PROPERTY>position = (59, -108)</PROPERTY>
   </VARIABLE>
 
   <VARIABLE TYPE="nature">
     <NAME>smoke</NAME>
     <OUTCOME>yes</OUTCOME>
     <OUTCOME>no</OUTCOME>
+    <OBSERVED>0</OBSERVED>
     <PROPERTY>position = (43, -10)</PROPERTY>
+  </VARIABLE>
+
+  <VARIABLE TYPE="nature">
+    <NAME>bronc</NAME>
+    <OUTCOME>yes</OUTCOME>
+    <OUTCOME>no</OUTCOME>
+    <OBSERVED>1</OBSERVED>
+    <PROPERTY>position = (228, -18)</PROPERTY>
   </VARIABLE>
 
   <DEFINITION>
@@ -75,6 +79,12 @@
   <DEFINITION>
     <FOR>asia</FOR>
     <TABLE>0.01 0.99 </TABLE>
+  </DEFINITION>
+
+  <DEFINITION>
+    <FOR>lung</FOR>
+    <GIVEN>smoke</GIVEN>
+    <TABLE>0.1 0.9 0.01 0.99 </TABLE>
   </DEFINITION>
 
   <DEFINITION>
@@ -98,20 +108,14 @@
   </DEFINITION>
 
   <DEFINITION>
+    <FOR>smoke</FOR>
+    <TABLE>0.5 0.5 </TABLE>
+  </DEFINITION>
+
+  <DEFINITION>
     <FOR>bronc</FOR>
     <GIVEN>smoke</GIVEN>
     <TABLE>0.6 0.4 0.3 0.7 </TABLE>
-  </DEFINITION>
-
-  <DEFINITION>
-    <FOR>lung</FOR>
-    <GIVEN>smoke</GIVEN>
-    <TABLE>0.1 0.9 0.01 0.99 </TABLE>
-  </DEFINITION>
-
-  <DEFINITION>
-    <FOR>smoke</FOR>
-    <TABLE>0.5 0.5 </TABLE>
   </DEFINITION>
 
 </NETWORK>

@@ -43,7 +43,7 @@ public class BayesianMain {
 
     public static aima.core.probability.bayes.BayesianNetwork buildNetwork() throws IOException {
 
-        BayesianNetwork bn = BIFUtil.readBIF("./retiBayesiane/asia.xmlbif");
+        BayesianNetwork bn = BIFUtil.readBIF("./retiBayesiane/earthquake.xmlbif");
         /*System.out.println(bn.toString());
         System.out.println("GETCONTENTS");
         System.out.println(bn.getContents());

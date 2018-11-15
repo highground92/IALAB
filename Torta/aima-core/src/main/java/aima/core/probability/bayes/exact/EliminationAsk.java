@@ -97,7 +97,11 @@ public class EliminationAsk implements BayesInference {
 
 		factors = sumOutVar(order,factors,hidden,bn);
 
+		System.out.println("----------------------------");
+
 		Factor product = pointwiseProduct(factors);
+
+		//return (ProbabilityTable) product;
 
 		// return NORMALIZE(POINTWISE-PRODUCT(factors))
 		return ((ProbabilityTable) product.pointwiseProductPOS(_identity, X))
@@ -299,6 +303,8 @@ public class EliminationAsk implements BayesInference {
 			if(hidden.contains(var)){
 				System.out.println("sumOut var: "+var.getName());
 				factors = sumOut(var, factors,bn);
+				for(int i=0; i<factors.size(); i++)
+					System.out.println("dopo sumout: "+factors.get(i));
 			}
 		}
 		return factors;
@@ -352,6 +358,8 @@ public class EliminationAsk implements BayesInference {
 
 		//inference MPE
 		maxedOutFactors.add(pointwiseProduct(toMultiply).maxOut(var));
+		for(int i=0; i<maxedOutFactors.size(); i++)
+			System.out.println("max: "+maxedOutFactors.get(i));
 
 		return maxedOutFactors;
 	}
@@ -359,7 +367,7 @@ public class EliminationAsk implements BayesInference {
 	private Factor pointwiseProduct(List<Factor> factors) {
 
 		Factor product = factors.get(0);
-		System.out.println("PRODUCT "+product.toString());
+		System.out.println("PRODUCT one "+product.toString());
 		for (int i = 1; i < factors.size(); i++) {
 			System.out.println("PRODUCT "+factors.get(i).toString());
 			product = product.pointwiseProduct(factors.get(i));
