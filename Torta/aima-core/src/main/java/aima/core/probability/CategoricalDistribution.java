@@ -3,6 +3,7 @@ package aima.core.probability;
 import java.util.Map;
 
 import aima.core.probability.proposition.AssignmentProposition;
+import aima.core.probability.util.ProbabilityTable;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 487.<br>

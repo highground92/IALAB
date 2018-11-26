@@ -1,14 +1,11 @@
 package aima.core.probability.util;
 
-import java.util.Collection;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import aima.core.probability.CategoricalDistribution;
 import aima.core.probability.Factor;
 import aima.core.probability.RandomVariable;
+import aima.core.probability.bayes.exact.EliminationAsk;
 import aima.core.probability.domain.FiniteDomain;
 import aima.core.probability.proposition.AssignmentProposition;
 import aima.core.util.SetOps;
@@ -19,7 +16,7 @@ import aima.core.util.math.MixedRadixNumber;
  * This is also the default implementation of the CategoricalDistribution and
  * Factor interfaces (as they are essentially dependent on the same underlying
  * data structures).
- * 
+ *
  * @author Ciaran O'Reilly
  */
 public class ProbabilityTable implements CategoricalDistribution, Factor {
@@ -32,11 +29,16 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 	private String toString = null;
 	private double sum = -1;
 
+	//new
+	//hashmap con lista di variabili con i loro valori (etc T/F)
+	public static HashMap<ArrayList<RandomVariable>, ArrayList<Object>> varObj = new HashMap<>();
+	//hasmap con la lista di variabili con la loro probabilità
+	public static HashMap<ArrayList<RandomVariable>, Double> varProb = new HashMap<>();
 	/**
 	 * Interface to be implemented by an object/algorithm that wishes to iterate
 	 * over the possible assignments for the random variables comprising this
 	 * table.
-	 * 
+	 *
 	 * @see ProbabilityTable#iterateOverTable(Iterator)
 	 * @see ProbabilityTable#iterateOverTable(Iterator,
 	 *      AssignmentProposition...)
@@ -45,7 +47,7 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 		/**
 		 * Called for each possible assignment for the Random Variables
 		 * comprising this ProbabilityTable.
-		 * 
+		 *
 		 * @param possibleAssignment
 		 *            a possible assignment, &omega;, of variable/value pairs.
 		 * @param probability
@@ -136,6 +138,7 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 
 	//
 	// START-CategoricalDistribution
+
 	public double[] getValues() {
 		return values;
 	}
@@ -224,6 +227,12 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 
 	//
 	// START-Factor
+
+	@Override
+	public Map<RandomVariable, RVInfo> getRrandomVarInfo() {
+		return this.randomVarInfo;
+	}
+
 	@Override
 	public Set<RandomVariable> getArgumentVariables() {
 		return randomVarInfo.keySet();
@@ -254,7 +263,7 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 						i++;
 					}
 					//System.out.println(summedOut.getValues()[summedOut.getIndex(termValues)]);
-					//0.01System.out.println(probability);
+					//System.out.println(probability);
 
 					summedOut.getValues()[summedOut.getIndex(termValues)] += probability;
 				}
@@ -270,36 +279,55 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 	public Factor maxOut(RandomVariable... vars){
 		Set<RandomVariable> soutVars = new LinkedHashSet<RandomVariable>(
 				this.randomVarInfo.keySet());
+		//new
+		ArrayList<RandomVariable> rvRemove = new ArrayList<>();
+		Set<RandomVariable> varProbArray = new LinkedHashSet<RandomVariable>(
+				this.randomVarInfo.keySet());
+
 		for (RandomVariable rv : vars) {
+			System.out.println("remove: "+rv.getName());
+			rvRemove.add(rv);
 			soutVars.remove(rv);
 		}
 		final ProbabilityTable summedMax = new ProbabilityTable(soutVars);
+		//new
+		final ProbabilityTable varProb = new ProbabilityTable(varProbArray);
+
 		if (1 == summedMax.getValues().length) {
-			summedMax.getValues()[0] = getSum();
+			summedMax.getValues()[0] = Math.max(values[0],values[1]);
 		} else {
 			// Otherwise need to iterate through this distribution
 			// to calculate the summed out distribution.
 			final Object[] termValues = new Object[summedMax.randomVarInfo
 					.size()];
+
+			//new
 			ProbabilityTable.Iterator di = new ProbabilityTable.Iterator() {
 				public void iterate(Map<RandomVariable, Object> possibleWorld,
 									double probability) {
 					int i=0;
+
+					for(RandomVariable var : varProb.randomVarInfo.keySet()){
+						System.out.println("var: "+var.getName());
+						System.out.println("value: "+possibleWorld.get(var));
+					}
+
 					for (RandomVariable rv : summedMax.randomVarInfo.keySet()) {
 						termValues[i] = possibleWorld.get(rv);
 						i++;
 					}
 
-					//System.out.println("1° "+summedMax.getValues()[summedMax.getIndex(termValues)]);
-					//System.out.println("2° "+probability);
-
 					summedMax.getValues()[summedMax.getIndex(termValues)] =
 							Math.max(summedMax.getValues()[summedMax.getIndex(termValues)], probability);
+
 				}
 			};
 			iterateOverTable(di);
 		}
-
+		System.out.println("summedMax");
+		for(int i=0; i<summedMax.size(); i++){
+			System.out.println(summedMax.getValues()[i]);
+		}
 		return summedMax;
 	}
 
@@ -336,6 +364,11 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 	}
 
 	@Override
+	public Map<RandomVariable, RVInfo> getRandomVarInfo() {
+		return this.randomVarInfo;
+	}
+
+	@Override
 	public Factor pointwiseProduct(Factor multiplier) {
 		return pointwiseProduct((ProbabilityTable) multiplier);
 	}
@@ -363,10 +396,11 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 	/**
 	 * Iterate over all the possible value assignments for the Random Variables
 	 * comprising this ProbabilityTable.
-	 * 
+	 *
 	 * @param pti
 	 *            the ProbabilityTable Iterator to iterate.
 	 */
+
 	public void iterateOverTable(Iterator pti) {
 		Map<RandomVariable, Object> possibleWorld = new LinkedHashMap<RandomVariable, Object>();
 		MixedRadixNumber mrn = new MixedRadixNumber(0, radices);
@@ -379,13 +413,14 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 			pti.iterate(possibleWorld, values[mrn.intValue()]);
 
 		} while (mrn.increment());
+
 	}
 
 	/**
 	 * Iterate over all possible values assignments for the Random Variables
 	 * comprising this ProbabilityTable that are not in the fixed set of values.
 	 * This allows you to iterate over a subset of possible combinations.
-	 * 
+	 *
 	 * @param pti
 	 *            the ProbabilityTable Iterator to iterate
 	 * @param fixedValues
@@ -639,7 +674,7 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 		return r;
 	}
 
-	private class RVInfo {
+	public class RVInfo {
 		private RandomVariable variable;
 		private FiniteDomain varDomain;
 		private int radixIdx = 0;

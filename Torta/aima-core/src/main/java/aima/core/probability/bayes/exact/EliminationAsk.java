@@ -75,12 +75,12 @@ public class EliminationAsk implements BayesInference {
 		List<RandomVariable> VARS = new ArrayList<RandomVariable>();
 		calculateVariables(X, e, bn, hidden, VARS);
 
-		return eliminationAskSumOutMPE(X, e, bn, hidden, VARS);
+		return eliminationAskMPE(X, e, bn, hidden, VARS);
 
 		//return eliminationAskSMAP(X, e, bn, hidden, VARS);
 	}
 
-	private CategoricalDistribution eliminationAskSumOutMPE(final RandomVariable[] X,
+	private CategoricalDistribution eliminationAskMPE(final RandomVariable[] X,
 														 final AssignmentProposition[] e, final BayesianNetwork bn,
 														 Set<RandomVariable> hidden, Collection<RandomVariable> bnVARS){
 		// factors <- []
@@ -99,13 +99,12 @@ public class EliminationAsk implements BayesInference {
 
 		System.out.println("----------------------------");
 
-		Factor product = pointwiseProduct(factors);
+		Factor product = pointwiseProduct(factors).maxOut(X);
 
-		//return (ProbabilityTable) product;
+		return (ProbabilityTable) product;
 
 		// return NORMALIZE(POINTWISE-PRODUCT(factors))
-		return ((ProbabilityTable) product.pointwiseProductPOS(_identity, X))
-				.normalize();
+		//return ((ProbabilityTable) product.pointwiseProductPOS(_identity, X)).normalize();
 	}
 
 	private CategoricalDistribution eliminationAskSMAP(final RandomVariable[] X,
@@ -358,8 +357,6 @@ public class EliminationAsk implements BayesInference {
 
 		//inference MPE
 		maxedOutFactors.add(pointwiseProduct(toMultiply).maxOut(var));
-		for(int i=0; i<maxedOutFactors.size(); i++)
-			System.out.println("max: "+maxedOutFactors.get(i));
 
 		return maxedOutFactors;
 	}
@@ -375,5 +372,10 @@ public class EliminationAsk implements BayesInference {
 		}
 
 		return product;
+	}
+
+	//new
+	private void printResult(){
+
 	}
 }

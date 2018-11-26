@@ -3,7 +3,7 @@
 <!--
   Bayesian network in XMLBIF v0.3 (BayesNet Interchange Format)
   Produced by SamIam http://reasoning.cs.ucla.edu/samiam
-  Output created 10-nov-2018 12.31.43
+  Output created 16-nov-2018 14.27.18
 -->
 
 <BIF VERSION="0.3">
@@ -14,35 +14,37 @@
     <NAME>Burglary</NAME>
     <OUTCOME>True</OUTCOME>
     <OUTCOME>False</OUTCOME>
-    <PROPERTY>position = (0, 0)</PROPERTY>
+    <PROPERTY>position = (337, 125)</PROPERTY>
   </VARIABLE>
 
   <VARIABLE TYPE="nature">
     <NAME>Alarm</NAME>
     <OUTCOME>True</OUTCOME>
     <OUTCOME>False</OUTCOME>
-    <PROPERTY>position = (0, 0)</PROPERTY>
-  </VARIABLE>
-
-  <VARIABLE TYPE="nature">
-    <NAME>Earthquake</NAME>
-    <OUTCOME>True</OUTCOME>
-    <OUTCOME>False</OUTCOME>
-    <PROPERTY>position = (0, 0)</PROPERTY>
-  </VARIABLE>
-
-  <VARIABLE TYPE="nature">
-    <NAME>JohnCalls</NAME>
-    <OUTCOME>True</OUTCOME>
-    <OUTCOME>False</OUTCOME>
-    <PROPERTY>position = (0, 0)</PROPERTY>
+    <PROPERTY>position = (229, 224)</PROPERTY>
   </VARIABLE>
 
   <VARIABLE TYPE="nature">
     <NAME>MaryCalls</NAME>
     <OUTCOME>True</OUTCOME>
     <OUTCOME>False</OUTCOME>
-    <PROPERTY>position = (0, 0)</PROPERTY>
+    <OBSERVED>0</OBSERVED>
+    <PROPERTY>position = (384, 352)</PROPERTY>
+  </VARIABLE>
+
+  <VARIABLE TYPE="nature">
+    <NAME>Earthquake</NAME>
+    <OUTCOME>True</OUTCOME>
+    <OUTCOME>False</OUTCOME>
+    <PROPERTY>position = (123, 125)</PROPERTY>
+  </VARIABLE>
+
+  <VARIABLE TYPE="nature">
+    <NAME>JohnCalls</NAME>
+    <OUTCOME>True</OUTCOME>
+    <OUTCOME>False</OUTCOME>
+    <OBSERVED>0</OBSERVED>
+    <PROPERTY>position = (124, 375)</PROPERTY>
   </VARIABLE>
 
   <DEFINITION>
@@ -58,6 +60,12 @@
   </DEFINITION>
 
   <DEFINITION>
+    <FOR>MaryCalls</FOR>
+    <GIVEN>Alarm</GIVEN>
+    <TABLE>0.7 0.3 0.01 0.99 </TABLE>
+  </DEFINITION>
+
+  <DEFINITION>
     <FOR>Earthquake</FOR>
     <TABLE>0.02 0.98 </TABLE>
   </DEFINITION>
@@ -66,12 +74,6 @@
     <FOR>JohnCalls</FOR>
     <GIVEN>Alarm</GIVEN>
     <TABLE>0.9 0.1 0.05 0.95 </TABLE>
-  </DEFINITION>
-
-  <DEFINITION>
-    <FOR>MaryCalls</FOR>
-    <GIVEN>Alarm</GIVEN>
-    <TABLE>0.7 0.3 0.01 0.99 </TABLE>
   </DEFINITION>
 
 </NETWORK>

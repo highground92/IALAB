@@ -1,10 +1,12 @@
 package aima.core.probability;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import aima.core.probability.proposition.AssignmentProposition;
+import aima.core.probability.util.ProbabilityTable;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 524.<br>
@@ -37,6 +39,8 @@ public interface Factor {
 		void iterate(Map<RandomVariable, Object> possibleAssignment,
 				double value);
 	}
+
+	Map<RandomVariable, ProbabilityTable.RVInfo> getRrandomVarInfo();
 
 	/**
 	 * @return a consistent ordered Set (e.g. LinkedHashSet) of the argument
@@ -80,6 +84,8 @@ public interface Factor {
 	Factor maxOut(RandomVariable... vars);
 
 	Factor sumMaxMAP(RandomVariable... vars);
+
+	Map<RandomVariable, ProbabilityTable.RVInfo> getRandomVarInfo();
 
 	/**
 	 * Pointwise multiplication of this Factor by a given multiplier, creating a

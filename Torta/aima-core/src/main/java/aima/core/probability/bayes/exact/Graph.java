@@ -174,9 +174,9 @@ public class Graph {
     private RandomVariable minFill(){
         RandomVariable bestMin = null;
         int numBestMin = Integer.MAX_VALUE;
-        int numMin = 0;
         Set<Node> neighboursList = null;
         for(int i=0; i<this.graph.size(); i++){
+            int numMin = 0;
             if(!this.graph.get(i).getMark()) {
                 neighboursList = this.graph.get(i).getNeighbors();
                 for (Node n1 : neighboursList){
@@ -202,8 +202,8 @@ public class Graph {
         RandomVariable bestMin = null;
         int bestMinSumWeigth = Integer.MAX_VALUE;
         int sumWeigth = 0;
-        Set<Node> neighboursList = null;
         for(int i=0; i<this.graph.size(); i++){
+            Set<Node> neighboursList = null;
             if(!this.graph.get(i).getMark()) {
                 neighboursList = this.graph.get(i).getNeighbors();
                 for (Node n1 : neighboursList){

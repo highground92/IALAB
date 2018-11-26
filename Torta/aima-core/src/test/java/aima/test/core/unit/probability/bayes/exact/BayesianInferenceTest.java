@@ -130,7 +130,7 @@ public abstract class BayesianInferenceTest {
 		System.out.println();
 
 		CategoricalDistribution d = bayesInference.ask(query,assig, bn);
-		System.out.println("P(Alarm | j, m)=" + d + "\n\n");
+		System.out.println("P(Burglary | j, m)=" + d + "\n\n");
 		//System.out.println("P(E | A = young, S = F, R = small)=" + d + "\n\n");
 
 		/*CategoricalDistribution d = bayesInference
