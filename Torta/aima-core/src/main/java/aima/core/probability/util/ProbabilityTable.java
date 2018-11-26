@@ -1,5 +1,6 @@
 package aima.core.probability.util;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 import aima.core.probability.CategoricalDistribution;
@@ -31,9 +32,7 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 
 	//new
 	//hashmap con lista di variabili con i loro valori (etc T/F)
-	public static HashMap<ArrayList<RandomVariable>, ArrayList<Object>> varObj = new HashMap<>();
-	//hasmap con la lista di variabili con la loro probabilità
-	public static HashMap<ArrayList<RandomVariable>, Double> varProb = new HashMap<>();
+	public static HashMap<Double, ArrayList<RandomVariable>> totRwows = new HashMap<>();
 	/**
 	 * Interface to be implemented by an object/algorithm that wishes to iterate
 	 * over the possible assignments for the random variables comprising this
@@ -54,7 +53,7 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 		 *            the probability associated with &omega;
 		 */
 		void iterate(Map<RandomVariable, Object> possibleAssignment,
-				double probability);
+		double probability);
 	}
 
 	public ProbabilityTable(Collection<RandomVariable> vars) {
@@ -217,7 +216,7 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 
 	@Override
 	public void iterateOver(CategoricalDistribution.Iterator cdi,
-			AssignmentProposition... fixedValues) {
+							AssignmentProposition... fixedValues) {
 		iterateOverTable(new CategoricalDistributionIteratorAdapter(cdi),
 				fixedValues);
 	}
@@ -255,7 +254,7 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 					.size()];
 			ProbabilityTable.Iterator di = new ProbabilityTable.Iterator() {
 				public void iterate(Map<RandomVariable, Object> possibleWorld,
-						double probability) {
+									double probability) {
 
 					int i = 0;
 					for (RandomVariable rv : summedOut.randomVarInfo.keySet()) {
@@ -300,7 +299,7 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 			// to calculate the summed out distribution.
 			final Object[] termValues = new Object[summedMax.randomVarInfo
 					.size()];
-
+			ArrayList<RandomVariable> row = new ArrayList<>();
 			//new
 			ProbabilityTable.Iterator di = new ProbabilityTable.Iterator() {
 				public void iterate(Map<RandomVariable, Object> possibleWorld,
@@ -308,9 +307,18 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 					int i=0;
 
 					for(RandomVariable var : varProb.randomVarInfo.keySet()){
-						System.out.println("var: "+var.getName());
-						System.out.println("value: "+possibleWorld.get(var));
+						//System.out.println("var: "+var.getName());
+						//System.out.println("value: "+possibleWorld.get(var));
+						var.setAssign((String) possibleWorld.get(var));
+						RandomVariable newVar = new RandVar(var.getName(), var.getDomain());
+						newVar.setAssign((String) possibleWorld.get(var));
+						row.add(newVar);
 					}
+					totRwows.put(probability, row);
+					for(RandomVariable v : row){
+						System.out.println(v.getName()+" "+v.getAssign());
+					}
+					System.out.println("-----------------------------------------");
 
 					for (RandomVariable rv : summedMax.randomVarInfo.keySet()) {
 						termValues[i] = possibleWorld.get(rv);
@@ -328,6 +336,7 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 		for(int i=0; i<summedMax.size(); i++){
 			System.out.println(summedMax.getValues()[i]);
 		}
+		
 		return summedMax;
 	}
 
@@ -375,7 +384,7 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 
 	@Override
 	public Factor pointwiseProductPOS(Factor multiplier,
-			RandomVariable... prodVarOrder) {
+									  RandomVariable... prodVarOrder) {
 		return pointwiseProductPOS((ProbabilityTable) multiplier, prodVarOrder);
 	}
 
@@ -386,7 +395,7 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 
 	@Override
 	public void iterateOver(Factor.Iterator fi,
-			AssignmentProposition... fixedValues) {
+							AssignmentProposition... fixedValues) {
 		iterateOverTable(new FactorIteratorAdapter(fi), fixedValues);
 	}
 

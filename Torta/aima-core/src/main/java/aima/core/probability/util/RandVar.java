@@ -20,6 +20,7 @@ import aima.core.probability.proposition.TermProposition;
 public class RandVar implements RandomVariable, TermProposition {
 	private String name = null;
 	private Domain domain = null;
+	private String assign = "";
 	private Set<RandomVariable> scope = new HashSet<RandomVariable>();
 
 	public RandVar(String name, Domain domain) {
@@ -45,6 +46,12 @@ public class RandVar implements RandomVariable, TermProposition {
 	public Domain getDomain() {
 		return domain;
 	}
+
+	@Override
+	public String getAssign(){ return assign; }
+
+	@Override
+	public void setAssign(String value) { this.assign = value; }
 
 	// END-RandomVariable
 	//

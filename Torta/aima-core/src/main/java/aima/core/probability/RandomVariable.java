@@ -23,4 +23,8 @@ public interface RandomVariable {
 	 * @return the Set of possible values the Random Variable can take on.
 	 */
 	Domain getDomain();
+
+	String getAssign();
+
+	void setAssign(String value);
 }

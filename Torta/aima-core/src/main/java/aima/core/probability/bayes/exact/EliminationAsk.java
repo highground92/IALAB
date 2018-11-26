@@ -101,6 +101,20 @@ public class EliminationAsk implements BayesInference {
 
 		Factor product = pointwiseProduct(factors).maxOut(X);
 
+		Iterator it = ProbabilityTable.totRwows.entrySet().iterator();
+
+		// Verifica con il metodo hasNext() che nella hashmap
+		// ci siano altri elementi su cui ciclare
+		while (it.hasNext()) {
+			// Utilizza il nuovo elemento (coppia chiave-valore)
+			// dell'hashmap
+			Map.Entry entry = (Map.Entry)it.next();
+
+			// Stampa a schermo la coppia chiave-valore;
+			System.out.println("Key = " + entry.getKey());
+			System.out.println("Value = " + entry.getValue());
+		}
+
 		return (ProbabilityTable) product;
 
 		// return NORMALIZE(POINTWISE-PRODUCT(factors))
