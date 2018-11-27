@@ -101,19 +101,7 @@ public class EliminationAsk implements BayesInference {
 
 		Factor product = pointwiseProduct(factors).maxOut(X);
 
-		Iterator it = ProbabilityTable.totRwows.entrySet().iterator();
-
-		// Verifica con il metodo hasNext() che nella hashmap
-		// ci siano altri elementi su cui ciclare
-		while (it.hasNext()) {
-			// Utilizza il nuovo elemento (coppia chiave-valore)
-			// dell'hashmap
-			Map.Entry entry = (Map.Entry)it.next();
-
-			// Stampa a schermo la coppia chiave-valore;
-			System.out.println("Key = " + entry.getKey());
-			System.out.println("Value = " + entry.getValue());
-		}
+		printResult(product);
 
 		return (ProbabilityTable) product;
 
@@ -388,8 +376,68 @@ public class EliminationAsk implements BayesInference {
 		return product;
 	}
 
+	public static ArrayList<RandomVariable> resultVariables = new ArrayList<>();
 	//new
-	private void printResult(){
+	private void printResult(Factor resInference){
+		for(RandomVariable var : ProbabilityTable.variables)
+			System.out.println(var.getName());
 
+		double firstVar = resInference.getValues()[0];
+		System.out.println(firstVar);
+
+		if(ProbabilityTable.varWithProb.containsKey(firstVar)){
+			ArrayList<RandomVariable> var = ProbabilityTable.varWithProb.get(firstVar);
+			for(RandomVariable v : var) {
+				resultVariables.add(v);
+				ProbabilityTable.variables.remove(v);
+			}
+		}
+
+		/*Iterator it = ProbabilityTable.varWithProb.entrySet().iterator();
+		int size = Integer.MAX_VALUE;
+		while (it.hasNext()) {
+			Map.Entry entry = (Map.Entry) it.next();
+			System.out.println("key: " + entry.getKey());
+			ArrayList<RandomVariable> prova = (ArrayList<RandomVariable>) entry.getValue();
+			for (RandomVariable v : prova)
+				System.out.println(v.getName()+" : " + v.getAssign());
+		}*/
+
+		for(int i=ProbabilityTable.variables.size()-1; i>=0; i--){
+			System.out.println("var : "+ProbabilityTable.variables.get(i).getName());
+			Iterator it = ProbabilityTable.varWithProb.entrySet().iterator();
+			boolean flag = false;
+			while (it.hasNext() && !flag) {
+				System.out.println("dentro while "+ProbabilityTable.variables.get(i).getName());
+				Map.Entry entry = (Map.Entry)it.next();
+				ArrayList<RandomVariable> prova = (ArrayList<RandomVariable>) entry.getValue();
+				RandomVariable r = null;
+				System.out.println("size del result: "+(resultVariables.size()+1));
+				int contVar = 0;
+				if(prova.size() == resultVariables.size()+1){
+					System.out.println("dentro if size "+ProbabilityTable.variables.get(i).getName());
+					for(RandomVariable v : resultVariables){
+						for(RandomVariable p : prova){
+							if(p.getName().equalsIgnoreCase(v.getName()) && p.getAssign().equalsIgnoreCase(v.getAssign())){
+								System.out.println(p.getName()+" "+p.getAssign());
+								contVar++;
+							}
+						}
+					}
+					if(contVar == resultVariables.size())
+						flag = true;
+				}
+				if(flag){
+					for(RandomVariable p : prova){
+						if(p.getName().equalsIgnoreCase(ProbabilityTable.variables.get(i).getName()))
+							resultVariables.add(p);
+					}
+				}
+			}
+		}
+
+		System.out.println("IL NOSTRO RISULTATO");
+		for(RandomVariable v : resultVariables)
+			System.out.println(v.getName()+" --> "+v.getAssign());
 	}
 }

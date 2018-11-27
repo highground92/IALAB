@@ -32,7 +32,12 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 
 	//new
 	//hashmap con lista di variabili con i loro valori (etc T/F)
-	public static HashMap<Double, ArrayList<RandomVariable>> totRwows = new HashMap<>();
+	public HashMap<Double, ArrayList<RandomVariable>> totRwows = new HashMap<>();
+	//hasmap con lista delle variabili con le probabilità da portarmi dietro per i calcoli finali
+	public static HashMap<Double, ArrayList<RandomVariable>> varWithProb = new HashMap<>();
+	//ordine delle variabili eliminate
+	public static ArrayList<RandomVariable> variables = new ArrayList<>();
+
 	/**
 	 * Interface to be implemented by an object/algorithm that wishes to iterate
 	 * over the possible assignments for the random variables comprising this
@@ -279,13 +284,14 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 		Set<RandomVariable> soutVars = new LinkedHashSet<RandomVariable>(
 				this.randomVarInfo.keySet());
 		//new
-		ArrayList<RandomVariable> rvRemove = new ArrayList<>();
 		Set<RandomVariable> varProbArray = new LinkedHashSet<RandomVariable>(
 				this.randomVarInfo.keySet());
 
+		Formatter fmt = new Formatter();
+
 		for (RandomVariable rv : vars) {
 			System.out.println("remove: "+rv.getName());
-			rvRemove.add(rv);
+			variables.add(rv);
 			soutVars.remove(rv);
 		}
 		final ProbabilityTable summedMax = new ProbabilityTable(soutVars);
@@ -294,31 +300,44 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 
 		if (1 == summedMax.getValues().length) {
 			summedMax.getValues()[0] = Math.max(values[0],values[1]);
+			ProbabilityTable.Iterator di = new ProbabilityTable.Iterator() {
+				public void iterate(Map<RandomVariable, Object> possibleWorld,
+									double probability) {
+					int i=0;
+
+					ArrayList<RandomVariable> row = new ArrayList<>();
+
+					for(RandomVariable var : varProb.randomVarInfo.keySet()){
+						var.setAssign((String) possibleWorld.get(var));
+						RandomVariable newVar = new RandVar(var.getName(), var.getDomain());
+						newVar.setAssign((String) possibleWorld.get(var));
+						row.add(newVar);
+					}
+
+					totRwows.put(probability, row);
+				}
+			};
+			iterateOverTable(di);
 		} else {
 			// Otherwise need to iterate through this distribution
 			// to calculate the summed out distribution.
 			final Object[] termValues = new Object[summedMax.randomVarInfo
 					.size()];
-			ArrayList<RandomVariable> row = new ArrayList<>();
 			//new
 			ProbabilityTable.Iterator di = new ProbabilityTable.Iterator() {
 				public void iterate(Map<RandomVariable, Object> possibleWorld,
 									double probability) {
 					int i=0;
 
+					ArrayList<RandomVariable> row = new ArrayList<>();
 					for(RandomVariable var : varProb.randomVarInfo.keySet()){
-						//System.out.println("var: "+var.getName());
-						//System.out.println("value: "+possibleWorld.get(var));
 						var.setAssign((String) possibleWorld.get(var));
 						RandomVariable newVar = new RandVar(var.getName(), var.getDomain());
 						newVar.setAssign((String) possibleWorld.get(var));
 						row.add(newVar);
 					}
+
 					totRwows.put(probability, row);
-					for(RandomVariable v : row){
-						System.out.println(v.getName()+" "+v.getAssign());
-					}
-					System.out.println("-----------------------------------------");
 
 					for (RandomVariable rv : summedMax.randomVarInfo.keySet()) {
 						termValues[i] = possibleWorld.get(rv);
@@ -335,6 +354,8 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 		System.out.println("summedMax");
 		for(int i=0; i<summedMax.size(); i++){
 			System.out.println(summedMax.getValues()[i]);
+			if(totRwows.containsKey(summedMax.getValues()[i]))
+				varWithProb.put(summedMax.getValues()[i], totRwows.get(summedMax.getValues()[i]));
 		}
 		
 		return summedMax;
