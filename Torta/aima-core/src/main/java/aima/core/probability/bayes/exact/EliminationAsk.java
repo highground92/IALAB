@@ -87,11 +87,11 @@ public class EliminationAsk implements BayesInference {
 		List<Factor> factors = new ArrayList<Factor>();
 		// for each var in ORDER(bn.VARS) do
 		List<RandomVariable> order = order(bn,bnVARS,e);
-		System.out.println("ORDER\n"+order);
+		//System.out.println("ORDER\n"+order);
 		for(RandomVariable var : order){
-			System.out.println("var: "+var);
+			//System.out.println("var: "+var);
 			// factors <- [MAKE-FACTOR(var, e) | factors]
-			System.out.println("makefactor: "+makeFactor(var, e, bn));
+			//System.out.println("makefactor: "+makeFactor(var, e, bn));
 			factors.add(0, makeFactor(var, e, bn));
 		}
 
@@ -109,7 +109,7 @@ public class EliminationAsk implements BayesInference {
 		//return ((ProbabilityTable) product.pointwiseProductPOS(_identity, X)).normalize();
 	}
 
-	private CategoricalDistribution eliminationAskSMAP(final RandomVariable[] X,
+	/*private CategoricalDistribution eliminationAskSMAP(final RandomVariable[] X,
 															final AssignmentProposition[] e, final BayesianNetwork bn,
 															Set<RandomVariable> hidden, Collection<RandomVariable> bnVARS){
 		List<Factor> factors = new ArrayList<Factor>();
@@ -148,7 +148,7 @@ public class EliminationAsk implements BayesInference {
 
 		return ((ProbabilityTable) product.pointwiseProductPOS(_identity, X));
 
-	}
+	}*/
 
 	// END-BayesInference
 	//
@@ -263,7 +263,7 @@ public class EliminationAsk implements BayesInference {
 		//Collections.reverse(var);
 
 		Graph graph = new Graph(bn,var);
-		System.out.println("ACYCLIC GRAPH\n"+graph.toString());
+		//System.out.println("ACYCLIC GRAPH\n"+graph.toString());
 
 		//List<RandomVariable> order = graph.maxCardinality();
 		List<RandomVariable> order = graph.greedyOrdering("MinNeighbors");
@@ -302,24 +302,24 @@ public class EliminationAsk implements BayesInference {
 
 		for(RandomVariable var : order){
 			if(hidden.contains(var)){
-				System.out.println("sumOut var: "+var.getName());
+				//System.out.println("sumOut var: "+var.getName());
 				factors = sumOut(var, factors,bn);
-				for(int i=0; i<factors.size(); i++)
-					System.out.println("dopo sumout: "+factors.get(i));
+				//for(int i=0; i<factors.size(); i++)
+					//System.out.println("dopo sumout: "+factors.get(i));
 			}
 		}
 		return factors;
 	}
 
-	private List<Factor> map(List<RandomVariable> orderQ, List<Factor> factors, BayesianNetwork bn){
+	/*private List<Factor> map(List<RandomVariable> orderQ, List<Factor> factors, BayesianNetwork bn){
 		for(RandomVariable var : orderQ){
 			System.out.println("map var: "+var.getName());
 			factors = maxMAP(var,factors,bn);
 		}
 		return factors;
-	}
+	}*/
 
-	private List<Factor> maxMAP(RandomVariable var, List<Factor> factors,
+	/*private List<Factor> maxMAP(RandomVariable var, List<Factor> factors,
 								BayesianNetwork bn) {
 		List<Factor> summedOutFactors = new ArrayList<Factor>();
 		List<Factor> toMultiply = new ArrayList<Factor>();
@@ -336,16 +336,16 @@ public class EliminationAsk implements BayesInference {
 		summedOutFactors.add(pointwiseProduct(toMultiply).sumMaxMAP(var));
 
 		return summedOutFactors;
-	}
+	}*/
 
 	private List<Factor> sumOut(RandomVariable var, List<Factor> factors,
 								BayesianNetwork bn) {
 		List<Factor> maxedOutFactors = new ArrayList<Factor>();
 		List<Factor> toMultiply = new ArrayList<Factor>();
 		for (Factor f : factors) {
-			System.out.println("factor: "+f);
+			//System.out.println("factor: "+f);
 			if (f.contains(var)) {
-				System.out.println("f cont var "+f.getArgumentVariables().toString());
+				//System.out.println("f cont var "+f.getArgumentVariables().toString());
 				toMultiply.add(f);
 			} else {
 				// This factor does not contain the variable
@@ -366,11 +366,11 @@ public class EliminationAsk implements BayesInference {
 	private Factor pointwiseProduct(List<Factor> factors) {
 
 		Factor product = factors.get(0);
-		System.out.println("PRODUCT one "+product.toString());
+		//System.out.println("PRODUCT one "+product.toString());
 		for (int i = 1; i < factors.size(); i++) {
-			System.out.println("PRODUCT "+factors.get(i).toString());
+			//System.out.println("PRODUCT "+factors.get(i).toString());
 			product = product.pointwiseProduct(factors.get(i));
-			System.out.println("PRODUCT "+product.toString());
+			//System.out.println("PRODUCT "+product.toString());
 		}
 
 		return product;
@@ -383,49 +383,61 @@ public class EliminationAsk implements BayesInference {
 			System.out.println(var.getName());
 
 		double firstVar = resInference.getValues()[0];
-		System.out.println(firstVar);
+		//System.out.println("prima variabili trovata --> "+firstVar);
 
-		if(ProbabilityTable.varWithProb.containsKey(firstVar)){
+		if(ProbabilityTable.varWithProb.containsKey(firstVar)) {
 			ArrayList<RandomVariable> var = ProbabilityTable.varWithProb.get(firstVar);
-			for(RandomVariable v : var) {
+			for (RandomVariable v : var) {
 				resultVariables.add(v);
 				ProbabilityTable.variables.remove(v);
 			}
 		}
 
-		/*Iterator it = ProbabilityTable.varWithProb.entrySet().iterator();
-		int size = Integer.MAX_VALUE;
-		while (it.hasNext()) {
-			Map.Entry entry = (Map.Entry) it.next();
-			System.out.println("key: " + entry.getKey());
-			ArrayList<RandomVariable> prova = (ArrayList<RandomVariable>) entry.getValue();
-			for (RandomVariable v : prova)
-				System.out.println(v.getName()+" : " + v.getAssign());
-		}*/
+		System.out.println("HASHMAP CON I PROBABILITÀ E VARIABILI");
+		Iterator iterator = ProbabilityTable.varWithProb.entrySet().iterator();
+		while(iterator.hasNext()){
+			Map.Entry entry = (Map.Entry) iterator.next();
+			System.out.println("key --> "+entry.getKey());
+			System.out.println("Value --> "+entry.getValue());
+		}
 
 		for(int i=ProbabilityTable.variables.size()-1; i>=0; i--){
-			System.out.println("var : "+ProbabilityTable.variables.get(i).getName());
+			//System.out.println("var : "+ProbabilityTable.variables.get(i).getName());
 			Iterator it = ProbabilityTable.varWithProb.entrySet().iterator();
 			boolean flag = false;
 			while (it.hasNext() && !flag) {
-				System.out.println("dentro while "+ProbabilityTable.variables.get(i).getName());
+				//System.out.println("dentro while "+ProbabilityTable.variables.get(i).getName());
 				Map.Entry entry = (Map.Entry)it.next();
+				//System.out.println("entry: "+entry.getValue());
 				ArrayList<RandomVariable> prova = (ArrayList<RandomVariable>) entry.getValue();
 				RandomVariable r = null;
-				System.out.println("size del result: "+(resultVariables.size()+1));
+				//System.out.println("size del result: "+(resultVariables.size()));
 				int contVar = 0;
-				if(prova.size() == resultVariables.size()+1){
-					System.out.println("dentro if size "+ProbabilityTable.variables.get(i).getName());
-					for(RandomVariable v : resultVariables){
-						for(RandomVariable p : prova){
-							if(p.getName().equalsIgnoreCase(v.getName()) && p.getAssign().equalsIgnoreCase(v.getAssign())){
-								System.out.println(p.getName()+" "+p.getAssign());
-								contVar++;
+				//System.out.println("size prova "+prova.size());
+				if(prova.size() == 1 && prova.get(0).getName().equalsIgnoreCase(ProbabilityTable.variables.get(i).getName())) {
+					contVar++;
+					flag = true;
+				}
+				else {
+					if(prova.size() > 1){
+						//System.out.println("dentro if size "+ProbabilityTable.variables.get(i).getName());
+						for(RandomVariable v : resultVariables){
+							//System.out.println("primo for "+v.getName()+" "+v.getAssign());
+							for (RandomVariable p : prova) {
+								//System.out.println("p "+p.getName()+" "+p.getAssign());
+								if (p.getName().equalsIgnoreCase(v.getName()) && p.getAssign().equalsIgnoreCase(v.getAssign())) {
+									//System.out.println(p.getName() + " " + p.getAssign());
+									contVar++;
+								}
 							}
 						}
+						if(contVar == (prova.size()-1)) {
+							flag = true;
+						}
+						else if(contVar == resultVariables.size()){
+							flag = true;
+						}
 					}
-					if(contVar == resultVariables.size())
-						flag = true;
 				}
 				if(flag){
 					for(RandomVariable p : prova){
@@ -436,7 +448,7 @@ public class EliminationAsk implements BayesInference {
 			}
 		}
 
-		System.out.println("IL NOSTRO RISULTATO");
+		System.out.println("\nIL NOSTRO RISULTATO");
 		for(RandomVariable v : resultVariables)
 			System.out.println(v.getName()+" --> "+v.getAssign());
 	}

@@ -36,7 +36,7 @@ public class AssignmentProposition extends AbstractTermProposition {
 		if (null == toString) {
 			StringBuilder sb = new StringBuilder();
 			sb.append(getTermVariable().getName());
-			sb.append(" = ");
+			sb.append(" --> ");
 			sb.append(value);
 
 			toString = sb.toString();

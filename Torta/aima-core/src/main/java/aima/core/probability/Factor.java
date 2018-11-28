@@ -83,7 +83,7 @@ public interface Factor {
 	//nuovo metodo
 	Factor maxOut(RandomVariable... vars);
 
-	Factor sumMaxMAP(RandomVariable... vars);
+	//Factor sumMaxMAP(RandomVariable... vars);
 
 	Map<RandomVariable, ProbabilityTable.RVInfo> getRandomVarInfo();
 

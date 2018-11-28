@@ -43,7 +43,7 @@ public class BayesianMain {
 
     public static aima.core.probability.bayes.BayesianNetwork buildNetwork() throws IOException {
 
-        BayesianNetwork bn = BIFUtil.readBIF("./retiBayesiane/earthquake.xmlbif");
+        BayesianNetwork bn = BIFUtil.readBIF("./retiBayesiane/survey.xmlbif");
         /*System.out.println(bn.toString());
         System.out.println("GETCONTENTS");
         System.out.println(bn.getContents());
@@ -131,7 +131,7 @@ public class BayesianMain {
                             z+=offset;
                         x++;
                     }
-                    System.out.println("----------------------------");
+                    //System.out.println("----------------------------");
                     x=e.getTable().getLines().size()/2;
                     for (int z=offset; z<e.getTable().getLines().size(); z++) {
                         //System.out.println(z);

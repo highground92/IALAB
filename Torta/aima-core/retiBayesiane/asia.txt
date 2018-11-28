@@ -1,5 +1,5 @@
 query dysp
-asia ________
+asia yes
 smoke yes
 tub ________
 bronc no

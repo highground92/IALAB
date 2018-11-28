@@ -83,7 +83,7 @@ public abstract class BayesianInferenceTest {
 
 		BayesianNetwork bn = BayesianMain.buildNetwork();
 
-		FileReader file = new FileReader("./retiBayesiane/earthquake.txt");
+		FileReader file = new FileReader("./retiBayesiane/survey.txt");
 		BufferedReader rete = new BufferedReader(file);
 		String delims = "[ ]+";
 		String[] split;
@@ -130,6 +130,10 @@ public abstract class BayesianInferenceTest {
 		System.out.println();
 
 		CategoricalDistribution d = bayesInference.ask(query,assig, bn);
+		System.out.println(query[0]);
+		for(int j=0; j<assig.length; j++)
+			System.out.println(assig[j].toString());
+		System.out.println();
 		System.out.println("P(Burglary | j, m)=" + d + "\n\n");
 		//System.out.println("P(E | A = young, S = F, R = small)=" + d + "\n\n");
 
