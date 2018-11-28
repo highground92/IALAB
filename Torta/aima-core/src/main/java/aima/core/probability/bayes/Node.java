@@ -72,6 +72,10 @@ public interface Node {
 
 	void setChildren(Set<Node> children);
 
+	void setAncestors(Set<Node> ancestors);
+
+	Set<Node> getAncestors();
+
 	void setMark(boolean m);
 
 	boolean getMark();

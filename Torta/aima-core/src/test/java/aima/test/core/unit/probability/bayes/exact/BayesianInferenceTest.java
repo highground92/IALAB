@@ -83,7 +83,7 @@ public abstract class BayesianInferenceTest {
 
 		BayesianNetwork bn = BayesianMain.buildNetwork();
 
-		FileReader file = new FileReader("./retiBayesiane/survey.txt");
+		FileReader file = new FileReader("./retiBayesiane/earthquake.txt");
 		BufferedReader rete = new BufferedReader(file);
 		String delims = "[ ]+";
 		String[] split;

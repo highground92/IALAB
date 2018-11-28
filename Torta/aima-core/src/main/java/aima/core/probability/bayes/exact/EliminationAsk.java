@@ -209,17 +209,28 @@ public class EliminationAsk implements BayesInference {
 
 		Set<Node> parents = new HashSet<Node>();
 		Set<Node> p = null;
-		for(RandomVariable var : bnVARS){
-			p = bn.getNode(var).getParents();
-			for(Node n : p)
-				parents.add(n);
+		for (RandomVariable rv : X){
+			if (bn.getNode(rv).getAncestors() != null) {
+				parents.addAll(bn.getNode(rv).getAncestors());
+			}
+		}
+		for (AssignmentProposition ap : e){
+			if (bn.getNode(ap.getTermVariable()).getAncestors() != null) {
+				parents.addAll(bn.getNode(ap.getTermVariable()).getAncestors());
+			}
 		}
 
-		/*System.out.println("PARENTS");
+		for (AssignmentProposition ap : e){
+			if (parents.contains(bn.getNode(ap.getTermVariable()))){
+				parents.remove(bn.getNode(ap.getTermVariable()));
+			}
+		}
+
+		System.out.println("ANCESTORS");
 		for(Node node : parents){
 			System.out.print(node.getRandomVariable().getName()+" ");
 		}
-		System.out.println();*/
+		System.out.println();
 
 		for(RandomVariable h : hidden){
 			if(!parents.contains(bn.getNode(h))) {
@@ -263,7 +274,9 @@ public class EliminationAsk implements BayesInference {
 		//Collections.reverse(var);
 
 		Graph graph = new Graph(bn,var);
-		//System.out.println("ACYCLIC GRAPH\n"+graph.toString());
+		System.out.println("ACYCLIC GRAPH\n"+graph.toString());
+
+
 
 		//List<RandomVariable> order = graph.maxCardinality();
 		List<RandomVariable> order = graph.greedyOrdering("MinNeighbors");
@@ -272,6 +285,11 @@ public class EliminationAsk implements BayesInference {
 		//List<RandomVariable> order = graph.greedyOrdering("minWeightFill");
 
 		return order;
+	}
+
+	private boolean isIrrelevant(Graph graph){
+
+		return true;
 	}
 
 	//

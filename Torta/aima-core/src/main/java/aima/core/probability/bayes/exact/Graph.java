@@ -226,6 +226,7 @@ public class Graph {
         return bestMin;
     }
 
+
     public String toString(){
         String graph = "";
         for(Node n : this.graph){

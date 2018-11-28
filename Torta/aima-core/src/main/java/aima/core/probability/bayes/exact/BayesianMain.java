@@ -43,7 +43,7 @@ public class BayesianMain {
 
     public static aima.core.probability.bayes.BayesianNetwork buildNetwork() throws IOException {
 
-        BayesianNetwork bn = BIFUtil.readBIF("./retiBayesiane/survey.xmlbif");
+        BayesianNetwork bn = BIFUtil.readBIF("./retiBayesiane/earthquake.xmlbif");
         /*System.out.println(bn.toString());
         System.out.println("GETCONTENTS");
         System.out.println(bn.getContents());
@@ -154,6 +154,23 @@ public class BayesianMain {
 
                     //System.out.println("creo nodo " + e.getLabel());
                     FiniteNode node = new FullCPTNode(new RandVar(e.getLabel(), new ArbitraryTokenDomain(choices)), values, parents);
+                    Set<Node> tempAncestors = new HashSet<>();
+                    for (Node parent : node.getParents()){
+                        if (parent.getAncestors()!=null) {
+                            tempAncestors.addAll(parent.getAncestors());
+                        }
+                        tempAncestors.add(parent);
+                    }
+                    node.setAncestors(tempAncestors);
+                    //System.out.println("Nodo " + node.getRandomVariable().getName());
+                    if(node.getAncestors() != null) {
+                        for (Node n : node.getAncestors()) {
+                            //System.out.print(n.getRandomVariable().getName() + ", ");
+                        }
+                        System.out.println();
+                    }
+
+
                     nodeList.add(node);
                     nodeNamesList.add(node.getRandomVariable().getName());
                     nodeLabel.add(node.getRandomVariable().getName());
