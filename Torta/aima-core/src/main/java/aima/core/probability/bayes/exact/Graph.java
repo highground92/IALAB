@@ -3,6 +3,8 @@ package aima.core.probability.bayes.exact;
 import aima.core.probability.RandomVariable;
 import aima.core.probability.bayes.BayesianNetwork;
 import aima.core.probability.bayes.Node;
+import aima.core.probability.proposition.AssignmentProposition;
+import aima.core.search.csp.Assignment;
 
 import java.util.*;
 
@@ -28,13 +30,15 @@ public class Graph {
             neighbors = new HashSet<Node>();
             parents = bn.getNode(v).getParents();
             for (Node n : parents) {
-                neighbors.add(n);
+                if (!EliminationAsk.irrelevantList.contains(n))
+                    neighbors.add(n);
             }
             children = bn.getNode(v).getChildren();
             for (Node n : children) {
-                neighbors.add(n);
+                if (!EliminationAsk.irrelevantList.contains(n))
+                    neighbors.add(n);
                 for(Node c : n.getParents()){
-                    if(!c.getRandomVariable().getName().equals(v.getName()))
+                    if(!c.getRandomVariable().getName().equals(v.getName()) && !EliminationAsk.irrelevantList.contains(c))
                         neighbors.add(c);
                 }
             }
@@ -44,6 +48,68 @@ public class Graph {
         }
         return graph;
     }
+
+    public List<Node> getNotMSeparatedGraph(Set<Node> X, Set<AssignmentProposition> e){
+        List<Node> newGraph = new ArrayList<>();
+        newGraph.addAll(X);
+        HashMap <Node,List<Node>> mSeparatedToDelete = new HashMap<>();
+
+        for(Node n : X){
+            boolean isEvidence = false;
+            for (AssignmentProposition ap : e) {
+                if (bn.getNode(ap.getTermVariable()).equals(n)) {
+                    isEvidence = true;
+                    System.out.println("N: " + n.getRandomVariable().getName() + " E: " + ap.getTermVariable().getName());
+                }
+            }
+            if (!isEvidence) {
+                newGraph.addAll(getNotMSeparatedGraphb(n.getParents(), newGraph, e));
+            }
+        }
+        for(Node node : newGraph){
+            List<Node> mSep = new ArrayList<>();
+            for(Node neighbour : node.getNeighbors()){
+                if(!newGraph.contains(neighbour)){
+                    mSep.add(neighbour);
+                    EliminationAsk.irrelevantList.add(neighbour);
+                }
+            }
+            mSeparatedToDelete.put(node,mSep);
+        }
+
+        for(Node n: newGraph){
+            n.getNeighbors().removeAll(mSeparatedToDelete.get(n));
+
+        }
+
+        this.graph = newGraph;
+        return this.graph;
+    }
+
+    private List<Node> getNotMSeparatedGraphb(Set<Node> parents, List<Node> newGraph, Set<AssignmentProposition> e) {
+        List<Node> path = new ArrayList<>();
+        for (Node n : parents) {
+            boolean isEvidence = false;
+            for (AssignmentProposition ap : e) {
+                if (bn.getNode(ap.getTermVariable()).equals(n)) {
+                    isEvidence = true;
+                }
+            }
+
+            if(!newGraph.contains(n)){
+                path.add(n);
+            }
+
+            if (!isEvidence) {
+                List<Node> temp = getNotMSeparatedGraphb(n.getParents(), newGraph, e);
+                if (!temp.isEmpty()) {
+                    path.addAll(temp);
+                }
+            }
+        }
+        return path;
+    }
+
 
     /**
      * MAX-CARDINALITY SEARCH

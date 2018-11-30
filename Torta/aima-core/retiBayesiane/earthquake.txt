@@ -1,6 +1,6 @@
 query JohnCalls
-Burglary True
+Burglary ________
 Earthquake ________
-Alarm ________
+Alarm True
 JohnCalls ________
 MaryCalls ________

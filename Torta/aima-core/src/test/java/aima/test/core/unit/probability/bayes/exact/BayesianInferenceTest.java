@@ -77,7 +77,7 @@ public abstract class BayesianInferenceTest {
 	}*/
 
 	@Test
-	public void testInferenceOnBurglaryAlarmNetwork() throws IOException {
+	public void testInferenceOnBurglaryAlarmNetwork() throws IOException,Exception {
 		/*BayesianNetwork bn = BayesNetExampleFactory
 				.constructBurglaryAlarmNetwork();*/
 
@@ -101,6 +101,9 @@ public abstract class BayesianInferenceTest {
 					if (!split[1].equalsIgnoreCase("________")) {
 						var.put(split[0], split[1]);
 					}
+				} else {
+					if (!split[1].equalsIgnoreCase("________"))
+						throw new Exception("La query richiesta è uguale a un evidence");
 				}
 			}
 			line = rete.readLine();
@@ -124,13 +127,13 @@ public abstract class BayesianInferenceTest {
 			}
 		}
 
-		System.out.println(query[0]);
+		System.out.println("Query: "+query[0]);
 		for(int j=0; j<assig.length; j++)
 			System.out.println(assig[j].toString());
 		System.out.println();
 
 		CategoricalDistribution d = bayesInference.ask(query,assig, bn);
-		System.out.println(query[0]);
+
 		for(int j=0; j<assig.length; j++)
 			System.out.println(assig[j].toString());
 		System.out.println();

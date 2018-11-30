@@ -43,6 +43,8 @@ public class EliminationAsk implements BayesInference {
 	private static final ProbabilityTable _identity = new ProbabilityTable(
 			new double[] { 1.0 });
 
+	public static List<Node> irrelevantList = new ArrayList<>();
+
 	public EliminationAsk() {
 
 	}
@@ -86,12 +88,20 @@ public class EliminationAsk implements BayesInference {
 		// factors <- []
 		List<Factor> factors = new ArrayList<Factor>();
 		// for each var in ORDER(bn.VARS) do
-		List<RandomVariable> order = order(bn,bnVARS,e);
-		//System.out.println("ORDER\n"+order);
+		Set<Node> listX = new HashSet<>();
+		Set<AssignmentProposition> listE = new HashSet<>();
+		for(RandomVariable rv : X){
+			listX.add(bn.getNode(rv));
+		}
+		for(AssignmentProposition ap : e){
+			listE.add(ap);
+		}
+		List<RandomVariable> order = order(bn,bnVARS,listE,listX);
+		System.out.println("ORDER\n"+order);
 		for(RandomVariable var : order){
 			//System.out.println("var: "+var);
 			// factors <- [MAKE-FACTOR(var, e) | factors]
-			//System.out.println("makefactor: "+makeFactor(var, e, bn));
+			System.out.println("makefactor: "+makeFactor(var, e, bn));
 			factors.add(0, makeFactor(var, e, bn));
 		}
 
@@ -236,6 +246,7 @@ public class EliminationAsk implements BayesInference {
 			if(!parents.contains(bn.getNode(h))) {
 				System.out.println(h.getName()+" is irrelevant variable");
 				bnVARS.remove(h);
+				irrelevantList.add(bn.getNode(h));
 			}
 		}
 
@@ -261,7 +272,7 @@ public class EliminationAsk implements BayesInference {
 	 */
 	protected List<RandomVariable> order(BayesianNetwork bn,
 										 Collection<RandomVariable> vars,
-										 AssignmentProposition[] e) {
+										 Set<AssignmentProposition> e, Set<Node> X) {
 		// Note: Trivial Approach:
 		// For simplicity just return in the reverse order received,
 		// i.e. received will be the default topological order for
@@ -274,8 +285,23 @@ public class EliminationAsk implements BayesInference {
 		//Collections.reverse(var);
 
 		Graph graph = new Graph(bn,var);
+
 		System.out.println("ACYCLIC GRAPH\n"+graph.toString());
 
+		graph.getNotMSeparatedGraph(X,e);
+
+		System.out.println("ACYCLIC M-SEPARATED GRAPH\n"+graph.toString());
+		/*
+		System.out.println("/////////////////////");
+		for(RandomVariable rv : vars){
+			if (!rv.getName().equals("JohnCalls") && !rv.getName().equals("Alarm")){
+				if(graph.isMSeparated(bn.getNode(rv),X,e)){
+					System.out.println(rv.getName() + " is M-Separated from X by evidence");
+				} else System.out.println(rv.getName() + " is NOT M-Separated from X by evidence");
+			}
+		}
+		System.out.println("/////////////////////");
+		*/
 
 
 		//List<RandomVariable> order = graph.maxCardinality();
@@ -285,11 +311,6 @@ public class EliminationAsk implements BayesInference {
 		//List<RandomVariable> order = graph.greedyOrdering("minWeightFill");
 
 		return order;
-	}
-
-	private boolean isIrrelevant(Graph graph){
-
-		return true;
 	}
 
 	//
@@ -306,7 +327,15 @@ public class EliminationAsk implements BayesInference {
 		FiniteNode fn = (FiniteNode) n;
 		List<AssignmentProposition> evidence = new ArrayList<AssignmentProposition>();
 		for (AssignmentProposition ap : e) {
+			boolean containsIrrelevant = false;
 			if (fn.getCPT().contains(ap.getTermVariable())) {
+				for(Node node : irrelevantList){
+					if (fn.getCPT().contains(node.getRandomVariable())) {
+						containsIrrelevant = true;
+					}
+				}
+			}
+			if (!containsIrrelevant) {
 				evidence.add(ap);
 			}
 		}
@@ -361,9 +390,9 @@ public class EliminationAsk implements BayesInference {
 		List<Factor> maxedOutFactors = new ArrayList<Factor>();
 		List<Factor> toMultiply = new ArrayList<Factor>();
 		for (Factor f : factors) {
-			//System.out.println("factor: "+f);
+			System.out.println("factor: "+f);
 			if (f.contains(var)) {
-				//System.out.println("f cont var "+f.getArgumentVariables().toString());
+				System.out.println("f cont var "+f.getArgumentVariables().toString());
 				toMultiply.add(f);
 			} else {
 				// This factor does not contain the variable
@@ -384,11 +413,11 @@ public class EliminationAsk implements BayesInference {
 	private Factor pointwiseProduct(List<Factor> factors) {
 
 		Factor product = factors.get(0);
-		//System.out.println("PRODUCT one "+product.toString());
+		System.out.println("PRODUCT one "+product.toString());
 		for (int i = 1; i < factors.size(); i++) {
-			//System.out.println("PRODUCT "+factors.get(i).toString());
+			System.out.println("PRODUCT "+factors.get(i).toString());
 			product = product.pointwiseProduct(factors.get(i));
-			//System.out.println("PRODUCT "+product.toString());
+			System.out.println("PRODUCT "+product.toString());
 		}
 
 		return product;
