@@ -1,19 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1c6a6288-93e6-4a71-bdd2-a84d54273cc9" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/aima/core/probability/bayes/exact/BayesianMain.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../encog-java-core-master/src/main/java/testBIFUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Pozzato/Prolog/gameHeuristic.pl" beforeDir="false" afterPath="$PROJECT_DIR$/../../Pozzato/Prolog/gameHeuristic.pl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/aima-core.iml" beforeDir="false" afterPath="$PROJECT_DIR$/aima-core.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/aima/core/probability/bayes/Node.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/aima/core/probability/bayes/Node.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/aima/core/probability/bayes/impl/AbstractNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/aima/core/probability/bayes/impl/AbstractNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/aima/core/probability/example/DynamicBayesNetExampleFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/aima/core/probability/example/DynamicBayesNetExampleFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/aima/test/core/unit/probability/bayes/exact/BayesianInferenceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/aima/test/core/unit/probability/bayes/exact/BayesianInferenceTest.java" afterDir="false" />
-    </list>
+    <list default="true" id="1c6a6288-93e6-4a71-bdd2-a84d54273cc9" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -21,133 +9,22 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FUSProjectUsageTrigger">
-    <session id="-1439527061">
-      <usages-collector id="statistics.lifecycle.project">
-        <counts>
-          <entry key="project.closed" value="11" />
-          <entry key="project.open.time.1" value="1" />
-          <entry key="project.open.time.166" value="1" />
-          <entry key="project.open.time.2" value="1" />
-          <entry key="project.open.time.49" value="1" />
-          <entry key="project.open.time.5" value="1" />
-          <entry key="project.open.time.55" value="1" />
-          <entry key="project.open.time.58" value="1" />
-          <entry key="project.open.time.6" value="1" />
-          <entry key="project.open.time.60" value="1" />
-          <entry key="project.open.time.64" value="1" />
-          <entry key="project.open.time.66" value="1" />
-          <entry key="project.open.time.7" value="1" />
-          <entry key="project.open.time.85" value="1" />
-          <entry key="project.opened" value="13" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.open">
-        <counts>
-          <entry key="class" value="7" />
-          <entry key="gitattributes" value="1" />
-          <entry key="java" value="48" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.open">
-        <counts>
-          <entry key="CLASS" value="7" />
-          <entry key="JAVA" value="48" />
-          <entry key="PLAIN_TEXT" value="1" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.edit">
-        <counts>
-          <entry key="java" value="3541" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.edit">
-        <counts>
-          <entry key="JAVA" value="3541" />
-        </counts>
-      </usages-collector>
-    </session>
-  </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/aima/core/probability/bayes/exact/BayesianMain.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1496">
-              <caret line="102" column="13" selection-start-line="102" selection-start-column="13" selection-end-line="102" selection-end-column="13" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="-355">
+              <caret line="94" column="39" selection-start-line="94" selection-start-column="39" selection-end-line="94" selection-end-column="39" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/aima/core/probability/bayes/exact/EliminationAsk.java">
+        <entry file="file://$PROJECT_DIR$/src/test/java/aima/test/core/unit/probability/bayes/exact/BayesianInferenceTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5066">
-              <caret line="308" column="23" selection-start-line="308" selection-start-column="23" selection-end-line="308" selection-end-column="23" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/aima/core/probability/bayes/exact/Graph.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="6" column="19" selection-start-line="6" selection-start-column="19" selection-end-line="6" selection-end-column="19" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="jar://$PROJECT_DIR$/encog-java-core-master.jar!/org/encog/ml/bayesian/table/BayesianTable.class">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2091">
-              <caret line="134" column="15" selection-start-line="134" selection-start-column="15" selection-end-line="134" selection-end-column="15" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="jar://$PROJECT_DIR$/encog-java-core-master.jar!/org/encog/ml/bayesian/BayesianNetwork.class">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="48" column="31" selection-start-line="48" selection-start-column="31" selection-end-line="48" selection-end-column="31" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/aima/core/probability/example/BayesNetExampleFactory.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2635">
-              <caret line="158" column="22" selection-start-line="158" selection-start-column="22" selection-end-line="158" selection-end-column="22" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/aima/core/probability/bayes/impl/BayesNet.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="26" column="11" selection-start-line="26" selection-start-column="11" selection-end-line="26" selection-end-column="11" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/aima/core/probability/bayes/impl/FullCPTNode.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="442">
-              <caret line="32" column="20" selection-start-line="32" selection-start-column="20" selection-end-line="32" selection-end-column="20" />
-              <folding>
-                <element signature="e#706#707#0" expanded="true" />
-                <element signature="e#751#752#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="180">
+              <caret line="78" selection-start-line="78" selection-end-line="78" />
             </state>
           </provider>
         </entry>
@@ -155,8 +32,45 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/aima/core/probability/util/ProbabilityTable.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="986">
-              <caret line="72" selection-start-line="72" selection-end-line="72" />
+            <state relative-caret-position="4350">
+              <caret line="300" column="9" selection-start-line="300" selection-start-column="9" selection-end-line="300" selection-end-column="9" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/aima/core/probability/bayes/exact/EliminationAsk.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="17">
+              <caret line="88" column="56" selection-start-line="88" selection-start-column="56" selection-end-line="88" selection-end-column="56" />
+              <folding>
+                <element signature="e#2415#2431#0" expanded="true" />
+                <element signature="e#2478#2494#0" expanded="true" />
+                <element signature="e#2956#2964#0" expanded="true" />
+                <element signature="e#3836#3844#0" expanded="true" />
+                <element signature="e#7038#7044#0" expanded="true" />
+                <element signature="e#8932#8948#0" expanded="true" />
+                <element signature="e#9612#9635#0" expanded="true" />
+                <element signature="e#10595#10603#0" expanded="true" />
+                <element signature="e#10648#10656#0" expanded="true" />
+                <element signature="e#11167#11175#0" expanded="true" />
+                <element signature="e#11220#11228#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/aima/core/probability/bayes/exact/Graph.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-57">
+              <caret line="156" selection-start-line="156" selection-end-line="156" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -164,11 +78,35 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/aima/core/probability/bayes/impl/AbstractNode.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="476">
-              <caret line="34" column="36" selection-start-line="34" selection-start-column="36" selection-end-line="34" selection-end-column="36" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="330">
+              <caret line="64" selection-start-line="64" selection-end-line="64" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/aima/core/probability/bayes/Node.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="346">
+              <caret line="77" column="1" selection-start-line="77" selection-start-column="1" selection-end-line="77" selection-end-column="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/aima/core/probability/RandomVariable.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="195">
+              <caret line="13" column="17" selection-start-line="13" selection-start-column="17" selection-end-line="13" selection-end-column="17" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/aima/core/probability/util/RandVar.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="615">
+              <caret line="47" selection-start-line="47" selection-end-line="47" />
             </state>
           </provider>
         </entry>
@@ -196,13 +134,6 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
-  <component name="GradleLocalSettings">
-    <option name="projectSyncType">
-      <map>
-        <entry key="$PROJECT_DIR$/../../../Torta/encog-java-core-master" value="PREVIEW" />
-      </map>
-    </option>
-  </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
@@ -220,12 +151,6 @@
         <option value="$PROJECT_DIR$/src/main/java/aima/core/probability/bayes/exact/BayesianMain.java" />
       </list>
     </option>
-  </component>
-  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
-  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
-  <component name="JsGulpfileManager">
-    <detection-done>true</detection-done>
-    <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="MavenProjectNavigator">
     <treeState>
@@ -245,7 +170,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -324,6 +248,16 @@
               <item name="aima-core" type="b2602c69:ProjectViewProjectNode" />
               <item name="aima-core" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
+              <item name="probability" type="462c0819:PsiDirectoryNode" />
+              <item name="domain" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="aima-core" type="b2602c69:ProjectViewProjectNode" />
+              <item name="aima-core" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="test" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -340,15 +274,6 @@
               <item name="test" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="core" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="aima-core" type="b2602c69:ProjectViewProjectNode" />
-              <item name="aima-core" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="core" type="462c0819:PsiDirectoryNode" />
-              <item name="unit" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="aima-core" type="b2602c69:ProjectViewProjectNode" />
@@ -364,6 +289,7 @@
         </subPane>
       </pane>
       <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -448,7 +374,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="TestNG" factoryName="TestNG">
+    <configuration default="true" type="TestNG">
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
       <properties />
       <listeners />
@@ -457,9 +383,9 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="JUnit.EliminationAskTest" />
       <item itemvalue="Application.BayesianMain" />
       <item itemvalue="Application.testBIFUtil" />
+      <item itemvalue="JUnit.EliminationAskTest" />
     </list>
     <recent_temporary>
       <list>
@@ -540,9 +466,9 @@
     <option name="totallyTimeSpent" value="87515000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1616" height="876" extended-state="7" />
+    <frame x="49" y="27" width="1317" height="741" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.30526993" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.22187254" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -604,9 +530,6 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
-  </component>
-  <component name="VcsContentAnnotationSettings">
-    <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/main/java/aima/core/probability/bayes/ConditionalProbabilityTable.java">
@@ -677,7 +600,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/aima/core/probability/RandomVariable.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
+        <state relative-caret-position="195">
           <caret line="13" column="17" selection-start-line="13" selection-start-column="17" selection-end-line="13" selection-end-column="17" />
         </state>
       </provider>
@@ -754,15 +677,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/aima/test/core/unit/probability/bayes/exact/BayesianInferenceTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="546">
-          <caret line="74" column="36" selection-start-line="74" selection-start-column="36" selection-end-line="74" selection-end-column="36" />
+        <state relative-caret-position="180">
+          <caret line="78" selection-start-line="78" selection-end-line="78" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/aima/core/probability/bayes/Node.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="179">
-          <caret line="70" column="9" selection-start-line="70" selection-start-column="9" selection-end-line="70" selection-end-column="9" />
+        <state relative-caret-position="346">
+          <caret line="77" column="1" selection-start-line="77" selection-start-column="1" selection-end-line="77" selection-end-column="1" />
         </state>
       </provider>
     </entry>
@@ -794,27 +717,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://C:/Program Files/Java/jdk-11/lib/src.zip!/java.base/java/util/List.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="563">
-          <caret line="264" column="12" selection-start-line="264" selection-start-column="12" selection-end-line="264" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk-11/lib/src.zip!/java.base/java/util/List.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/aima/core/probability/bayes/exact/BayesianMain.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1496">
-          <caret line="102" column="13" selection-start-line="102" selection-start-column="13" selection-end-line="102" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="-355">
+          <caret line="94" column="39" selection-start-line="94" selection-start-column="39" selection-end-line="94" selection-end-column="39" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/aima/core/probability/bayes/exact/EliminationAsk.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5066">
-          <caret line="308" column="23" selection-start-line="308" selection-start-column="23" selection-end-line="308" selection-end-column="23" />
+        <state relative-caret-position="17">
+          <caret line="88" column="56" selection-start-line="88" selection-start-column="56" selection-end-line="88" selection-end-column="56" />
+          <folding>
+            <element signature="e#2415#2431#0" expanded="true" />
+            <element signature="e#2478#2494#0" expanded="true" />
+            <element signature="e#2956#2964#0" expanded="true" />
+            <element signature="e#3836#3844#0" expanded="true" />
+            <element signature="e#7038#7044#0" expanded="true" />
+            <element signature="e#8932#8948#0" expanded="true" />
+            <element signature="e#9612#9635#0" expanded="true" />
+            <element signature="e#10595#10603#0" expanded="true" />
+            <element signature="e#10648#10656#0" expanded="true" />
+            <element signature="e#11167#11175#0" expanded="true" />
+            <element signature="e#11220#11228#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -859,25 +786,25 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/aima/core/probability/util/ProbabilityTable.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="986">
-          <caret line="72" selection-start-line="72" selection-end-line="72" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/aima/core/probability/bayes/impl/AbstractNode.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="34" column="36" selection-start-line="34" selection-start-column="36" selection-end-line="34" selection-end-column="36" />
+        <state relative-caret-position="4350">
+          <caret line="300" column="9" selection-start-line="300" selection-start-column="9" selection-end-line="300" selection-end-column="9" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/aima/core/probability/bayes/impl/AbstractNode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="64" selection-start-line="64" selection-end-line="64" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/aima/core/probability/bayes/exact/Graph.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="19" selection-start-line="6" selection-start-column="19" selection-end-line="6" selection-end-column="19" />
+        <state relative-caret-position="-57">
+          <caret line="156" selection-start-line="156" selection-end-line="156" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
