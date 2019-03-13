@@ -1,40 +1,32 @@
-% ampiezza(Soluzione)
-% stato rappresentato da nodo(S,ListaAzioniPerS)
+% stato rappresentato da nodo(F,G,S,ListaAzioniPerS)
 
-ampiezza(Soluzione):-
+aStar(Soluzione,NPassi,NNodiAperti):-
   iniziale(S),
-  depth([nodo(_,_,S,[])],[],SoluzioneTemp),
-  reverse(SoluzioneTemp,Soluzione).
+  depth([nodo(_,0,S,[])],[],SoluzioneTemp,NNodiAperti),
+  reverse(SoluzioneTemp,Soluzione),
+  length(Soluzione,NPassi).
 
 % depth(CodaNodiDaEsplorare,NodiEspansi,Soluzione)
-depth([nodo(_,_,S,ListaAzioniPerS)|_],_,ListaAzioniPerS):-
-  finale(S).
-depth([nodo(F,G,S,ListaAzioniPerS)|Frontiera], NodiEspansi,Soluzione):-
+depth([nodo(F,_,S,ListaAzioniPerS)|_], NodiEspansi,ListaAzioniPerS,NNodiAperti):-
+  finale(S),write(F),write("---"),
+  length(NodiEspansi,NNodiAperti).
+
+depth([nodo(F,G,S,ListaAzioniPerS)|Frontiera], ListaNodiEspansi, Soluzione,NNodiAperti):-
   findall(Az,applicabile(Az,S),ListaApplicabili),
-  visitati([nodo(F,G,S,ListaAzioniPerS)|Frontiera],NodiEspansi,ListaStatiVisitati),
-  generateSons(nodo(F,G,S,ListaAzioniPerS),ListaApplicabili, ListaStatiVisitati,ListaFigliS),
-  append(Frontiera,ListaFigliS,NuovaFrontiera),
-  sort(NuovaFrontiera,NuovaFrontieraOrdinata),
-  depth(NuovaFrontieraOrdinata,[S|NodiEspansi],Soluzione).
+  generateSons(nodo(F,G,S,ListaAzioniPerS),ListaApplicabili, [S|ListaNodiEspansi], ListaFigliS),
+  append(ListaFigliS, Frontiera, NuovaFrontiera),
+  sort(NuovaFrontiera, NuovaFrontieraOrdinata),
+  depth(NuovaFrontieraOrdinata, [S|ListaNodiEspansi], Soluzione,NNodiAperti).
 
-% visitati(Frontiera,NodiEspansi,ListaStatiVisitati)
-visitati(Frontiera,NodiEspansi,ListaStatiVisitati):-
-  estraiStato(Frontiera,StatiFrontiera),
-  append(StatiFrontiera,NodiEspansi,ListaStatiVisitati).
 
-% estraiStato(Frontiera,ListaDiStati)
-estraiStato([],[]).
-estraiStato([nodo(_,_,S,_)|Frontiera],[S|StatiFrontiera]):-
-  estraiStato(Frontiera,StatiFrontiera).
-
-% generateSons(Nodo,ListaApplicabili,
-%	  ListaStatiVisitati,ListaNodiFigli)
 generateSons(_,[],_,[]).
 
-generateSons(nodo(F_padre,G_padre,S,ListaAzioniPerS),[Azione|AltreAzioni],ListaStatiVisitati,[nodo(F,G,SNuovo,[Azione|ListaAzioniPerS])|AltriFigli]):-
-    trasforma(Azione,S,SNuovo,F,G),
-    \+member(SNuovo,ListaStatiVisitati),!,
-    generateSons(nodo(F_padre,G_padre,S,ListaAzioniPerS),AltreAzioni,ListaStatiVisitati,AltriFigli).
+generateSons(nodo(F_padre,G_padre,S,ListaAzioniPerS), [Azione|AltreAzioni],
+             ListaNodiVisitati,[nodo(F,G_nuovo,SNuovo,[Azione|ListaAzioniPerS])|AltriFigli]):-
+    trasforma(Azione,S,SNuovo,F,G_padre,G_nuovo),
+    \+member(SNuovo,ListaNodiVisitati), !,
+    generateSons(nodo(F_padre,G_padre,S,ListaAzioniPerS),AltreAzioni,ListaNodiVisitati,AltriFigli).
 
+%Permette di saltare Azione nel caso in cui essa conduce in uno stato già visitato
 generateSons(Nodo,[_|AltreAzioni],ListaStatiVisitati,ListaNodiFigli):-
   generateSons(Nodo,AltreAzioni,ListaStatiVisitati,ListaNodiFigli).

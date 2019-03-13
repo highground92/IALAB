@@ -1,9 +1,3 @@
-%Write it in a linear way, 1,2,3,4,5,6,8,7 - Ignore the blank tile
-%Now find the number of inversion, by counting tiles precedes the another tile with lower number.
-%In our case, 1,2,3,4,5,6,7 is having 0 inversions, and 8 is having 1 inversion as it's preceding the number 7.
-%Total number of inversion is 1 (odd number) so the puzzle is insolvable.
-%https://dgurkaynak.github.io/8-puzzle-solver/
-
 applicabile(est,Stato):-
   nth(Stato,PosVuoto,vuoto),
   \+bordosinistro(PosVuoto).
@@ -40,22 +34,19 @@ bordodestro(Posizione):-Resto is Posizione mod 3,Resto=2.
 bordoinferiore(Posizione):-Posizione > 5.
 bordosuperiore(Posizione):-Posizione < 3.
 
-% Gioco dell'otto'
-
 %    _______
-%    |2|1|3|
-%    | |4|6|
-%    |7|5|8|
+%    |2|4|3|
+%    |7|1|6|
+%    | |5|8|
 %
-
-%iniziale([2,8,5,6,vuoto,1,3,7,4]). % circa 5 minuti
-%iniziale([vuoto,8,7,6,5,4,3,2,1]). % circa 10 minuti
-iniziale([7,8,3,1,5,6,2,vuoto,4] ).
-%iniziale([1,2,3,4,5,6,7,8,vuoto]).
-
+%iniziale([3,8,vuoto,1,2,5,4,7,6]). % stato ok
+iniziale([2,8,5,6,1,vuoto,3,7,4]). % stato incasinato
+%iniziale([7,4,3,2,1,8,vuoto,5,6]). % prova cesare
+%iniziale([2,4,3,7,1,6,vuoto,5,8]). %stato iniziale del prof
 finale([1,2,3,4,5,6,7,8,vuoto]).
 
 % nth(Lista,Posizione,Valore)
+
 nth([Head|_],0,Head):-!.
 nth([_|Tail],Pos,X):-
     nonvar(Pos),!,
@@ -64,6 +55,7 @@ nth([_|Tail],Pos,X):-
 nth([_|Tail],Pos,X):-
     nth(Tail,Pos1,X),
     Pos is Pos1+1.
+
 
 % swap(Lista,Pos1,Pos2,NuovaLista)
 

@@ -3,7 +3,6 @@
 %  'ground' se l'agente non è su nessun treno
 % Dir può esere 0 o 1
 
-
 % Azioni:
 %  sali(Linea, Dir)
 %  scendi(Stazione)
@@ -50,37 +49,9 @@ member_pair(X,Y,[X,Y|_]).
 member_pair(X,Y,[_,Z|Rest]):- member_pair(X,Y,[Z|Rest]).
 
 
-% stazione(Stazione, Coord1, Coord2)
-
-stazione('Baker Street',3.0,5.0). %
-stazione('Bank',7.5,2.8). %
-stazione('Bayswater',0.5,3.2). %
-stazione('Bond Street',2.5,3.3). %
-stazione('Covent Garden',5.8,2.9). %
-stazione('Earls Court',0.0,1.0).   %
-stazione('Embankment',5.5,1.0). %
-stazione('Euston',5.7,5.2). %
-stazione('Gloucester Road',1.0,1.0). %
-stazione('Green Park',2.5,2.7). %
-stazione('Holborn',6.0,3.3). %
-stazione('Kings Cross',7.0,5.0). %
-stazione('Leicester Square',5.5,2.7). %
-stazione('London Bridge',7.5,0.8). %
-stazione('Notting Hill Gate',0.5,2.8). %
-stazione('Oxford Circus',3.5,3.3). %
-stazione('Paddington',0.5,5.0). %
-stazione('Piccadilly Circus',4.5,2.7). %
-stazione('South Kensington',1.5,1.0). %
-stazione('Tottenham Court Road',5.5,3.3). %
-stazione('Victoria',2.5,1.0). %
-stazione('Warren Street',5.5,5). %
-stazione('Waterloo',5.5,0). %
-stazione('Westminster',4.5,1.0). %
-
-
 fermata(Stazione,Linea):- percorso(Linea,0,P), member(Stazione,P).
 
 
-iniziale([at('Bayswater'),ground]).
+iniziale([at('South Kensington'),ground]).
 
-finale([at('Covent Garden'),ground]).
+finale([at('Bank'),ground]).
