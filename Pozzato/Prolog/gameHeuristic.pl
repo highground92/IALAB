@@ -16,32 +16,36 @@ trasforma(sud,Stato,NuovoStato,F,G_padre,G_nuovo):-
   PosTessera is PosVuoto-3,
   swap(Stato,PosVuoto,PosTessera,NuovoStato),
   finale(StatoF),
-  manhattan(NuovoStato,StatoF,F,G_temp),
-  sum(G_temp,G_padre,G_nuovo).
+  manhattan(NuovoStato,StatoF,H),
+  sum(1,G_padre,G_nuovo),
+  sum(G_nuovo,H,F).
 
 trasforma(ovest,Stato,NuovoStato,F,G_padre,G_nuovo):-
   nth(Stato,PosVuoto,casella(vuoto,_,_)),
   PosTessera is PosVuoto+1,
   swap(Stato,PosVuoto,PosTessera,NuovoStato),
   finale(StatoF),
-  manhattan(NuovoStato,StatoF,F,G_temp),
-  sum(G_temp,G_padre,G_nuovo).
+  manhattan(NuovoStato,StatoF,H),
+  sum(1,G_padre,G_nuovo),
+  sum(G_nuovo,H,F).
 
 trasforma(nord,Stato,NuovoStato,F,G_padre,G_nuovo):-
   nth(Stato,PosVuoto,casella(vuoto,_,_)),
   PosTessera is PosVuoto+3,
   swap(Stato,PosVuoto,PosTessera,NuovoStato),
   finale(StatoF),
-  manhattan(NuovoStato,StatoF,F,G_temp),
-  sum(G_temp,G_padre,G_nuovo).
+  manhattan(NuovoStato,StatoF,H),
+  sum(1,G_padre,G_nuovo),
+  sum(G_nuovo,H,F).
 
 trasforma(est,Stato,NuovoStato,F,G_padre,G_nuovo):-
   nth(Stato,PosVuoto,casella(vuoto,_,_)),
   PosTessera is PosVuoto-1,
   swap(Stato,PosVuoto,PosTessera,NuovoStato),
   finale(StatoF),
-  manhattan(NuovoStato,StatoF,F,G_temp),
-  sum(G_temp,G_padre,G_nuovo).
+  manhattan(NuovoStato,StatoF,H),
+  sum(1,G_padre,G_nuovo),
+  sum(G_nuovo,H,F).
 
 bordosinistro(Posizione):-Resto is Posizione mod 3,Resto=0.
 bordodestro(Posizione):-Resto is Posizione mod 3,Resto=2.
@@ -108,22 +112,23 @@ setElement([Head|Tail],Pos,casella(N,X,Y),[Head|NuovaTail]):-
   Pos1 is Pos-1,
   setElement(Tail,Pos1,casella(N,X,Y),NuovaTail).
 
-% euristica per azioni
+% Euristica per azioni
+% Ho scorso tutta la lista dei miei stati
+manhattan([],_,H):-
+  H is 0.
 
-manhattan([casella(N,X1,Y1)|StatoS],[casella(M,X2,Y2)|StatoF],F,G_temp):-
-  manhattan1([casella(N,X1,Y1)|StatoS],[casella(M,X2,Y2)|StatoF],F,G_temp),
-  F is G_temp.
+%Scorro lista dello stato finale, sto cercando la casella giusta
+manhattan([casella(N,X1,Y1)|StatoS],[casella(M,_,_)|StatoF],H):-
+  M \= N,
+  manhattan([casella(N,X1,Y1)|StatoS],StatoF,H).
 
-manhattan1([],[_|_],_,G):-
-  G is 0.
-manhattan1([casella(N,X1,Y1)|StatoS],[casella(N,X2,Y2)|_],F,G1):-
+% Ho trovato la casella giusta, calcolo il costo e scorro la lista dei miei
+% stati e reinizializzo quella dello stato finale
+manhattan([casella(N,X1,Y1)|StatoS],[casella(N,X2,Y2)|_],H):-
   calcolo(X1,X2,Y1,Y2,Res),
-  finale(StatoF2),
-  manhattan1(StatoS,StatoF2,F,G),
-  G1 is G + Res.
-
-manhattan1([casella(N,X1,Y1)|StatoP],[_|StatoF],F,G):-
-  manhattan1([casella(N,X1,Y1)|StatoP],StatoF,F,G).
+  finale(StatoFinale),
+  manhattan(StatoS,StatoFinale,H1),
+  H is H1 + Res.
 
 calcolo(X1,X2,Y1,Y2,Res):-
   Res is abs(X1-X2)+ abs(Y1-Y2).
