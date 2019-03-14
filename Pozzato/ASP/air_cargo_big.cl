@@ -42,22 +42,23 @@ airport(los).
   unload(C,P,A,S):cargo(C),plane(P),airport(A);
   fly(P,From,To,S):plane(P),airport(From),airport(To),From != To}:-livello(S).
 
+0{fly(P,From,To,S):plane(P),airport(From),livello(S),airport(To),From != To}:-plane(P).
 % EFFECTS
--at(C,A,S+1):-load(C,P,A,S).
-in (C,P,S+1):-load(C,P,A,S).
+-at(C,A,S+1):-load(C,P,A,S),livello(S).
+in (C,P,S+1):-load(C,P,A,S),livello(S).
 
-at(C,A,S+1):-unload(C,P,A,S).
--in(C,P,S+1):-unload(C,P,A,S).
+at(C,A,S+1):-unload(C,P,A,S),livello(S).
+-in(C,P,S+1):-unload(C,P,A,S),livello(S).
 
 -at(P,From,S+1):-fly(P,From,To,S),livello(S).
 at(P,To,S+1):-fly(P,From,To,S),livello(S).
 
 % PRECOND
-:-load(C,P,A,S),not at(C,A,S).
-:-load(C,P,A,S),not at(P,A,S).
-:-unload(C,P,A,S),not in(C,P,S).
-:-unload(C,P,A,S),not at(P,A,S).
-:-fly(P,From,To,S),not at(P,From,S).
+:- load(C,P,A,S),not at(C,A,S).
+:- load(C,P,A,S),not at(P,A,S).
+:- unload(C,P,A,S),not in(C,P,S).
+:- unload(C,P,A,S),not at(P,A,S).
+:- fly(P,From,To,S),not at(P,From,S).
 
 % PERSISTENCE
 at(C,A,S+1):- at(C,A,S),livello(S),not -at(C,A,S+1).
