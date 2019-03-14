@@ -84,7 +84,7 @@ member_pair(X,Y,[_,Z|Rest]):- member_pair(X,Y,[Z|Rest]).
 
 
 % stazione(Stazione, Coord1, Coord2)
-
+/*
 stazione('Baker Street',3.0,5.0). %
 stazione('Bank',7.5,2.8). %
 stazione('Bayswater',0.5,3.2). %
@@ -108,9 +108,9 @@ stazione('Tottenham Court Road',5.5,3.3). %
 stazione('Victoria',2.5,1.0). %
 stazione('Warren Street',5.5,5). %
 stazione('Waterloo',5.5,0). %
-stazione('Westminster',4.5,1.0).
+stazione('Westminster',4.5,1.0). */
 /* Dati di fetch */
-/*
+
 stazione('Baker Street',4.5,5.6).
 stazione('Bank',12,4).
 stazione('Bayswater',1,3.7).
@@ -134,14 +134,14 @@ stazione('Tottenham Court Road',7.4,4.5).
 stazione('Victoria',5.8,1).
 stazione('Warren Street',6.5,6).
 stazione('Waterloo',9.2,2.4).
-stazione('Westminster',8,1.8). */
+stazione('Westminster',8,1.8).
 
 fermata(Stazione,Linea):- percorso(Linea,0,P), member(Stazione,P).
 
 % ('Paddington')->('Covent Garden’)
-iniziale([at('Bayswater'),ground]).
+iniziale([at('Notting Hill Gate'),ground]).
 
-finale([at('Covent Garden'),ground]).
+finale([at('London Bridge'),ground]).
 
 
 % euristiche per azioni

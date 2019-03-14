@@ -1,20 +1,25 @@
 % ricerca in profonditá limitata
 
-idaStar(Soluzione,Npassi):-
+idaStar(Soluzione,Npassi,NNodi):-
 	iniziale(S),
+	assert(numeroNodi(0)),
 	ric_prof(S,0,Soluzione,[S],0),
-	length(Soluzione,Npassi).
+	numeroNodi(NNoditemp),
+	length(Soluzione,Npassi),
+	NNodi is NNoditemp + Npassi,
+	retractall(numeroNodi(V)).
+
 
 ric_prof(S,G,Soluzione,Visitati,Threshold):-
 	ric_prof2(S,G,Soluzione,Visitati,Threshold);
-/*
-	length(NV, NNodiTemp),
-	numeroNodi(N), write(N),write("---"),
-	NewNum is N + NNodiTemp,
-	retractall(numeroNodi(_)),
-	assert(numeroNodi(NewNum)); */
 
 	findall(Cost, nodoIda(Cost,_), ListaAssert),
+	length(ListaAssert,Ntemp),
+	numeroNodi(N),
+	NewNum is N + Ntemp,
+	retractall(numeroNodi(N)),
+	assert(numeroNodi(NewNum)),
+
 	sort(ListaAssert,ListaAssert2),
 	findNextThreshold(Threshold, ListaAssert2, NewTreshold),
 	retractall(nodoIda(_,_)),
