@@ -73,18 +73,18 @@ bordosuperiore(Posizione):-Posizione < 4.
           casella(1,1,0),casella(15,1,1),casella(vuoto,1,2),casella(7,1,3),
           casella(12,2,0),casella(14,2,1),casella(2,2,2),casella(13,2,3),
           casella(5,3,0),casella(6,3,1),casella(11,3,2),casella(3,3,3)]). */
-iniziale([casella(9,0,0),casella(6,0,1),casella(4,0,2),casella(3,0,3),          % dovrebbe terminare
+/*iniziale([casella(9,0,0),casella(6,0,1),casella(4,0,2),casella(3,0,3),          % dovrebbe terminare
           casella(2,1,0),casella(8,1,1),casella(11,1,2),casella(5,1,3),
           casella(1,2,0),casella(10,2,1),casella(7,2,2),casella(15,2,3),
-          casella(12,3,0),casella(vuoto,3,1),casella(14,3,2),casella(13,3,3)]).
+          casella(12,3,0),casella(vuoto,3,1),casella(14,3,2),casella(13,3,3)]). */
 /*iniziale([casella(1,0,0),casella(6,0,1),casella(2,0,2),casella(4,0,3),         %circa 30 secondi con IDA*
           casella(9,1,0),casella(vuoto,1,1),casella(5,1,2),casella(8,1,3),
           casella(13,2,0),casella(7,2,1),casella(3,2,2),casella(15,2,3),
           casella(14,3,0),casella(10,3,1),casella(12,3,2),casella(11,3,3)]). */
-%iniziale([casella(1,0,0),casella(6,0,1),casella(2,0,2),casella(4,0,3),          %circa 3 secondi con IDA*
-%          casella(9,1,0),casella(5,1,1),casella(3,1,2),casella(8,1,3),
-%          casella(13,2,0),casella(10,2,1),casella(7,2,2),casella(15,2,3),
-%          casella(14,3,0),casella(vuoto,3,1),casella(12,3,2),casella(11,3,3)]).
+iniziale([casella(1,0,0),casella(6,0,1),casella(2,0,2),casella(4,0,3),          %circa 3 secondi con IDA*
+          casella(9,1,0),casella(5,1,1),casella(3,1,2),casella(8,1,3),
+          casella(13,2,0),casella(10,2,1),casella(7,2,2),casella(15,2,3),
+          casella(14,3,0),casella(vuoto,3,1),casella(12,3,2),casella(11,3,3)]).
 % Stato finale del Norvig
 finale([casella(1,0,0),casella(2,0,1),casella(3,0,2),casella(4,0,3),
           casella(5,1,0),casella(6,1,1),casella(7,1,2),casella(8,1,3),

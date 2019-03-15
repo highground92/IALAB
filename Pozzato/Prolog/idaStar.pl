@@ -29,7 +29,8 @@ ric_prof2(S,_,[],_,_):-finale(S).
 
 ric_prof2(S,G,[Azione|ListaAzioni],Visitati,Threshold):-
 	applicabile(Azione,S),
-	trasforma(Azione,S,SNuovo,F,G,G_nuovo),%write(G_nuovo),write("---"),   % write della G totale, si deve leggere solo l'ultima scrittura
+	trasforma(Azione,S,SNuovo,F,G,G_nuovo),
+	%write(G_nuovo),write("---"),   % write della G totale, si deve leggere solo l'ultima scrittura
 	\+member(SNuovo,Visitati),
 	assert(nodoIda(F,SNuovo)),
 	F=<Threshold,

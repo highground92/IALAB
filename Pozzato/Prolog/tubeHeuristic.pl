@@ -16,44 +16,44 @@ applicabile(vai(Linea,Dir,SP,SA),[at(SP),in(Linea,Dir)]):-
 	tratta(Linea,Dir,SP,SA).
 
 % Regole con calcolo del costo per salire e scendere usando manhattan
-/*trasforma(sali(Linea,Dir),[at(Stazione),ground],[at(Stazione),in(Linea,Dir)],G_padre,G_nuovo):-
+trasforma(sali(Linea,Dir),[at(Stazione),ground],[at(Stazione),in(Linea,Dir)],F,G_padre,G_nuovo):-
  	finale([at(StazioneGoal),_]),
- 	manhattan(Stazione,StazioneGoal,G_padre,G_nuovo).
- trasforma(scendi(Stazione),[at(Stazione),in(_,_)],[at(Stazione),ground],G_padre,G_nuovo):-
+ 	manhattan(Stazione,StazioneGoal,F,G_padre,G_nuovo).
+trasforma(scendi(Stazione),[at(Stazione),in(_,_)],[at(Stazione),ground],F,G_padre,G_nuovo):-
  	finale([at(StazioneGoal),_]),
- 	manhattan(Stazione,StazioneGoal,G_padre,G_nuovo).
- trasforma(vai(Linea,Dir,SP,SA),[at(SP),in(Linea,Dir)],[at(SA),in(Linea,Dir)],G_padre,G_nuovo):-
- 	manhattan(SP,SA,G_padre,G_nuovo),
- 	tratta(Linea,Dir,SP,SA). */
+ 	manhattan(Stazione,StazioneGoal,F,G_padre,G_nuovo).
+trasforma(vai(Linea,Dir,SP,SA),[at(SP),in(Linea,Dir)],[at(SA),in(Linea,Dir)],F,G_padre,G_nuovo):-
+	manhattan(SP,SA,F,G_padre,G_nuovo),
+ 	tratta(Linea,Dir,SP,SA).
 %___________
 % Regole con calcolo del costo per salire e scendere usando euclidea
-/*trasforma(sali(Linea,Dir),[at(Stazione),ground],[at(Stazione),in(Linea,Dir)],G_padre,G_nuovo):-
+/*trasforma(sali(Linea,Dir),[at(Stazione),ground],[at(Stazione),in(Linea,Dir)],F,G_padre,G_nuovo):-
 	finale([at(StazioneGoal),_]),
-	euclidea(Stazione,StazioneGoal,G_padre,G_nuovo).
-trasforma(scendi(Stazione),[at(Stazione),in(_,_)],[at(Stazione),ground],G_padre,G_nuovo):-
+	euclidea(Stazione,StazioneGoal,F,G_padre,G_nuovo).
+trasforma(scendi(Stazione),[at(Stazione),in(_,_)],[at(Stazione),ground],F,G_padre,G_nuovo):-
 	finale([at(StazioneGoal),_]),
-	euclidea(Stazione,StazioneGoal,G_padre,G_nuovo).
-trasforma(vai(Linea,Dir,SP,SA),[at(SP),in(Linea,Dir)],[at(SA),in(Linea,Dir)],G_padre,G_nuovo):-
-	euclidea(SP,SA,G_padre,G_nuovo),
-	tratta(Linea,Dir,SP,SA). */
+	euclidea(Stazione,StazioneGoal,F,G_padre,G_nuovo).
+trasforma(vai(Linea,Dir,SP,SA),[at(SP),in(Linea,Dir)],[at(SA),in(Linea,Dir)],F,G_padre,G_nuovo):-
+	euclidea(SP,SA,F,G_padre,G_nuovo),
+	tratta(Linea,Dir,SP,SA).  */
 %---------------------------------------------------------------------
 % Regole con costo fisso di salire e scendere usando manhattan
 /*trasforma(sali(Linea,Dir),[at(Stazione),ground],[at(Stazione),in(Linea,Dir)],F,G_padre,G_nuovo):-
-	euclidea2(Stazione,F,G_padre,G_nuovo).
+	manhattan2(Stazione,F,G_padre,G_nuovo).
  trasforma(scendi(Stazione),[at(Stazione),in(_,_)],[at(Stazione),ground],F,G_padre,G_nuovo):-
- 	euclidea2(Stazione,F,G_padre,G_nuovo).
+ 	manhattan2(Stazione,F,G_padre,G_nuovo).
  trasforma(vai(Linea,Dir,SP,SA),[at(SP),in(Linea,Dir)],[at(SA),in(Linea,Dir)],F,G_padre,G_nuovo):-
- 	manhattan(SP,SA,G_padre,G_nuovo),
- 	tratta(Linea,Dir,SP,SA). */
+ 	manhattan2(SA,F,G_padre,G_nuovo),
+ 	tratta(Linea,Dir,SP,SA).  */
 %___________
 % Regole con costo fisso di salire e scendere usando euclidea
-trasforma(sali(Linea,Dir),[at(Stazione),ground],[at(Stazione),in(Linea,Dir)],F,G_padre,G_nuovo):-
+/*trasforma(sali(Linea,Dir),[at(Stazione),ground],[at(Stazione),in(Linea,Dir)],F,G_padre,G_nuovo):-
 	euclidea2(Stazione,F,G_padre,G_nuovo).
  trasforma(scendi(Stazione),[at(Stazione),in(_,_)],[at(Stazione),ground],F,G_padre,G_nuovo):-
 	 euclidea2(Stazione,F,G_padre,G_nuovo).
  trasforma(vai(Linea,Dir,SP,SA),[at(SP),in(Linea,Dir)],[at(SA),in(Linea,Dir)],F,G_padre,G_nuovo):-
  	euclidea(SP,SA,F,G_padre,G_nuovo),
- 	tratta(Linea,Dir,SP,SA).
+ 	tratta(Linea,Dir,SP,SA).  */
 
 
 % percorso(Linea, Dir, ListaFermate)
@@ -84,7 +84,7 @@ member_pair(X,Y,[_,Z|Rest]):- member_pair(X,Y,[Z|Rest]).
 
 
 % stazione(Stazione, Coord1, Coord2)
-/*
+
 stazione('Baker Street',3.0,5.0). %
 stazione('Bank',7.5,2.8). %
 stazione('Bayswater',0.5,3.2). %
@@ -108,9 +108,9 @@ stazione('Tottenham Court Road',5.5,3.3). %
 stazione('Victoria',2.5,1.0). %
 stazione('Warren Street',5.5,5). %
 stazione('Waterloo',5.5,0). %
-stazione('Westminster',4.5,1.0). */
+stazione('Westminster',4.5,1.0).
 /* Dati di fetch */
-
+/*
 stazione('Baker Street',4.5,5.6).
 stazione('Bank',12,4).
 stazione('Bayswater',1,3.7).
@@ -134,14 +134,14 @@ stazione('Tottenham Court Road',7.4,4.5).
 stazione('Victoria',5.8,1).
 stazione('Warren Street',6.5,6).
 stazione('Waterloo',9.2,2.4).
-stazione('Westminster',8,1.8).
+stazione('Westminster',8,1.8).  */
 
 fermata(Stazione,Linea):- percorso(Linea,0,P), member(Stazione,P).
 
 % ('Paddington')->('Covent Garden’)
-iniziale([at('Notting Hill Gate'),ground]).
+iniziale([at('South Kensington'),ground]).
 
-finale([at('London Bridge'),ground]).
+finale([at('Bank'),ground]).
 
 
 % euristiche per azioni
@@ -153,6 +153,14 @@ manhattan(StazioneP,StazioneA,F,G_padre,G_nuovo):-
 	calcolo(X,X1,Y,Y1,G1),
 	calcolo(X1,X2,Y1,Y2,H),
 	G_nuovo is G_padre + G1,
+	sum(G_nuovo,H,F).
+
+manhattan2(StazioneA,F,G_padre,G_nuovo):-
+	stazione(StazioneA,X1,Y1),
+	finale([at(StazioneFinale),ground]),
+	stazione(StazioneFinale,X2,Y2),
+	calcolo(X1,X2,Y1,Y2,H),
+	G_nuovo is G_padre + 0.1,
 	sum(G_nuovo,H,F).
 
 calcolo(X1,X2,Y1,Y2,Res):-

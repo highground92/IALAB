@@ -7,8 +7,8 @@ aStar(Soluzione,NPassi,NNodiAperti):-
   length(Soluzione,NPassi).
 
 % depth(CodaNodiDaEsplorare,NodiEspansi,Soluzione)
-depth([nodo(_,_,S,ListaAzioniPerS)|_], NodiEspansi,ListaAzioniPerS,NNodiAperti):-
-  finale(S),%write(F),write("---"),
+depth([nodo(F,_,S,ListaAzioniPerS)|_], NodiEspansi,ListaAzioniPerS,NNodiAperti):-
+  finale(S),write(F),write("---"),
   length(NodiEspansi,NNodiAperti).
 
 depth([nodo(F,G,S,ListaAzioniPerS)|Frontiera], ListaNodiEspansi, Soluzione,NNodiAperti):-
