@@ -1,8 +1,8 @@
 (defmodule ASTAR (import MOVE ?ALL)(export ?ALL))
 
-(deftemplate node_star (slot ident) (slot totaldistance) (slot fcost)  (slot father) (slot open) (slot city))
+(deftemplate node_star (slot ident) (slot gcost) (slot fcost)  (slot father) (slot open) (slot city))
 
-(deftemplate newnode (slot ident) (slot totaldistance) (slot fcost) (slot father) (slot city))
+(deftemplate newnode (slot ident) (slot gcost) (slot fcost) (slot father) (slot city))
 
 (deftemplate current_star (slot curr))
 
@@ -26,13 +26,13 @@
 =>
   (bind ?id (gensym*))
   (assert
-    (node_star (ident ?id)(totaldistance 0)(fcost ?distance)(father NA)(open yes)(city ?id_city))
+    (node_star (ident ?id)(gcost 0)(fcost ?distance)(father NA)(open yes)(city ?id_city))
     (current_star (curr ?id))
   )
   (focus EXPAND)
 )
 
-;
+;partendo dal nodo goal risalgo il percorso fino alla radice
 (defrule stampaSol (declare (salience 101))
   (next_trans(id_trans ?id_trans)(type_trans ?tt))
   (current (id_current ?id_state))
@@ -46,21 +46,18 @@
   (retract ?f)
 )
 
-;
+; ?city-name contiene il nome della città in cui ci si deve muovere
 (defrule stampa-fine (declare (salience 102))
-
   (next_trans(id_trans ?id_trans)(type_trans ?tt))
   (current (id_current ?id_state))
   (transport (id_state ?id_state)(id_transport ?id_trans)(transport_type ?tt)(city ?id_city_t))
-  (node_star (ident ?id)(father ?id-father)(fcost ?fcost)(totaldistance ?totaldistance)(city ?city-name))
+  (node_star (ident ?id)(father ?id-father)(fcost ?fcost)(gcost ?gcost)(city ?city-name))
   (node_star (ident ?id-father)(city ?id_city_t))
   ?f1<- (stampa ?id)
   ?f2<- (new-destination(id_city ?id_city_destination)(distance ?distance))
   ?f3<- (current_star (curr ?c))
 =>
-  (assert (move_to_city ?city-name (- ?fcost ?totaldistance)))
-  (printout t "TOTALDISTANCE" crlf)
-  (printout t1 (- ?fcost ?totaldistance) crlf)
+  (assert (move_to_city ?city-name (- ?fcost ?gcost)))
   (retract ?f1)
   (retract ?f2)
   (retract ?f3)
@@ -88,7 +85,7 @@
 ;
 (defrule move-exec-goal (declare (salience 51))
   (current_star (curr ?curr))
-  (node_star (ident ?curr)(city ?id_city)(totaldistance ?g))
+  (node_star (ident ?curr)(city ?id_city)(gcost ?g))
   (new-destination(id_city ?id_city_destination))
   (route (departure ?id_city)(arrival ?id_city_destination) (km ?km)) ;route tra città corrente e prossima città
   ?f1<- (apply ?curr move ?id_city_destination)
@@ -96,7 +93,7 @@
   (bind ?new (gensym*))
   (assert
     (exec ?curr ?new move ?id_city_destination)
-    (newnode (ident ?new)(totaldistance (+ ?g ?km))(fcost (+ ?g ?km))(father ?curr)
+    (newnode (ident ?new)(gcost (+ ?g ?km))(fcost (+ ?g ?km))(father ?curr)
              (city ?id_city_destination))
   )
   (retract ?f1)
@@ -106,7 +103,7 @@
 ;
 (defrule move-exec (declare (salience 50))
   (current_star (curr ?curr))
-  (node_star (ident ?curr) (city ?id_city) (totaldistance ?g))
+  (node_star (ident ?curr) (city ?id_city) (gcost ?g))
   (new-destination(id_city ?id_city_destination)(distance ?distance))
   (route (departure ?id_city) (arrival ?arrival) (km ?km)) ;route tra città corrente e prossima città
   (route (departure ?arrival) (arrival ?id_city_destination) (km ?km_to_goal)) ;distanza tra prossima città e città goal
@@ -115,7 +112,7 @@
   (bind ?new (gensym*))
   (assert
     (exec ?curr ?new move ?arrival)
-    (newnode (ident ?new)(totaldistance (+ ?g ?km))(fcost (+ ?km_to_goal ?g ?km))
+    (newnode (ident ?new)(gcost (+ ?g ?km))(fcost (+ ?km_to_goal ?g ?km))
              (father ?curr)(city ?arrival))
   )
   (retract ?f1)
@@ -188,9 +185,9 @@
 (defrule solution-exist (declare (salience 25))
   (new-destination(id_city ?id_city_destination))
   (node_star (ident ?father))
-  ?f <- (newnode (ident ?id) (father ?father) (city ?id_city_destination) (totaldistance ?g))
+  ?f <- (newnode (ident ?id) (father ?father) (city ?id_city_destination) (gcost ?g))
 =>
-  (assert (node_star (ident ?id) (father ?father) (totaldistance ?g) (fcost 0) (open no)))
+  (assert (node_star (ident ?id) (father ?father) (gcost ?g) (fcost 0) (open no)))
   (assert (stampa ?id))
   (retract ?f)
   (pop-focus)
@@ -216,8 +213,8 @@
 
 ;
 (defrule check-open-worse (declare (salience 50))
-  (node_star (ident ?old) (totaldistance ?g-old) (open yes) (city ?id_city))
-  ?f1 <- (newnode (ident ?id) (totaldistance ?g) (father ?anc) (city ?id_city))
+  (node_star (ident ?old) (gcost ?g-old) (open yes) (city ?id_city))
+  ?f1 <- (newnode (ident ?id) (gcost ?g) (father ?anc) (city ?id_city))
   ?f2 <- (open-worse ?a)
   (test (or (> ?g ?g-old) (= ?g-old ?g)))
 =>
@@ -229,12 +226,12 @@
 
 ;
 (defrule check-open-better (declare (salience 50))
-  ?f1 <- (newnode (ident ?id) (totaldistance ?g) (fcost ?f) (father ?anc) (city ?id_city))
-  ?f2 <- (node_star (ident ?old) (totaldistance ?g-old) (open yes) (city ?id_city))
+  ?f1 <- (newnode (ident ?id) (gcost ?g) (fcost ?f) (father ?anc) (city ?id_city))
+  ?f2 <- (node_star (ident ?old) (gcost ?g-old) (open yes) (city ?id_city))
   ?f3 <- (open-better ?a)
   (test (<  ?g ?g-old))
 =>
-  (assert (node_star (ident ?id) (totaldistance ?g) (fcost ?f) (father ?anc) (open yes) (city ?id_city)))
+  (assert (node_star (ident ?id) (gcost ?g) (fcost ?f) (father ?anc) (open yes) (city ?id_city)))
   (assert (open-better (+ ?a 1)))
   (retract ?f1)
   (retract ?f2)
@@ -245,10 +242,10 @@
 
 ;
 (defrule add-open (declare (salience 25))
-  ?f1 <- (newnode (ident ?id) (totaldistance ?g) (fcost ?f)(father ?anc)(city ?id_city))
+  ?f1 <- (newnode (ident ?id) (gcost ?g) (fcost ?f)(father ?anc)(city ?id_city))
   ?f2 <- (numberofnodes ?a)
 =>
-  (assert (node_star (ident ?id) (totaldistance ?g) (fcost ?f)(father ?anc) (open yes) (city ?id_city)))
+  (assert (node_star (ident ?id) (gcost ?g) (fcost ?f)(father ?anc) (open yes) (city ?id_city)))
   (assert (numberofnodes (+ ?a 1)))
   (retract ?f1)
   (retract ?f2)

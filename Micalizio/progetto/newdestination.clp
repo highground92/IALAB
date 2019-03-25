@@ -4,7 +4,7 @@
 (defrule find-new-destination-unload
   (next_trans(id_trans ?id_trans)(type_trans ?tt))
   (current (id_current ?id_state))
-  (state(id_state ?id_state)(f_cost ?f_cost)(h_cost ?h_cost)(total_distance ?total_distance))
+  (state(id_state ?id_state)(total_cost ?total_cost)(weight ?weight)(total_distance ?total_distance))
   (route (departure ?departure) (arrival ?arrival) (km ?km))
   (transport (id_state ?id_state)(id_transport ?id_trans)(transport_type ?tt)(capacity ?capacity)
              (type_route ?tr)(trans_goods_quantity ?tgq)(trans_goods_type ?tgt)(city ?departure)(route_id ?id_route))
@@ -24,7 +24,7 @@
 (defrule find-new-destination-load
   (next_trans(id_trans ?id_trans)(type_trans ?tt))
   (current (id_current ?id_state))
-  (state(id_state ?id_state)(f_cost ?f_cost)(h_cost ?h_cost)(total_distance ?total_distance))
+  (state(id_state ?id_state)(total_cost ?total_cost)(weight ?weight)(total_distance ?total_distance))
   (route (departure ?departure) (arrival ?arrival) (km ?km) (type_route NA))
   (transport (id_state ?id_state)(id_transport ?id_trans)(transport_type ?tt)(capacity ?capacity)
              (type_route ?tr)(trans_goods_quantity 0)(trans_goods_type NA)(city ?departure)(route_id ?id_route))

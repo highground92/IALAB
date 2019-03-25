@@ -3,7 +3,7 @@
 
 (defrule update-state-1 (declare (salience 101))
   (current (id_current 1))
-  ?new_state <- (state(id_state 1)(total_distance ?old_total_distance)(f_cost ?old_f_cost)(h_cost ?old_h_cost))
+  ?new_state <- (state(id_state 1)(total_distance ?old_total_distance)(total_cost ?old_total_cost)(weight ?old_weight))
   ?trans<-(transport (id_state 1)(id_transport ?id_trans)(transport_type ?tt)
                      (capacity ?capacity)(type_route ?tr)(trans_goods_quantity ?tgq)
                      (trans_goods_type ?tgt)(city ?id_city_t))
@@ -17,11 +17,11 @@
                                  (provided_goods_quantity ?prov_quantity)
                                  (provided_goods_type ?prov_type)
                                  (trans_goods_quantity ?goodsq)(trans_goods_type ?goodst)
-                                 (f_cost ?fcostplanning)(h_cost ?hcostplanning)
+                                 (total_cost ?fcostplanning)(weight ?hcostplanning)
                                  (total_distance ?totaldistanceplanning)
                   )
 =>
-  (modify ?new_state (f_cost ?fcostplanning)(h_cost ?hcostplanning)
+  (modify ?new_state (total_cost ?fcostplanning)(weight ?hcostplanning)
                      (total_distance ?totaldistanceplanning))
 
   (modify ?trans (id_state 1)(id_transport ?id_trans)(transport_type ?tt)(capacity ?capacity)
@@ -38,7 +38,7 @@
 
 (defrule update-state (declare (salience 100))
   (current (id_current ?current))
-  ?new_state <- (state(id_state ?current)(total_distance ?old_total_distance)(f_cost ?old_f_cost)(h_cost ?old_h_cost))
+  ?new_state <- (state(id_state ?current)(total_distance ?old_total_distance)(total_cost ?old_total_cost)(weight ?old_weight))
   ?trans<-(transport (id_state ?current)(id_transport ?id_trans)(transport_type ?tt)
                      (capacity ?capacity)(type_route ?tr)(trans_goods_quantity ?tgq)
                      (trans_goods_type ?tgt)(city ?id_city_t))
@@ -52,11 +52,11 @@
                                  (provided_goods_quantity ?prov_quantity)
                                  (provided_goods_type ?prov_type)
                                  (trans_goods_quantity ?goodsq)(trans_goods_type ?goodst)
-                                 (f_cost ?fcostplanning)(h_cost ?hcostplanning)
+                                 (total_cost ?fcostplanning)(weight ?hcostplanning)
                                  (total_distance ?totaldistanceplanning)
                   )
 =>
-  (modify ?new_state (f_cost (+ ?old_f_cost ?fcostplanning))(h_cost (+ ?old_h_cost ?hcostplanning))
+  (modify ?new_state (total_cost (+ ?old_total_cost ?fcostplanning))(weight (+ ?old_weight ?hcostplanning))
                      (total_distance (+ ?old_total_distance ?totaldistanceplanning)))
 
   (modify ?trans (id_state ?current)(id_transport ?id_trans)(transport_type ?tt)(capacity ?capacity)

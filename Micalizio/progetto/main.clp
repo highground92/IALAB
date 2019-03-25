@@ -1,6 +1,6 @@
 (defmodule MAIN (export ?ALL))
 
-(deftemplate state (slot id_state)(slot f_cost)(slot h_cost)(slot total_distance))
+(deftemplate state (slot id_state)(slot total_cost)(slot weight)(slot total_distance))
 
 (deftemplate city (slot id_state)(slot id_city)(slot requested_goods_quantity)
                   (slot requested_goods_type)(slot provided_goods_quantity)
@@ -19,7 +19,7 @@
 (deftemplate next_trans (slot id_trans)(slot type_trans))
 
 (deftemplate state_planning (slot id_transport)(slot transport_type)(slot id_city )
-                            (slot f_cost)(slot h_cost)(slot total_distance)
+                            (slot total_cost)(slot weight)(slot total_distance)
                             (slot requested_goods_quantity)(slot requested_goods_type)
                             (slot provided_goods_quantity)(slot provided_goods_type)
                             (slot trans_goods_quantity)(slot trans_goods_type))
@@ -166,7 +166,7 @@
 (deffacts S0
   (current (id_current 0)(total_distance 0))
 
-  (state(id_state 0)(f_cost 99999999)(h_cost 99999999)(total_distance 0))
+  (state(id_state 0)(total_cost 99999999)(weight 99999999)(total_distance 0))
   (transport (id_state 0)(id_transport 1)(transport_type Truck)(type_route Ground)
              (capacity 4)(trans_goods_quantity 0)(trans_goods_type NA)(city Bologna)(route_id t1))
   (transport (id_state 0)(id_transport 2)(transport_type Truck)(type_route Ground)
@@ -222,7 +222,7 @@
 (defrule print-solution (declare (salience 50))
   ?id_stampa<-(stampa ?id)
 
-  (state (id_state ?id)(f_cost ?f_cost)(h_cost ?h_cost)(total_distance ?total_distance))
+  (state (id_state ?id)(total_cost ?total_cost)(weight ?weight)(total_distance ?total_distance))
 
   (transport (id_state ?id)(id_transport 1)(transport_type Ship)
     (trans_goods_quantity ?quantity1)(trans_goods_type ?g_type1)(city ?trans_city1))
@@ -279,7 +279,7 @@
 
 =>
   (printout t "∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞" crlf)
-  (printout t "STATO " ?id " f_cost " ?f_cost  " h_cost " ?h_cost " total_distance " ?total_distance crlf)
+  (printout t "STATO " ?id " total_distance " ?total_distance crlf)
   (printout t "Trasporto 1 tipo Ship, goods " ?quantity1 " " ?g_type1 " citta " ?trans_city1 crlf)
   (printout t "Trasporto 2 tipo Ship, goods " ?quantity2 " " ?g_type2 " citta " ?trans_city2 crlf)
   (printout t "Trasporto 1 tipo Plane, goods " ?quantity3 " " ?g_type3 " citta " ?trans_city3 crlf)
@@ -309,7 +309,7 @@
   ?st<-(stampa ?id)
   (current (id_current ?id))
 
-  (state (id_state ?id)(f_cost ?f_cost)(h_cost ?h_cost)(total_distance ?total_distance))
+  (state (id_state ?id)(total_cost ?total_cost)(weight ?weight)(total_distance ?total_distance))
 
   (transport (id_state ?id)(id_transport 1)(transport_type Ship)
     (trans_goods_quantity ?quantity1)(trans_goods_type ?g_type1)(city ?trans_city1))
@@ -365,7 +365,7 @@
         (provided_goods_type ?provided_t11))
 =>
   (printout t "∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞" crlf)
-  (printout t "STATO " ?id " f_cost " ?f_cost  " h_cost " ?h_cost " total_distance " ?total_distance crlf)
+  (printout t "STATO " ?id " total_distance " ?total_distance crlf)
   (printout t "Trasporto 1 tipo Ship, goods " ?quantity1 " " ?g_type1 " citta " ?trans_city1 crlf)
   (printout t "Trasporto 2 tipo Ship, goods " ?quantity2 " " ?g_type2 " citta " ?trans_city2 crlf)
   (printout t "Trasporto 1 tipo Plane, goods " ?quantity3 " " ?g_type3 " citta " ?trans_city3 crlf)
