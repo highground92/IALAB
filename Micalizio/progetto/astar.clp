@@ -18,7 +18,7 @@
 
 ;
 (defrule start
-  (new-destination(id_city ?id_city_destination)(distance ?distance))
+  (new_destination(id_city ?id_city_destination)(distance ?distance))
   (next_trans(id_trans ?id_trans)(type_trans ?tt))
   (current (id_current ?id_state))
   (transport (id_state ?id_state)(id_transport ?id_trans)(transport_type ?tt)
@@ -54,7 +54,7 @@
   (node_star (ident ?id)(father ?id-father)(fcost ?fcost)(gcost ?gcost)(city ?city-name))
   (node_star (ident ?id-father)(city ?id_city_t))
   ?f1<- (stampa ?id)
-  ?f2<- (new-destination(id_city ?id_city_destination)(distance ?distance))
+  ?f2<- (new_destination(id_city ?id_city_destination)(distance ?distance))
   ?f3<- (current_star (curr ?c))
 =>
   (assert (move_to_city ?city-name (- ?fcost ?gcost)))
@@ -86,7 +86,7 @@
 (defrule move-exec-goal (declare (salience 51))
   (current_star (curr ?curr))
   (node_star (ident ?curr)(city ?id_city)(gcost ?g))
-  (new-destination(id_city ?id_city_destination))
+  (new_destination(id_city ?id_city_destination))
   (route (departure ?id_city)(arrival ?id_city_destination) (km ?km)) ;route tra città corrente e prossima città
   ?f1<- (apply ?curr move ?id_city_destination)
 =>
@@ -104,7 +104,7 @@
 (defrule move-exec (declare (salience 50))
   (current_star (curr ?curr))
   (node_star (ident ?curr) (city ?id_city) (gcost ?g))
-  (new-destination(id_city ?id_city_destination)(distance ?distance))
+  (new_destination(id_city ?id_city_destination)(distance ?distance))
   (route (departure ?id_city) (arrival ?arrival) (km ?km)) ;route tra città corrente e prossima città
   (route (departure ?arrival) (arrival ?id_city_destination) (km ?km_to_goal)) ;distanza tra prossima città e città goal
   ?f1<- (apply ?curr move ?arrival)
@@ -143,7 +143,6 @@
 (defrule change-current-b (declare (salience 24))
   ?f1 <- (current_star (curr ?curr))
   ?f2 <- (node_star (ident ?curr))
-  ;?f3 <- (node_star (ident ?new-curr)(fcost ?temp-cost))
   (node_star (ident ?new-curr)(fcost ?temp-cost))
   ?f4 <- (temp-cost (cost ?temp-cost)(node ?new-curr))
 =>
@@ -152,28 +151,13 @@
   (retract ?f4)
 )
 
-;
-(defrule open-empty (declare (salience 25))
-  ?f1 <- (current_star (curr ?curr))
-  ?f2 <- (node_star (ident ?curr))
-  (not
-    (node_star (ident ?id&:(neq ?id ?curr))  (open yes) )
-  )
-=>
-  (retract ?f1)
-  (modify ?f2 (open no))
-  (printout t " FAIL! (Last node expanded " ?curr ")" crlf)
-  (halt)
-)
-
-
 ;;;
 (defmodule CHECK (import EXPAND ?ALL)(export ?ALL))
 
 ;
 (defrule goal-not-yet (declare (salience 50))
   (newnode (ident ?id))
-  (new-destination(id_city ?id_city_destination))
+  (new_destination(id_city ?id_city_destination))
   (not
     (newnode (ident ?id) (city ?id_city_destination))
   )
@@ -183,7 +167,7 @@
 
 ;
 (defrule solution-exist (declare (salience 25))
-  (new-destination(id_city ?id_city_destination))
+  (new_destination(id_city ?id_city_destination))
   (node_star (ident ?father))
   ?f <- (newnode (ident ?id) (father ?father) (city ?id_city_destination) (gcost ?g))
 =>

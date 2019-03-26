@@ -2,7 +2,7 @@
 
 ; Non ho trovato nessuna destinazione quindi rimango fermo
 (defrule no-move (declare(salience 106))
-?f1<- (new-destination (id_city ?id_city)(distance 99999999))
+?f1<- (new_destination (id_city ?id_city)(distance 99999999))
 
   (current (id_current ?id_state))
   (next_trans(id_trans ?id_trans)(type_trans ?tt))
@@ -41,7 +41,7 @@
 
 ; Applico A* per cercare il percorso più breve per la nuova destinazione
 (defrule move-find-path-full (declare(salience 105))
-  (new-destination (id_city ?id_city)(distance ?distance))
+  (new_destination (id_city ?id_city)(distance ?distance))
 =>
   (focus ASTAR)
 )
@@ -246,7 +246,7 @@
   (route(departure ?id_city)(arrival ?arrival)(km ?km)(type_route ?tr))
 
 =>
-  (assert (new-destination (id_city ?id_city)(distance 99999999)))
+  (assert (new_destination (id_city ?id_city)(distance 99999999)))
   (assert (no-a-star))
   (focus NEWDESTINATION)
 )

@@ -1,7 +1,7 @@
 (defmodule NEWDESTINATION (import MOVE ?ALL)(export ?ALL))
 
 ; Cerco la città migliore in cui scaricare
-(defrule find-new-destination-unload
+(defrule find-new_destination-unload
   (next_trans(id_trans ?id_trans)(type_trans ?tt))
   (current (id_current ?id_state))
   (state(id_state ?id_state)(total_cost ?total_cost)(weight ?weight)(total_distance ?total_distance))
@@ -11,7 +11,7 @@
   (city (id_state ?id_state)(id_city ?arrival)(requested_goods_quantity ?rgq)(requested_goods_type ?rgt)
         (provided_goods_quantity ?pgq)(provided_goods_type ?pgt)(route_id $?before ?id_route $?after))
 
-  ?dest<- (new-destination (id_city ?id_city_destination)(distance ?distance))
+  ?dest<- (new_destination (id_city ?id_city_destination)(distance ?distance))
 
   (test (> ?tgq 0))
   (test (eq ?tgt ?rgt))
@@ -21,7 +21,7 @@
 )
 
 ; Cerco la città migliore in cui caricare
-(defrule find-new-destination-load
+(defrule find-new_destination-load
   (next_trans(id_trans ?id_trans)(type_trans ?tt))
   (current (id_current ?id_state))
   (state(id_state ?id_state)(total_cost ?total_cost)(weight ?weight)(total_distance ?total_distance))
@@ -31,7 +31,7 @@
   (city (id_state ?id_state)(id_city ?arrival)(requested_goods_quantity ?rgq)(requested_goods_type ?rgt)
         (provided_goods_quantity ?pgq)(provided_goods_type ?pgt)(route_id $?before ?id_route $?after))
 
-  ?dest<- (new-destination (id_city ?id_city_destination)(distance ?distance))
+  ?dest<- (new_destination (id_city ?id_city_destination)(distance ?distance))
 
   (test (< ?km ?distance))
   (test (> ?pgq 0))

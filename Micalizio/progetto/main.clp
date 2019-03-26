@@ -24,7 +24,7 @@
                             (slot provided_goods_quantity)(slot provided_goods_type)
                             (slot trans_goods_quantity)(slot trans_goods_type))
 
-(deftemplate new-destination (slot id_city)(slot distance))
+(deftemplate new_destination (slot id_city)(slot distance))
 
 (deftemplate action (slot type))
 
