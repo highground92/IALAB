@@ -19,7 +19,7 @@ public class ArbitraryTokenDomain extends AbstractFiniteDomain {
 	private boolean ordered = false;
 
 	public ArbitraryTokenDomain(Object... pValues) {
-		this(false, pValues);
+		this(true, pValues);
 	}
 
 	public ArbitraryTokenDomain(boolean ordered, Object... pValues) {
@@ -31,7 +31,7 @@ public class ArbitraryTokenDomain extends AbstractFiniteDomain {
 		}
 		// Ensure cannot be modified
 		possibleValues = Collections.unmodifiableSet(possibleValues);
-
+		System.out.println("Possibili valori: "+ possibleValues);
 		indexPossibleValues(possibleValues);
 	}
 

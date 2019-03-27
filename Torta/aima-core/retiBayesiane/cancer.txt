@@ -1,0 +1,6 @@
+query Smoker
+Pollution ________
+Smoker ________
+Cancer ________
+Xray ________
+Dyspnoea True

@@ -38,7 +38,7 @@ public class BayesNet implements BayesianNetwork {
 		}
 		// Ensure is a DAG
 		checkIsDAGAndCollectVariablesInTopologicalOrder();
-		variables = Collections.unmodifiableList(variables);
+		//variables = Collections.unmodifiableList(variables);
 	}
 
 	//

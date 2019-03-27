@@ -32,7 +32,7 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 
 	//new
 	//hashmap con lista di variabili con i loro valori (etc T/F)
-	public HashMap<Double, ArrayList<RandomVariable>> totRwows = new HashMap<>();
+	public static HashMap<Double, ArrayList<RandomVariable>> totRows = new HashMap<>();
 	//hasmap con lista delle variabili con le probabilità da portarmi dietro per i calcoli finali
 	public static HashMap<Double, ArrayList<RandomVariable>> varWithProb = new HashMap<>();
 	//ordine delle variabili eliminate
@@ -94,6 +94,17 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 		if (radices.length > 0) {
 			queryMRN = new MixedRadixNumber(0, radices);
 		}
+	}
+	//restituisce il valore massimo della cpt (da usare a fine procedimento)
+	public double getMaxResult(){
+		double temp = this.getValues()[0];
+
+		for(int i=0;i<this.getValues().length;i++){
+			if(temp<this.getValues()[i]){
+				temp = this.getValues()[i];
+			}
+		}
+		return temp;
 	}
 
 	public int size() {
@@ -246,6 +257,13 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 	public ProbabilityTable sumOut(RandomVariable... vars) {
 		Set<RandomVariable> soutVars = new LinkedHashSet<RandomVariable>(
 				this.randomVarInfo.keySet());
+
+		//new
+		Set<RandomVariable> varProbArray = new LinkedHashSet<RandomVariable>(
+				this.randomVarInfo.keySet());
+		final ProbabilityTable varProb = new ProbabilityTable(varProbArray);
+		//fine new
+
 		for (RandomVariable rv : vars) {
 			soutVars.remove(rv);
 		}
@@ -262,6 +280,16 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 									double probability) {
 
 					int i = 0;
+
+					ArrayList<RandomVariable> row = new ArrayList<>();
+					for(RandomVariable var : varProb.randomVarInfo.keySet()){
+						var.setAssign((String) possibleWorld.get(var));
+						RandomVariable newVar = new RandVar(var.getName(), var.getDomain());
+						newVar.setAssign((String) possibleWorld.get(var));
+						row.add(newVar);
+					}
+
+					totRows.put(probability, row);
 					for (RandomVariable rv : summedOut.randomVarInfo.keySet()) {
 						termValues[i] = possibleWorld.get(rv);
 						i++;
@@ -287,11 +315,6 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 		Set<RandomVariable> varProbArray = new LinkedHashSet<RandomVariable>(
 				this.randomVarInfo.keySet());
 
-		for (RandomVariable rv : vars) {
-			System.out.println("remove: "+rv.getName());
-			variables.add(rv);
-			soutVars.remove(rv);
-		}
 		final ProbabilityTable summedMax = new ProbabilityTable(soutVars);
 		//new
 		final ProbabilityTable varProb = new ProbabilityTable(varProbArray);
@@ -310,7 +333,7 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 						row.add(newVar);
 					}
 
-					totRwows.put(probability, row);
+					totRows.put(probability, row);
 				}
 			};
 			iterateOverTable(di);
@@ -331,7 +354,7 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 						row.add(newVar);
 					}
 
-					totRwows.put(probability, row);
+					totRows.put(probability, row);
 
 					for (RandomVariable rv : summedMax.randomVarInfo.keySet()) {
 						termValues[i] = possibleWorld.get(rv);
@@ -348,14 +371,14 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 		System.out.println("summedMax");
 		for(int i=0; i<summedMax.size(); i++){
 			System.out.println(summedMax.getValues()[i]);
-			if(totRwows.containsKey(summedMax.getValues()[i]))
-				varWithProb.put(summedMax.getValues()[i], totRwows.get(summedMax.getValues()[i]));
+			if(totRows.containsKey(summedMax.getValues()[i]))
+				varWithProb.put(summedMax.getValues()[i], totRows.get(summedMax.getValues()[i]));
 		}
 		
 		return summedMax;
 	}
 
-	/*public Factor sumMaxMAP(RandomVariable... vars){
+	public Factor sumMaxMAP(){ //RandomVariable... vars
 		Set<RandomVariable> soutVars = new LinkedHashSet<RandomVariable>(
 				this.randomVarInfo.keySet());
 		final ProbabilityTable summedMax = new ProbabilityTable(soutVars);
@@ -385,7 +408,7 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 			iterateOverTable(di);
 		}
 		return summedMax;
-	}*/
+	}
 
 	@Override
 	public Map<RandomVariable, RVInfo> getRandomVarInfo() {
@@ -591,6 +614,7 @@ public class ProbabilityTable implements CategoricalDistribution, Factor {
 	public ProbabilityTable pointwiseProduct(final ProbabilityTable multiplier) {
 		Set<RandomVariable> prodVars = SetOps.union(randomVarInfo.keySet(),
 				multiplier.randomVarInfo.keySet());
+
 		return pointwiseProductPOS(multiplier, prodVars
 				.toArray(new RandomVariable[prodVars.size()]));
 	}

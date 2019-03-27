@@ -52,6 +52,6 @@ member_pair(X,Y,[_,Z|Rest]):- member_pair(X,Y,[Z|Rest]).
 fermata(Stazione,Linea):- percorso(Linea,0,P), member(Stazione,P).
 
 
-iniziale([at('South Kensington'),ground]).
+iniziale([at('Notting Hill Gate'),ground]).
 
-finale([at('Bank'),ground]).
+finale([at('London Bridge'),ground]).

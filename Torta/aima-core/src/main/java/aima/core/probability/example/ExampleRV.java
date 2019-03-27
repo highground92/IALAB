@@ -32,6 +32,7 @@ public class ExampleRV {
 	public static final RandVar STIFF_NECK_RV = new RandVar("StiffNeck",
 			new BooleanDomain());
 	//
+	/*
 	public static final RandVar BURGLARY_RV = new RandVar("Burglary",
 			new BooleanDomain());
 	public static final RandVar EARTHQUAKE_RV = new RandVar("Earthquake",
@@ -42,7 +43,20 @@ public class ExampleRV {
 			new BooleanDomain());
 	public static final RandVar MARY_CALLS_RV = new RandVar("MaryCalls",
 			new BooleanDomain());
+	*/
+	public static final RandVar BURGLARY_RV = new RandVar("Burglary",
+			new ArbitraryTokenDomain("TRUE","FALSE"));
+	public static final RandVar EARTHQUAKE_RV = new RandVar("Earthquake",
+            new ArbitraryTokenDomain("TRUE","FALSE"));
+	public static final RandVar ALARM_RV = new RandVar("Alarm",
+            new ArbitraryTokenDomain("TRUE","FALSE"));
+	public static final RandVar JOHN_CALLS_RV = new RandVar("JohnCalls",
+            new ArbitraryTokenDomain("TRUE","FALSE"));
+	public static final RandVar MARY_CALLS_RV = new RandVar("MaryCalls",
+            new ArbitraryTokenDomain("TRUE","FALSE"));
+
 	//
+
 	public static final RandVar CLOUDY_RV = new RandVar("Cloudy",
 			new BooleanDomain());
 	public static final RandVar SPRINKLER_RV = new RandVar("Sprinkler",

@@ -45,9 +45,9 @@ bordosuperiore(Posizione):-Posizione < 4.
 %
 
 
-%iniziale([1,6,2,4,9,5,3,8,13,10,7,15,14,vuoto,12,11]). %circa 3 secondi
-%iniziale([1,6,2,4,9,vuoto,5,8,13,7,3,15,14,10,12,11]).  %circa minuti 1,40
-iniziale([9,6,4,3,2,8,11,5,1,10,7,15,12,vuoto,14,13]).   
+%iniziale([1,6,2,4,9,5,3,8,13,10,7,15,14,vuoto,12,11]).
+iniziale([1,6,2,4,9,vuoto,5,8,13,7,3,15,14,10,12,11]).  
+%iniziale([9,6,4,3,2,8,11,5,1,10,7,15,12,vuoto,14,13]).
 finale([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,vuoto]).
 
 % nth(Lista,Posizione,Valore)

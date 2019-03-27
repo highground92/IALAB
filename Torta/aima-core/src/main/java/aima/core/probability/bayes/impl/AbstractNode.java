@@ -16,7 +16,7 @@ public abstract class AbstractNode implements Node {
 	private RandomVariable variable = null;
 	private Set<Node> parents = null;
 	private Set<Node> children = null;
-	private Set<Node> ancestors = null;
+	private Set<Node> ancestor = null;
 
 	private Set<Node> neighbors = new HashSet<Node>();
 	private boolean mark = false;
@@ -42,14 +42,6 @@ public abstract class AbstractNode implements Node {
 		this.children = Collections.unmodifiableSet(new LinkedHashSet<Node>());
 	}
 
-	public Set<Node> getAncestors(){
-		return this.ancestors;
-	}
-
-	public void setAncestors(Set<Node> ancestors){
-		this.ancestors = ancestors;
-	}
-
 	//
 	// START-Node
 	@Override
@@ -71,6 +63,11 @@ public abstract class AbstractNode implements Node {
 	public Set<Node> getChildren() {
 		return children;
 	}
+
+	@Override
+	public Set<Node> getAncestors(){ return ancestor; }
+	@Override
+	public void setAncestors(Set<Node> ancestor){ this.ancestor = ancestor; }
 
 	@Override
 	public Set<Node> getMarkovBlanket() {
@@ -163,5 +160,4 @@ public abstract class AbstractNode implements Node {
 
 		children = Collections.unmodifiableSet(children);
 	}
-
 }

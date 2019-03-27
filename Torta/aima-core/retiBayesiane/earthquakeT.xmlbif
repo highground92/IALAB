@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="US-ASCII"?>
+
+<!--
+  Bayesian network in XMLBIF v0.3 (BayesNet Interchange Format)
+  Produced by SamIam http://reasoning.cs.ucla.edu/samiam
+  Output created 16-nov-2018 14.27.18
+-->
+
+<BIF VERSION="0.3">
+<NETWORK>
+  <NAME>bayesiannetwork</NAME>
+
+  <VARIABLE TYPE="nature">
+    <NAME>BurglaryT</NAME>
+    <OUTCOME>True</OUTCOME>
+    <OUTCOME>False</OUTCOME>
+    <PROPERTY>position = (337, 125)</PROPERTY>
+  </VARIABLE>
+  <VARIABLE TYPE="nature">
+    <NAME>Burglary</NAME>
+    <OUTCOME>True</OUTCOME>
+    <OUTCOME>False</OUTCOME>
+    <PROPERTY>position = (337, 125)</PROPERTY>
+  </VARIABLE>
+
+  <VARIABLE TYPE="nature">
+    <NAME>AlarmT</NAME>
+    <OUTCOME>True</OUTCOME>
+    <OUTCOME>False</OUTCOME>
+    <PROPERTY>position = (229, 224)</PROPERTY>
+  </VARIABLE>
+  <VARIABLE TYPE="nature">
+    <NAME>Alarm</NAME>
+    <OUTCOME>True</OUTCOME>
+    <OUTCOME>False</OUTCOME>
+    <PROPERTY>position = (229, 224)</PROPERTY>
+  </VARIABLE>
+
+  <VARIABLE TYPE="nature">
+    <NAME>MaryCallsT</NAME>
+    <OUTCOME>True</OUTCOME>
+    <OUTCOME>False</OUTCOME>
+    <OBSERVED>0</OBSERVED>
+    <PROPERTY>position = (384, 352)</PROPERTY>
+  </VARIABLE>
+  <VARIABLE TYPE="nature">
+    <NAME>MaryCalls</NAME>
+    <OUTCOME>True</OUTCOME>
+    <OUTCOME>False</OUTCOME>
+    <OBSERVED>0</OBSERVED>
+    <PROPERTY>position = (384, 352)</PROPERTY>
+  </VARIABLE>
+
+  <VARIABLE TYPE="nature">
+    <NAME>EarthquakeT</NAME>
+    <OUTCOME>True</OUTCOME>
+    <OUTCOME>False</OUTCOME>
+    <PROPERTY>position = (123, 125)</PROPERTY>
+  </VARIABLE>
+  <VARIABLE TYPE="nature">
+    <NAME>Earthquake</NAME>
+    <OUTCOME>True</OUTCOME>
+    <OUTCOME>False</OUTCOME>
+    <PROPERTY>position = (123, 125)</PROPERTY>
+  </VARIABLE>
+
+  <VARIABLE TYPE="nature">
+    <NAME>JohnCallsT</NAME>
+    <OUTCOME>True</OUTCOME>
+    <OUTCOME>False</OUTCOME>
+    <OBSERVED>0</OBSERVED>
+    <PROPERTY>position = (124, 375)</PROPERTY>
+  </VARIABLE>
+  <VARIABLE TYPE="nature">
+    <NAME>JohnCalls</NAME>
+    <OUTCOME>True</OUTCOME>
+    <OUTCOME>False</OUTCOME>
+    <OBSERVED>0</OBSERVED>
+    <PROPERTY>position = (124, 375)</PROPERTY>
+  </VARIABLE>
+
+  <DEFINITION>
+    <FOR>BurglaryT</FOR>
+    <GIVEN>Burglary</GIVEN>
+    <TABLE>0.15 0.85 0.005 0.995 </TABLE>
+  </DEFINITION>
+  <DEFINITION>
+    <FOR>Burglary</FOR>
+    <TABLE>0.01 0.99 </TABLE>
+  </DEFINITION>
+
+  <DEFINITION>
+    <FOR>AlarmT</FOR>
+    <GIVEN>BurglaryT</GIVEN>
+    <GIVEN>EarthquakeT</GIVEN>
+    <GIVEN>Alarm</GIVEN>
+    <TABLE>0.97 0.03 0.9 0.1 0.3 0.7 0.1 0.9 0.001 0.999 0.88 0.12 0.75 0.25 0.2 0.8</TABLE>
+  </DEFINITION>
+  <DEFINITION>
+    <FOR>Alarm</FOR>
+    <GIVEN>Burglary</GIVEN>
+    <GIVEN>Earthquake</GIVEN>
+    <TABLE>0.95 0.05 0.94 0.06 0.29 0.71 0.001 0.999 </TABLE>
+  </DEFINITION>
+
+  <DEFINITION>
+    <FOR>MaryCallsT</FOR>
+    <GIVEN>AlarmT</GIVEN>
+    <GIVEN>MaryCalls</GIVEN>
+    <TABLE>0.9 0.1 0.1 0.9 0.01 0.99 0.75 0.25</TABLE>
+  </DEFINITION>
+  <DEFINITION>
+    <FOR>MaryCalls</FOR>
+    <GIVEN>Alarm</GIVEN>
+    <TABLE>0.7 0.3 0.01 0.99 </TABLE>
+  </DEFINITION>
+
+  <DEFINITION>
+    <FOR>EarthquakeT</FOR>
+    <GIVEN>Earthquake</GIVEN>
+    <TABLE>0.1 0.9 0.88 0.12</TABLE>
+  </DEFINITION>
+  <DEFINITION>
+    <FOR>Earthquake</FOR>
+    <TABLE>0.02 0.98 </TABLE>
+  </DEFINITION>
+
+  <DEFINITION>
+    <FOR>JohnCallsT</FOR>
+    <GIVEN>AlarmT</GIVEN>
+    <GIVEN>JohnCalls</GIVEN>
+    <TABLE>0.9 0.1 0.3 0.7 0.65 0.35 0.2 0.8</TABLE>
+  </DEFINITION>
+  <DEFINITION>
+    <FOR>JohnCalls</FOR>
+    <GIVEN>Alarm</GIVEN>
+    <TABLE>0.9 0.1 0.05 0.95 </TABLE>
+  </DEFINITION>
+
+</NETWORK>
+</BIF>

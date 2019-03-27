@@ -1,6 +1,6 @@
-query JohnCalls
-Burglary ________
+query Alarm Earthquake JohnCalls MaryCalls 
+Burglary True
 Earthquake ________
-Alarm True
+Alarm ________
 JohnCalls ________
 MaryCalls ________

@@ -196,7 +196,7 @@ public class CPT implements ConditionalProbabilityTable {
 					if (Math.abs(1 - rowProb) > ProbabilityModel.DEFAULT_ROUNDING_THRESHOLD) {
 						throw new IllegalArgumentException("Row "
 								+ (iterateCnt / rowSize)
-								+ " of CPT does not sum to 1.0.");
+								+ " of CPT does not sum to 1.0. totproba="+rowProb);
 					}
 					rowProb = 0;
 				}

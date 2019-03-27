@@ -1,6 +1,11 @@
 package aima.test.core.unit.probability.bayes.exact;
 
+import aima.core.probability.Factor;
+import aima.core.probability.bayes.Node;
 import aima.core.probability.bayes.exact.BayesianMain;
+import aima.core.probability.bayes.exact.EliminationAsk;
+import aima.core.probability.bayes.exact.Graph;
+import aima.core.probability.util.ProbabilityTable;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -16,7 +21,7 @@ import aima.core.probability.proposition.AssignmentProposition;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.*;
 
 /**
  *
@@ -77,67 +82,14 @@ public abstract class BayesianInferenceTest {
 	}*/
 
 	@Test
-	public void testInferenceOnBurglaryAlarmNetwork() throws IOException,Exception {
-		/*BayesianNetwork bn = BayesNetExampleFactory
-				.constructBurglaryAlarmNetwork();*/
+	public void testInferenceOnBurglaryAlarmNetwork() throws IOException {
 
-		BayesianNetwork bn = BayesianMain.buildNetwork();
-
-		FileReader file = new FileReader("./retiBayesiane/earthquake.txt");
-		BufferedReader rete = new BufferedReader(file);
-		String delims = "[ ]+";
-		String[] split;
-		String line = rete.readLine();
-		int nVar = 0;
-		String qVar = "";
-		HashMap<String, String> var = new HashMap<>();
-		while (line != null) {
-			nVar++;
-			split = line.split(delims);
-			if(nVar == 1)
-				qVar = split[1];
-			else {
-				if (!qVar.equalsIgnoreCase(split[0])) {
-					if (!split[1].equalsIgnoreCase("________")) {
-						var.put(split[0], split[1]);
-					}
-				} else {
-					if (!split[1].equalsIgnoreCase("________"))
-						throw new Exception("La query richiesta è uguale a un evidence");
-				}
-			}
-			line = rete.readLine();
-		}
-
-		rete.close();
-		file.close();
-
-		RandomVariable[] query = new RandomVariable[1];
-		AssignmentProposition[] assig= assig = new AssignmentProposition[var.size()];
-
-		int i=0;
-		for(RandomVariable v : bn.getVariablesInTopologicalOrder()){
-			if(v.getName().equalsIgnoreCase(qVar))
-				query[0] = v;
-			else {
-				if (var.get(v.getName()) != null) {
-					assig[i] = new AssignmentProposition(v, var.get(v.getName()));
-					i++;
-				}
-			}
-		}
-
-		System.out.println("Query: "+query[0]);
-		for(int j=0; j<assig.length; j++)
-			System.out.println(assig[j].toString());
-		System.out.println();
-
-		CategoricalDistribution d = bayesInference.ask(query,assig, bn);
-
-		for(int j=0; j<assig.length; j++)
-			System.out.println(assig[j].toString());
-		System.out.println();
-		System.out.println("P(Burglary | j, m)=" + d + "\n\n");
+		//CategoricalDistribution d = bayesInference.ask(query,assig, bn);
+		//System.out.println(query[0]);
+		//for(int j=0; j<assig.length; j++)
+		//	System.out.println(assig[j].toString());
+		//System.out.println();
+		//System.out.println("P(" + query[0] + " | j, m)=" + d + "\n\n");
 		//System.out.println("P(E | A = young, S = F, R = small)=" + d + "\n\n");
 
 		/*CategoricalDistribution d = bayesInference

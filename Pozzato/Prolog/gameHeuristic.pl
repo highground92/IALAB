@@ -61,8 +61,8 @@ bordosuperiore(Posizione):-Posizione < 3.
 %
 
 % Stato -> lista di caselle(numero,x,y)  %[vuoto,8,7,6,5,4,3,2,1]
-%iniziale([casella(vuoto,0,0),casella(8,0,1),casella(7,0,2),casella(6,1,0),casella(5,1,1),
-%          casella(4,1,2),casella(3,2,0),casella(2,2,1),casella(1,2,2)]).
+iniziale([casella(vuoto,0,0),casella(8,0,1),casella(7,0,2),casella(6,1,0),casella(5,1,1),
+          casella(4,1,2),casella(3,2,0),casella(2,2,1),casella(1,2,2)]).
 %iniziale([casella(1,0,0),casella(2,0,1),casella(3,0,2),casella(4,1,0),casella(5,1,1),
 %        casella(6,1,2),casella(7,2,0),casella(8,2,1),casella(vuoto,2,2)]).
 %iniziale([casella(2,0,0),casella(8,0,1),casella(5,0,2),casella(6,1,0),casella(vuoto,1,1),
@@ -71,8 +71,8 @@ bordosuperiore(Posizione):-Posizione < 3.
 %        casella(3,1,2),casella(5,2,0),casella(2,2,1),casella(7,2,2)]).
 %iniziale([casella(8,0,0),casella(5,0,1),casella(2,0,2),casella(1,1,0),casella(4,1,1),
 %        casella(6,1,2),casella(3,2,0),casella(7,2,1),casella(vuoto,2,2)]).
-iniziale([casella(7,0,0),casella(8,0,1),casella(3,0,2),casella(1,1,0),casella(5,1,1),
-        casella(6,1,2),casella(2,2,0),casella(vuoto,2,1),casella(4,2,2)]).
+%iniziale([casella(7,0,0),casella(8,0,1),casella(3,0,2),casella(1,1,0),casella(5,1,1),
+%        casella(6,1,2),casella(2,2,0),casella(vuoto,2,1),casella(4,2,2)]).
 
 % Stato iniziale del Norvig
 %iniziale([casella(7,0,0),casella(2,0,1),casella(4,0,2),casella(5,1,0),casella(vuoto,1,1),
@@ -125,12 +125,12 @@ manhattan([casella(N,X1,Y1)|StatoS],[casella(M,_,_)|StatoF],H):-
 % Ho trovato la casella giusta, calcolo il costo e scorro la lista dei miei
 % stati e reinizializzo quella dello stato finale
 manhattan([casella(N,X1,Y1)|StatoS],[casella(N,X2,Y2)|_],H):-
-  calcolo(X1,X2,Y1,Y2,Res),
+  norma1(X1,X2,Y1,Y2,Res),
   finale(StatoFinale),
   manhattan(StatoS,StatoFinale,H1),
   H is H1 + Res.
 
-calcolo(X1,X2,Y1,Y2,Res):-
+norma1(X1,X2,Y1,Y2,Res):-
   Res is abs(X1-X2)+ abs(Y1-Y2).
 
 sum(A,B,Res):-

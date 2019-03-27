@@ -45,7 +45,7 @@ public abstract class AbstractFiniteDomain implements FiniteDomain {
 		Integer idx = valueToIdx.get(value);
 		if (null == idx) {
 			throw new IllegalArgumentException("Value [" + value
-					+ "] is not a possible value of this domain.");
+					+ "] is not a possible value of this domain. keySet: " + valueToIdx.keySet() + " values: " + valueToIdx.values());
 		}
 		return idx.intValue();
 	}

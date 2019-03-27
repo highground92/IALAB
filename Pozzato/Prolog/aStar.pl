@@ -1,22 +1,22 @@
 % stato rappresentato da nodo(F,G,S,ListaAzioniPerS)
 
-aStar(Soluzione,NPassi,NNodiAperti):-
+aStar(Soluzione,NPassi,NNodi):-
   iniziale(S),
-  depth([nodo(_,0,S,[])],[],SoluzioneTemp,NNodiAperti),
+  depth([nodo(_,0,S,[])],[],SoluzioneTemp,NNodi),
   reverse(SoluzioneTemp,Soluzione),
   length(Soluzione,NPassi).
 
 % depth(CodaNodiDaEsplorare,NodiEspansi,Soluzione)
-depth([nodo(F,_,S,ListaAzioniPerS)|_], NodiEspansi,ListaAzioniPerS,NNodiAperti):-
+depth([nodo(F,_,S,ListaAzioniPerS)|_], NodiEspansi,ListaAzioniPerS,NNodi):-
   finale(S),write(F),write("---"),
-  length(NodiEspansi,NNodiAperti).
+  length(NodiEspansi,NNodi).
 
-depth([nodo(F,G,S,ListaAzioniPerS)|Frontiera], ListaNodiEspansi, Soluzione,NNodiAperti):-
+depth([nodo(F,G,S,ListaAzioniPerS)|Frontiera], ListaNodiEspansi, Soluzione,NNodi):-
   findall(Az,applicabile(Az,S),ListaApplicabili),
   generateSons(nodo(F,G,S,ListaAzioniPerS),ListaApplicabili, [S|ListaNodiEspansi], ListaFigliS),
   append(ListaFigliS, Frontiera, NuovaFrontiera),
   sort(NuovaFrontiera, NuovaFrontieraOrdinata),
-  depth(NuovaFrontieraOrdinata, [S|ListaNodiEspansi], Soluzione,NNodiAperti).
+  depth(NuovaFrontieraOrdinata, [S|ListaNodiEspansi], Soluzione,NNodi).
 
 
 generateSons(_,[],_,[]).

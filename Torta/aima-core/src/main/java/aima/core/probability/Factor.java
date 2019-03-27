@@ -161,4 +161,6 @@ public interface Factor {
 	 *            this Factor.
 	 */
 	void iterateOver(Iterator fi, AssignmentProposition... fixedValues);
+
+	double getMaxResult();
 }

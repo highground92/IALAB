@@ -1,7 +1,7 @@
 query E
-A young
+A ________
 S F
 E ________
-O ________
-R small
-T ________
+O emp
+R ________
+T train

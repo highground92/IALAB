@@ -1,0 +1,4 @@
+(clear)
+(load main.clp)
+(load planning.clp)
+(reset)

@@ -2,7 +2,6 @@
 %Now find the number of inversion, by counting tiles precedes the another tile with lower number.
 %In our case, 1,2,3,4,5,6,7 is having 0 inversions, and 8 is having 1 inversion as it's preceding the number 7.
 %Total number of inversion is 1 (odd number) so the puzzle is insolvable.
-%https://dgurkaynak.github.io/8-puzzle-solver/
 
 applicabile(est,Stato):-
   nth(Stato,PosVuoto,vuoto),
@@ -48,9 +47,11 @@ bordosuperiore(Posizione):-Posizione < 3.
 %    |7|5|8|
 %
 
-%iniziale([2,8,5,6,vuoto,1,3,7,4]). % circa 5 minuti
-%iniziale([vuoto,8,7,6,5,4,3,2,1]). % circa 10 minuti
-iniziale([7,8,3,1,5,6,2,vuoto,4] ).
+%iniziale([2,8,5,6,vuoto,1,3,7,4]).
+iniziale([vuoto,8,7,6,5,4,3,2,1]).
+%iniziale([7,8,3,1,5,6,2,vuoto,4]).
+%iniziale([1,6,4,vuoto,8,3,5,2,7]).
+%iniziale([8,5,2,1,4,6,3,7,vuoto]).
 %iniziale([1,2,3,4,5,6,7,8,vuoto]).
 
 finale([1,2,3,4,5,6,7,8,vuoto]).
