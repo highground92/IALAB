@@ -1,12 +1,16 @@
 (defmodule MAINTRANSPORT (import NEWSTATE ?ALL) (export ?ALL))
 
 (defrule is_goal (declare (salience 100))
-  (city (id_city Torino) (requested_goods_quantity 0))
-  (city (id_city Milano) (requested_goods_quantity 0))
-  (city (id_city Bologna)(requested_goods_quantity 0))
-  (city (id_city Genova) (requested_goods_quantity 0))
-  (city (id_city Venezia)(requested_goods_quantity 0))
-  (city (id_city Firenze)(requested_goods_quantity 0))
+  (current (id_current ?id_current))
+  (city (id_state ?id_current)(id_city Torino) (requested_goods_quantity 0))
+  (city (id_state ?id_current)(id_city Milano) (requested_goods_quantity 0))
+  (city (id_state ?id_current)(id_city Bologna)(requested_goods_quantity 0))
+  (city (id_state ?id_current)(id_city Genova) (requested_goods_quantity 0))
+  (city (id_state ?id_current)(id_city Venezia)(requested_goods_quantity 0))
+  (city (id_state ?id_current)(id_city Firenze)(requested_goods_quantity 0))
+  (city (id_state ?id_current)(id_city Reggio) (requested_goods_quantity 0))
+  (city (id_state ?id_current)(id_city Roma) (requested_goods_quantity 0))
+
 =>
   (assert (stampa 0))
   (pop-focus)
