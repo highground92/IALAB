@@ -213,7 +213,59 @@
         ( provided_goods_quantity 0)(provided_goods_type NA)(route_id t1))
   )
 
+(defrule check_goods
+  (current (id_current 0))
+=>
+  (bind ?sumAreq 0)
+  (bind ?sumBreq 0)
+  (bind ?sumCreq 0)
+  (bind ?sumAprov 0)
+  (bind ?sumBprov 0)
+  (bind ?sumCprov 0)
+  (do-for-all-facts ((?f city)) (eq ?f:requested_goods_type A) (bind ?sumAreq (+ ?sumAreq ?f:requested_goods_quantity)))
+  (do-for-all-facts ((?f city)) (eq ?f:requested_goods_type B) (bind ?sumBreq (+ ?sumBreq ?f:requested_goods_quantity)))
+  (do-for-all-facts ((?f city)) (eq ?f:requested_goods_type C) (bind ?sumCreq (+ ?sumCreq ?f:requested_goods_quantity)))
+
+  (do-for-all-facts ((?f city)) (eq ?f:provided_goods_type A) (bind ?sumAprov (+ ?sumAprov ?f:provided_goods_quantity)))
+  (do-for-all-facts ((?f city)) (eq ?f:provided_goods_type B) (bind ?sumBprov (+ ?sumBprov ?f:provided_goods_quantity)))
+  (do-for-all-facts ((?f city)) (eq ?f:provided_goods_type C) (bind ?sumCprov (+ ?sumCprov ?f:provided_goods_quantity)))
+
+  (assert (sumAreq ?sumAreq))
+  (assert (sumBreq ?sumBreq))
+  (assert (sumCreq ?sumCreq))
+  (assert (sumAprov ?sumAprov))
+  (assert (sumBprov ?sumBprov))
+  (assert (sumCprov ?sumCprov))
+
+  (assert (check_failed))
+)
+
+(defrule check_goods_true
+  ?f1 <- (check_failed)
+  (sumAreq ?sumAreq)
+  (sumBreq ?sumBreq)
+  (sumCreq ?sumCreq)
+  (sumAprov ?sumAprov)
+  (sumBprov ?sumBprov)
+  (sumCprov ?sumCprov)
+  (test (<= ?sumAreq ?sumAprov))
+  (test (<= ?sumBreq ?sumBprov))
+  (test (<= ?sumCreq ?sumCprov))
+=>
+  (assert (check_passed))
+  (retract ?f1)
+)
+
+(defrule check_goods_failed
+  ?f1 <- (check_failed)
+=>
+  (printout t "I beni prodotti sono minori di quelli richiesti" crlf)
+  (retract ?f1)
+  (halt)
+)
+
 (defrule start
+  (check_passed)
   (current (id_current 0))
 =>
   (focus NEWSTATE)
@@ -278,7 +330,7 @@
         (provided_goods_type ?provided_t11))
 
 =>
-  (printout t "∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞" crlf)
+  (printout t "==============================================================" crlf)
   (printout t "STATO " ?id " total_distance " ?total_distance crlf)
   (printout t "Trasporto 1 tipo Ship, goods " ?quantity1 " " ?g_type1 " citta " ?trans_city1 crlf)
   (printout t "Trasporto 2 tipo Ship, goods " ?quantity2 " " ?g_type2 " citta " ?trans_city2 crlf)
@@ -364,7 +416,7 @@
         (requested_goods_type ?requested_t11)( provided_goods_quantity ?provided_g11)
         (provided_goods_type ?provided_t11))
 =>
-  (printout t "∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞" crlf)
+  (printout t "==============================================================" crlf)
   (printout t "STATO " ?id " total_distance " ?total_distance crlf)
   (printout t "Trasporto 1 tipo Ship, goods " ?quantity1 " " ?g_type1 " citta " ?trans_city1 crlf)
   (printout t "Trasporto 2 tipo Ship, goods " ?quantity2 " " ?g_type2 " citta " ?trans_city2 crlf)
@@ -387,7 +439,7 @@
   (printout t "Citta Napoli requested " ?requested_q9 " " ?requested_t9 " provided " ?provided_g9 " " ?provided_t9 crlf)
   (printout t "Citta Bari requested " ?requested_q10 " " ?requested_t10 " provided " ?provided_g10 " " ?provided_t10 crlf)
   (printout t "Citta Reggio requested " ?requested_q11 " " ?requested_t11 " provided " ?provided_g11 " " ?provided_t11 crlf)
-  (printout t "∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞" crlf)
+  (printout t "==============================================================" crlf)
   (printout t "FINE" crlf)
   (retract ?st)
 )

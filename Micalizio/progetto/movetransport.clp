@@ -1,9 +1,32 @@
 (defmodule MOVE (import LOAD ?ALL)(import UNLOAD ?ALL) (export ?ALL))
 
+(defrule truck_weight (declare (salience 150))
+  (current (id_current ?id_state))
+  (next_trans(id_trans ?id_trans)(type_trans Truck))
+  =>
+  (assert (weight 1))
+)
+
+(defrule ship_weight (declare (salience 150))
+  (current (id_current ?id_state))
+  (next_trans(id_trans ?id_trans)(type_trans Ship))
+  =>
+  (assert (weight 0.66))
+)
+
+(defrule plane_weight (declare (salience 150))
+  (current (id_current ?id_state))
+  (next_trans(id_trans ?id_trans)(type_trans Plane))
+  =>
+  (assert (weight 1.25))
+)
+
+
+
 ; Non ho trovato nessuna destinazione quindi rimango fermo
 (defrule no-move (declare(salience 106))
-?f1<- (new_destination (id_city ?id_city)(distance 99999999))
-
+  ?f1<- (new_destination (id_city ?id_city)(distance 99999999))
+  ?f3<-(weight ?w)
   (current (id_current ?id_state))
   (next_trans(id_trans ?id_trans)(type_trans ?tt))
   (transport (id_state ?id_state)(id_transport ?id_trans)(transport_type ?tt)(capacity ?capacity)
@@ -35,6 +58,7 @@
   )
   (retract ?f1)
   (retract ?f2)
+  (retract ?f3)
   (assert (action(type move)))
   (focus UPDATESTATE)
 )
@@ -49,6 +73,7 @@
 ; A* ha trovato la città migliore in cui muoversi
 (defrule a-star-applied (declare(salience 101))
   ?f1<-(move_to_city ?id ?hcost)
+  ?f2<-(weight ?w)
   (current (id_current ?id_state))
   (next_trans(id_trans ?id_trans)(type_trans ?tt))
   (transport (id_state ?id_state)(id_transport ?id_trans)(transport_type ?tt)(capacity ?capacity)
@@ -77,12 +102,14 @@
                          (weight ?hcost)(total_distance ?km)
   )
   (retract ?f1)
+  (retract ?f2)
   (assert (action(type move)))
   (focus UPDATESTATE)
 )
 
 ; Mezzo vuoto e c'è una città adiacente che lo può completamente rifornire
 (defrule move-empty-cargo-full (declare (salience 100))
+  ?f1<-(weight ?w)
   (next_trans(id_trans ?id_trans)(type_trans ?tt))
   (current (id_current ?id_state))
   (state(id_state ?id_state)(total_cost ?total_cost)(weight ?weight)(total_distance ?total_distance))
@@ -111,14 +138,16 @@
                          (provided_goods_quantity ?pgq)
                          (provided_goods_type ?pgt)
                          (trans_goods_quantity 0)(trans_goods_type NA)
-                         (total_cost (+ (/ ?km ?pgq) ?km))
-                         (weight (/ ?km ?pgq))(total_distance ?km)
+                         (total_cost (+ (* ?km ?w) ?km))
+                         (weight (* ?km ?w))(total_distance ?km)
   )
+  (retract ?f1)
   (assert (no-a-star))
 )
 
 ; Il mezzo è carico e c'è una città adiacente che può completamente rifornire
 (defrule move-full-cargo-pos (declare (salience 100))
+  ?f1<-(weight ?w)
   (next_trans(id_trans ?id_trans)(type_trans ?tt))
   (current (id_current ?id_state))
   (state(id_state ?id_state)(total_cost ?total_cost)(weight ?weight)(total_distance ?total_distance))
@@ -142,7 +171,6 @@
   (test(>= ?tgq ?rgq))
   (test(neq ?tr NA))
   (test(< (+ (/ ?km ?rgq) ?km) ?fcostplanning))
-
 =>
   (modify ?stateplanning (id_transport ?id_trans)(transport_type ?tt)(id_city ?arrival)
                          (requested_goods_quantity ?rgq)
@@ -150,16 +178,16 @@
                          (provided_goods_quantity ?pgq)
                          (provided_goods_type ?pgt)
                          (trans_goods_quantity ?tgq)(trans_goods_type ?good_type)
-                         (total_cost (+ (/ ?km ?tgq) ?km))
-                         (weight (/ ?km ?tgq))(total_distance ?km)
+                         (total_cost (+ (* ?km ?w) ?km))
+                         (weight (* ?km ?w))(total_distance ?km)
   )
-
+  (retract ?f1)
   (assert (no-a-star))
-
 )
 
 ; Mezzo vuoto e c'è una città adiacente che lo può rifornire non completamente
 (defrule move-empty-cargo-some (declare (salience 90))
+  ?f1<-(weight ?w)
   (next_trans(id_trans ?id_trans)(type_trans ?tt))
   (current (id_current ?id_state))
   (state(id_state ?id_state)(total_cost ?total_cost)(weight ?weight)(total_distance ?total_distance))
@@ -188,14 +216,16 @@
                          (provided_goods_quantity ?pgq)
                          (provided_goods_type ?pgt)
                          (trans_goods_quantity 0)(trans_goods_type NA)
-                         (total_cost (+ (/ ?km ?pgq) ?km))
-                         (weight (/ ?km ?pgq))(total_distance ?km)
+                         (total_cost (+ (* ?km ?w) ?km))
+                         (weight (* ?km ?w))(total_distance ?km)
   )
+  (retract ?f1)
   (assert (no-a-star))
 )
 
 ; Il mezzo è carico e c'è una città adiacente che può parzialmente rifornire
 (defrule move-full-cargo-neg (declare (salience 90))
+  ?f1<-(weight ?w)
   (next_trans(id_trans ?id_trans)(type_trans ?tt))
   (current (id_current ?id_state))
   (state(id_state ?id_state)(total_cost ?total_cost)(weight ?weight)(total_distance ?total_distance))
@@ -227,9 +257,10 @@
                          (provided_goods_quantity ?pgq)
                          (provided_goods_type ?pgt)
                          (trans_goods_quantity ?tgq)(trans_goods_type ?good_type)
-                         (total_cost (+ (/ ?km ?tgq) ?km))
-                         (weight (/ ?km ?tgq))(total_distance ?km)
+                         (total_cost (+ (* ?km ?w) ?km))
+                         (weight (* ?km ?w))(total_distance ?km)
   )
+  (retract ?f1)
   (assert (no-a-star))
 )
 
