@@ -13,7 +13,7 @@ applicabile(sud,Stato):-
 
 trasforma(sud,Stato,NuovoStato,F,G_padre,G_nuovo):-
   nth(Stato,PosVuoto,casella(vuoto,_,_)),
-  PosTessera is PosVuoto-3,
+  PosTessera is PosVuoto-4,
   swap(Stato,PosVuoto,PosTessera,NuovoStato),
   finale(StatoF),
   manhattan(NuovoStato,StatoF,H),
@@ -31,7 +31,7 @@ trasforma(ovest,Stato,NuovoStato,F,G_padre,G_nuovo):-
 
 trasforma(nord,Stato,NuovoStato,F,G_padre,G_nuovo):-
   nth(Stato,PosVuoto,casella(vuoto,_,_)),
-  PosTessera is PosVuoto+3,
+  PosTessera is PosVuoto+4,
   swap(Stato,PosVuoto,PosTessera,NuovoStato),
   finale(StatoF),
   manhattan(NuovoStato,StatoF,H),
@@ -65,7 +65,6 @@ bordosuperiore(Posizione):-Posizione < 4.
 %    |5 |6 |  |8 |
 %    |9 |10|7 |15|
 %    |13|14|12|11|
-%iniziale([9,6,4,3,2,8,11,5,1,10,7,15,12,vuoto,14,13]).
 
 
 % Stato -> lista di caselle(numero,x,y)
@@ -77,11 +76,12 @@ bordosuperiore(Posizione):-Posizione < 4.
 iniziale([casella(1,0,0),casella(6,0,1),casella(2,0,2),casella(4,0,3),
           casella(9,1,0),casella(vuoto,1,1),casella(5,1,2),casella(8,1,3),
           casella(13,2,0),casella(7,2,1),casella(3,2,2),casella(15,2,3),
-          casella(14,3,0),casella(10,3,1),casella(12,3,2),casella(11,3,3)]). 
+          casella(14,3,0),casella(10,3,1),casella(12,3,2),casella(11,3,3)]).
+
 /*iniziale([casella(1,0,0),casella(6,0,1),casella(2,0,2),casella(4,0,3),
           casella(9,1,0),casella(5,1,1),casella(3,1,2),casella(8,1,3),
           casella(13,2,0),casella(10,2,1),casella(7,2,2),casella(15,2,3),
-          casella(14,3,0),casella(vuoto,3,1),casella(12,3,2),casella(11,3,3)]).*/
+          casella(14,3,0),casella(vuoto,3,1),casella(12,3,2),casella(11,3,3)]). */
 % Stato finale
 finale([casella(1,0,0),casella(2,0,1),casella(3,0,2),casella(4,0,3),
           casella(5,1,0),casella(6,1,1),casella(7,1,2),casella(8,1,3),

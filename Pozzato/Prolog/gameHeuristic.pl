@@ -61,12 +61,12 @@ bordosuperiore(Posizione):-Posizione < 3.
 %
 
 % Stato -> lista di caselle(numero,x,y)  %[vuoto,8,7,6,5,4,3,2,1]
-iniziale([casella(vuoto,0,0),casella(8,0,1),casella(7,0,2),casella(6,1,0),casella(5,1,1),
-          casella(4,1,2),casella(3,2,0),casella(2,2,1),casella(1,2,2)]).
+%iniziale([casella(vuoto,0,0),casella(8,0,1),casella(7,0,2),casella(6,1,0),casella(5,1,1),
+%          casella(4,1,2),casella(3,2,0),casella(2,2,1),casella(1,2,2)]).
 %iniziale([casella(1,0,0),casella(2,0,1),casella(3,0,2),casella(4,1,0),casella(5,1,1),
 %        casella(6,1,2),casella(7,2,0),casella(8,2,1),casella(vuoto,2,2)]).
-%iniziale([casella(2,0,0),casella(8,0,1),casella(5,0,2),casella(6,1,0),casella(vuoto,1,1),
-%        casella(1,1,2),casella(3,2,0),casella(7,2,1),casella(4,2,2)]).
+iniziale([casella(2,0,0),casella(8,0,1),casella(5,0,2),casella(6,1,0),casella(vuoto,1,1),
+        casella(1,1,2),casella(3,2,0),casella(7,2,1),casella(4,2,2)]).
 %iniziale([casella(1,0,0),casella(6,0,1),casella(4,0,2),casella(vuoto,1,0),casella(8,1,1),
 %        casella(3,1,2),casella(5,2,0),casella(2,2,1),casella(7,2,2)]).
 %iniziale([casella(8,0,0),casella(5,0,1),casella(2,0,2),casella(1,1,0),casella(4,1,1),

@@ -2,21 +2,26 @@
 
 aStar(Soluzione,NPassi,NNodi):-
   iniziale(S),
-  depth([nodo(_,0,S,[])],[],SoluzioneTemp,NNodi),
+  breadth([nodo(_,0,S,[])],[],SoluzioneTemp,NNodi),
   reverse(SoluzioneTemp,Soluzione),
   length(Soluzione,NPassi).
 
 % depth(CodaNodiDaEsplorare,NodiEspansi,Soluzione)
-depth([nodo(F,_,S,ListaAzioniPerS)|_], NodiEspansi,ListaAzioniPerS,NNodi):-
+breadth([nodo(F,_,S,ListaAzioniPerS)|_], NodiEspansi,ListaAzioniPerS,NNodi):-
   finale(S),write(F),write("---"),
   length(NodiEspansi,NNodi).
 
-depth([nodo(F,G,S,ListaAzioniPerS)|Frontiera], ListaNodiEspansi, Soluzione,NNodi):-
+breadth([nodo(F,G,S,ListaAzioniPerS)|Frontiera], ListaNodiEspansi, Soluzione,NNodi):-
+  \+member(S,ListaNodiEspansi),
   findall(Az,applicabile(Az,S),ListaApplicabili),
   generateSons(nodo(F,G,S,ListaAzioniPerS),ListaApplicabili, [S|ListaNodiEspansi], ListaFigliS),
   append(ListaFigliS, Frontiera, NuovaFrontiera),
   sort(NuovaFrontiera, NuovaFrontieraOrdinata),
-  depth(NuovaFrontieraOrdinata, [S|ListaNodiEspansi], Soluzione,NNodi).
+  breadth(NuovaFrontieraOrdinata, [S|ListaNodiEspansi], Soluzione,NNodi).
+
+breadth([_|Frontiera], ListaNodiEspansi, Soluzione,NNodi):-
+  breadth(Frontiera, ListaNodiEspansi, Soluzione,NNodi).
+
 
 
 generateSons(_,[],_,[]).
