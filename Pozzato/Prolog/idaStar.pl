@@ -7,7 +7,11 @@ idaStar(Soluzione,Npassi,NNodi):-
 	numeroNodi(NNoditemp),
 	length(Soluzione,Npassi),
 	NNodi is NNoditemp + Npassi,
-	retractall(numeroNodi(_)).
+	retractall(numeroNodi(_)),
+	valore(G),
+	write("F totale: "),
+	write(G),
+	retractall(valore(_)).
 
 
 depth(S,G,Soluzione,Visitati,Threshold):-
@@ -24,12 +28,11 @@ depth(S,G,Soluzione,Visitati,Threshold):-
 	depth(S,G,Soluzione,Visitati,NewTreshold).
 
 
-depth_ot(S,_,[],_,_):-finale(S).
+depth_ot(S,G,[],_,_):-finale(S), assert(valore(G)).
 
 depth_ot(S,G,[Azione|ListaAzioni],Visitati,Threshold):-
 	applicabile(Azione,S),
 	trasforma(Azione,S,SNuovo,F,G,G_nuovo),
-	%write(G_nuovo),write("---"),   % write della G totale, si deve leggere solo l'ultima scrittura
 	\+member(SNuovo,Visitati),
 	assert(nodoIda(F,SNuovo)),
 	F=<Threshold,
