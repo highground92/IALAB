@@ -3,7 +3,7 @@
 (defrule find_new_state
   ?current<-(current (id_current ?id_current_state))
 
-  (state (id_state ?id_current_state)(total_cost ?total_cost)(weight ?weight)(total_distance ?total_distance))
+  (state (id_state ?id_current_state)(weight ?weight)(total_distance ?total_distance))
 
   (transport (id_state ?id_current_state)(id_transport 1)(transport_type Truck)
              (type_route Ground)(capacity 4)(trans_goods_quantity ?quantity1)(trans_goods_type ?g_type1)
@@ -68,7 +68,7 @@
         (provided_goods_type ?provided_t11))
 =>
   (assert
-    (state (id_state (+ ?id_current_state 1))(total_cost ?total_cost)(weight ?weight)(total_distance ?total_distance))
+    (state (id_state (+ ?id_current_state 1))(weight ?weight)(total_distance ?total_distance))
 
     (transport (id_state (+ ?id_current_state 1))(id_transport 1)(transport_type Truck)
                (type_route Ground)(capacity 4)(trans_goods_quantity ?quantity1)
