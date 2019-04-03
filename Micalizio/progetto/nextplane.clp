@@ -73,6 +73,7 @@
 =>
   (retract ?t)
   (retract ?tmp)
+  (assert (next_trans(id_trans 1)(type_trans Truck)))
   (pop-focus)
   (pop-focus)
   (pop-focus)
@@ -87,6 +88,7 @@
 =>
   (retract ?t)
   (retract ?tmp)
+  (assert (next_trans(id_trans 1)(type_trans Truck)))
   (pop-focus)
   (pop-focus)
   (pop-focus)
@@ -104,6 +106,7 @@
   (retract ?t)
   (retract ?tmp1)
   (retract ?tmp2)
+  (assert (next_trans(id_trans 1)(type_trans Truck)))
   (pop-focus)
   (pop-focus)
   (pop-focus)
@@ -121,6 +124,7 @@
   (retract ?t)
   (retract ?tmp2)
   (retract ?tmp3)
+  (assert (next_trans(id_trans 1)(type_trans Truck)))
   (pop-focus)
   (pop-focus)
   (pop-focus)

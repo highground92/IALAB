@@ -10,6 +10,9 @@
   (city (id_state ?id_current)(id_city Firenze)(requested_goods_quantity 0))
   (city (id_state ?id_current)(id_city Reggio) (requested_goods_quantity 0))
   (city (id_state ?id_current)(id_city Roma) (requested_goods_quantity 0))
+  (city (id_state ?id_current)(id_city Napoli) (requested_goods_quantity 0))
+  (city (id_state ?id_current)(id_city Palermo) (requested_goods_quantity 0))
+  (city (id_state ?id_current)(id_city Bari) (requested_goods_quantity 0))
 
 =>
   (assert (stampa 0))

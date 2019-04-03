@@ -134,6 +134,6 @@
   )
 
   (modify ?current(id_current (+ ?id_current_state 1)))
-  (assert (next_trans(id_trans 1)(type_trans Truck)))
+  (assert (next_trans(id_trans 1)(type_trans Ship)))
   (focus MAINTRANSPORT)
 )

@@ -25,7 +25,7 @@
   (next_trans(id_trans ?id_trans)(type_trans ?tt))
   (current (id_current ?id_state))
   (state(id_state ?id_state)(weight ?weight)(total_distance ?total_distance))
-  (route (departure ?departure) (arrival ?arrival) (km ?km) (type_route NA))
+  (route (departure ?departure) (arrival ?arrival) (km ?km))
   (transport (id_state ?id_state)(id_transport ?id_trans)(transport_type ?tt)(capacity ?capacity)
              (type_route ?tr)(trans_goods_quantity 0)(trans_goods_type NA)(city ?departure)(route_id ?id_route))
   (city (id_state ?id_state)(id_city ?arrival)(requested_goods_quantity ?rgq)(requested_goods_type ?rgt)
