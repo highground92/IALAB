@@ -7,12 +7,7 @@ idaStar(Soluzione,Npassi,NNodi):-
 	numeroNodi(NNoditemp),
 	length(Soluzione,Npassi),
 	NNodi is NNoditemp + Npassi,
-	retractall(numeroNodi(_)),
-	valore(G),
-	write("F totale: "),
-	write(G),
-	retractall(valore(_)).
-
+	retractall(numeroNodi(_)).
 
 depth(S,G,Soluzione,Visitati,Threshold):-
 	depth_ot(S,G,Soluzione,Visitati,Threshold);
@@ -28,7 +23,7 @@ depth(S,G,Soluzione,Visitati,Threshold):-
 	depth(S,G,Soluzione,Visitati,NewTreshold).
 
 
-depth_ot(S,G,[],_,_):-finale(S), assert(valore(G)).
+depth_ot(S,G,[],_,_):-finale(S), write("F totale: "), write(G).
 
 depth_ot(S,G,[Azione|ListaAzioni],Visitati,Threshold):-
 	applicabile(Azione,S),
@@ -42,7 +37,6 @@ depth_ot(S,G,[Azione|ListaAzioni],Visitati,Threshold):-
 findNextThreshold(_,[],_).
 findNextThreshold(OldThreshold,[ Cost | _], NewTreshold):-
 	Cost>OldThreshold,
-	%write("Il Cost vale: "), write(Cost), write(" "),
 	NewTreshold = Cost.
 findNextThreshold(OldThreshold,[ _ | ListaAssert], NewTreshold):-
 	findNextThreshold(OldThreshold, ListaAssert, NewTreshold).

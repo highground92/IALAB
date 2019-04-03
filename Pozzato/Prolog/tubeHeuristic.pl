@@ -15,14 +15,14 @@ applicabile(scendi(Stazione),[at(Stazione),in(_,_)]).
 applicabile(vai(Linea,Dir,SP,SA),[at(SP),in(Linea,Dir)]):-
 	tratta(Linea,Dir,SP,SA).
 
-% Regole con calcolo del costo per salire e scendere usando manhattan
+% Regole con costo nullo per salire e scendere usando manhattan
 /*trasforma(sali(Linea,Dir),[at(Stazione),ground],[at(Stazione),in(Linea,Dir)],F,G_padre,G_nuovo):-
  	manhattanSaliScendi(Stazione,F,G_padre,G_nuovo).
 trasforma(scendi(Stazione),[at(Stazione),in(_,_)],[at(Stazione),ground],F,G_padre,G_nuovo):-
  	manhattanSaliScendi(Stazione,F,G_padre,G_nuovo).
 trasforma(vai(Linea,Dir,SP,SA),[at(SP),in(Linea,Dir)],[at(SA),in(Linea,Dir)],F,G_padre,G_nuovo):-
 	manhattanVai(SP,SA,F,G_padre,G_nuovo),
- 	tratta(Linea,Dir,SP,SA). */
+ 	tratta(Linea,Dir,SP,SA).  */
 %___________
 % Regole con costo nullo per salire e scendere usando euclidea
 trasforma(sali(Linea,Dir),[at(Stazione),ground],[at(Stazione),in(Linea,Dir)],F,G_padre,G_nuovo):-
@@ -156,7 +156,7 @@ euclideaSaliScendi(Stazione,F,G_padre,G_nuovo):-
   stazione(Stazione,X1,Y1),
   finale([at(StazioneFinale),ground]),
   stazione(StazioneFinale,X2,Y2),
-  norma1(X1,X2,Y1,Y2,H),
+  norma2(X1,X2,Y1,Y2,H),
 	G_nuovo is G_padre,
   sum(G_padre,H,F).
 

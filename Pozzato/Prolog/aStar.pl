@@ -8,7 +8,7 @@ aStar(Soluzione,NPassi,NNodi):-
 
 % depth(CodaNodiDaEsplorare,NodiEspansi,Soluzione)
 breadth([nodo(F,_,S,ListaAzioniPerS)|_], NodiEspansi,ListaAzioniPerS,NNodi):-
-  finale(S),write(F),write("---"),
+  finale(S),write("F totale: "),write(F),
   length(NodiEspansi,NNodi).
 
 breadth([nodo(F,G,S,ListaAzioniPerS)|Frontiera], ListaNodiEspansi, Soluzione,NNodi):-
