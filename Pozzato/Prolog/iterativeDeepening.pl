@@ -1,5 +1,3 @@
-% Iterative Deepening
-
 iterativeDeepening(Soluzione,NPassi,NNodi):-
     iniziale(S), N is 0,
     assert(numeroNodi(0)), assert(nodiIterative(0,S)),
@@ -29,5 +27,3 @@ ric_prof_ot(S,[Azione|ListaAzioni],Visitati,N,NPassi):-
     N>0, applicabile(Azione,S),trasforma(Azione,S,SNuovo),\+member(SNuovo,Visitati),
     assert(nodiIterative(N,S)),
     N1 is N-1, ric_prof_ot(SNuovo,ListaAzioni,[SNuovo|Visitati],N1,Np), NPassi is Np+1.
-
-%%

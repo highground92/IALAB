@@ -46,7 +46,7 @@ bordosuperiore(Posizione):-Posizione < 4.
 
 
 %iniziale([1,6,2,4,9,5,3,8,13,10,7,15,14,vuoto,12,11]).
-iniziale([1,6,2,4,9,vuoto,5,8,13,7,3,15,14,10,12,11]).  
+iniziale([1,6,2,4,9,vuoto,5,8,13,7,3,15,14,10,12,11]).
 %iniziale([9,6,4,3,2,8,11,5,1,10,7,15,12,vuoto,14,13]).
 finale([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,vuoto]).
 
@@ -61,7 +61,6 @@ nth([_|Tail],Pos,X):-
     Pos is Pos1+1.
 
 % swap(Lista,Pos1,Pos2,NuovaLista)
-
 swap(Lista,Pos1,Pos2,NuovaLista):-
   nth(Lista,Pos1,X1),
   nth(Lista,Pos2,X2),
@@ -69,7 +68,6 @@ swap(Lista,Pos1,Pos2,NuovaLista):-
   setElement(Temp,Pos1,X2,NuovaLista).
 
 % setElement(Lista,Posizione,Valore,NuovaLista)
-
 setElement([_|Tail],0,X,[X|Tail]):-!.
 setElement([Head|Tail],Pos,X,[Head|NuovaTail]):-
   Pos1 is Pos-1,

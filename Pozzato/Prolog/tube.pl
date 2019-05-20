@@ -1,6 +1,5 @@
 % stato: [at(Stazione), Location]
-% Location può essere in(NomeLinea, Dir) o
-%  'ground' se l'agente non è su nessun treno
+% Location può essere in(NomeLinea, Dir) o 'ground' se l'agente non è su nessun treno
 % Dir può esere 0 o 1
 
 % Azioni:
@@ -22,7 +21,6 @@ trasforma(vai(Linea,Dir,SP,SA),[at(SP),in(Linea,Dir)],[at(SA),in(Linea,Dir)]):-
 uguale(S,S).
 
 % percorso(Linea, Dir, ListaFermate)
-
 percorso(piccadilly,0,['Kings Cross','Holborn','Covent Garden',
 	'Leicester Square','Piccadilly Circus','Green Park','South Kensington',
 	'Gloucester Road','Earls Court']).
@@ -40,17 +38,13 @@ percorso(circle,0,['Embankment','Westminster','Victoria','South Kensington',
 
 percorso(Linea,1,LR):- percorso(Linea,0,L), reverse(L,LR).
 
-
 % tratta(NomeLinea, Dir, StazionePartenza, StazioneArrivo)
-
 tratta(Linea,Dir,SP,SA):- percorso(Linea,Dir,LF), member_pair(SP,SA,LF).
 
 member_pair(X,Y,[X,Y|_]).
 member_pair(X,Y,[_,Z|Rest]):- member_pair(X,Y,[Z|Rest]).
 
-
 fermata(Stazione,Linea):- percorso(Linea,0,P), member(Stazione,P).
-
 
 iniziale([at('Notting Hill Gate'),ground]).
 

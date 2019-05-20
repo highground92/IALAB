@@ -1,6 +1,7 @@
 %Write it in a linear way, 1,2,3,4,5,6,8,7 - Ignore the blank tile
-%Now find the number of inversion, by counting tiles precedes the another tile with lower number.
-%In our case, 1,2,3,4,5,6,7 is having 0 inversions, and 8 is having 1 inversion as it's preceding the number 7.
+%Now find the number of inversion, by counting tiles precedes the another tile with
+%lower number. In our case, 1,2,3,4,5,6,7 is having 0 inversions, and 8 is having
+%1 inversion as it's preceding the number 7.
 %Total number of inversion is 1 (odd number) so the puzzle is insolvable.
 
 applicabile(est,Stato):-
@@ -39,7 +40,7 @@ bordodestro(Posizione):-Resto is Posizione mod 3,Resto=2.
 bordoinferiore(Posizione):-Posizione > 5.
 bordosuperiore(Posizione):-Posizione < 3.
 
-% Gioco dell'otto'
+% Gioco dell'otto
 
 %    _______
 %    |2|1|3|
@@ -67,7 +68,6 @@ nth([_|Tail],Pos,X):-
     Pos is Pos1+1.
 
 % swap(Lista,Pos1,Pos2,NuovaLista)
-
 swap(Lista,Pos1,Pos2,NuovaLista):-
   nth(Lista,Pos1,X1),
   nth(Lista,Pos2,X2),
@@ -75,7 +75,6 @@ swap(Lista,Pos1,Pos2,NuovaLista):-
   setElement(Temp,Pos1,X2,NuovaLista).
 
 % setElement(Lista,Posizione,Valore,NuovaLista)
-
 setElement([_|Tail],0,X,[X|Tail]):-!.
 setElement([Head|Tail],Pos,X,[Head|NuovaTail]):-
   Pos1 is Pos-1,

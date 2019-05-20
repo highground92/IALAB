@@ -1,8 +1,6 @@
 % stato: [at(Stazione), Location]
-% Location può essere in(NomeLinea, Dir) o
-%  'ground' se l'agente non è su nessun treno
+% Location può essere in(NomeLinea, Dir) o 'ground' se l'agente non è su nessun treno
 % Dir può esere 0 o 1
-
 
 % Azioni:
 %  sali(Linea, Dir)
@@ -23,15 +21,15 @@ trasforma(scendi(Stazione),[at(Stazione),in(_,_)],[at(Stazione),ground],F,G_padr
 trasforma(vai(Linea,Dir,SP,SA),[at(SP),in(Linea,Dir)],[at(SA),in(Linea,Dir)],F,G_padre,G_nuovo):-
 	manhattanVai(SP,SA,F,G_padre,G_nuovo),
  	tratta(Linea,Dir,SP,SA).  */
-%___________
+%---------------------------------------------------------------------------------------------------------
 % Regole con costo nullo per salire e scendere usando euclidea
-trasforma(sali(Linea,Dir),[at(Stazione),ground],[at(Stazione),in(Linea,Dir)],F,G_padre,G_nuovo):-
+/*trasforma(sali(Linea,Dir),[at(Stazione),ground],[at(Stazione),in(Linea,Dir)],F,G_padre,G_nuovo):-
 	euclideaSaliScendi(Stazione,F,G_padre,G_nuovo).
 trasforma(scendi(Stazione),[at(Stazione),in(_,_)],[at(Stazione),ground],F,G_padre,G_nuovo):-
 	euclideaSaliScendi(Stazione,F,G_padre,G_nuovo).
 trasforma(vai(Linea,Dir,SP,SA),[at(SP),in(Linea,Dir)],[at(SA),in(Linea,Dir)],F,G_padre,G_nuovo):-
 	euclideaVai(SP,SA,F,G_padre,G_nuovo),
-	tratta(Linea,Dir,SP,SA).
+	tratta(Linea,Dir,SP,SA).  */
 %---------------------------------------------------------------------------------------------------------
 % Regole con costo fisso per salire e scendere usando manhattan
 /*trasforma(sali(Linea,Dir),[at(Stazione),ground],[at(Stazione),in(Linea,Dir)],F,G_padre,G_nuovo):-
@@ -41,19 +39,18 @@ trasforma(scendi(Stazione),[at(Stazione),in(_,_)],[at(Stazione),ground],F,G_padr
 trasforma(vai(Linea,Dir,SP,SA),[at(SP),in(Linea,Dir)],[at(SA),in(Linea,Dir)],F,G_padre,G_nuovo):-
  	manhattanVai(SP,SA,F,G_padre,G_nuovo),
  	tratta(Linea,Dir,SP,SA).  */
-%___________
+%---------------------------------------------------------------------------------------------------------
 % Regole con costo fisso di salire e scendere usando euclidea
-/*trasforma(sali(Linea,Dir),[at(Stazione),ground],[at(Stazione),in(Linea,Dir)],F,G_padre,G_nuovo):-
+trasforma(sali(Linea,Dir),[at(Stazione),ground],[at(Stazione),in(Linea,Dir)],F,G_padre,G_nuovo):-
 	euclideaCosto(Stazione,F,G_padre,G_nuovo).
 trasforma(scendi(Stazione),[at(Stazione),in(_,_)],[at(Stazione),ground],F,G_padre,G_nuovo):-
 	 euclideaCosto(Stazione,F,G_padre,G_nuovo).
 trasforma(vai(Linea,Dir,SP,SA),[at(SP),in(Linea,Dir)],[at(SA),in(Linea,Dir)],F,G_padre,G_nuovo):-
  	euclideaVai(SP,SA,F,G_padre,G_nuovo),
- 	tratta(Linea,Dir,SP,SA).  */
+ 	tratta(Linea,Dir,SP,SA).
 
 
 % percorso(Linea, Dir, ListaFermate)
-
 percorso(piccadilly,0,['Kings Cross','Holborn','Covent Garden',
 	'Leicester Square','Piccadilly Circus','Green Park','South Kensington',
 	'Gloucester Road','Earls Court']).
@@ -72,15 +69,12 @@ percorso(circle,0,['Embankment','Westminster','Victoria','South Kensington',
 percorso(Linea,1,LR):- percorso(Linea,0,L), reverse(L,LR).
 
 % tratta(NomeLinea, Dir, StazionePartenza, StazioneArrivo)
-
 tratta(Linea,Dir,SP,SA):- percorso(Linea,Dir,LF), member_pair(SP,SA,LF).
 
 member_pair(X,Y,[X,Y|_]).
 member_pair(X,Y,[_,Z|Rest]):- member_pair(X,Y,[Z|Rest]).
 
-
 % stazione(Stazione, Coord1, Coord2)
-
 stazione('Baker Street',3.0,5.0).
 stazione('Bank',7.5,2.8).
 stazione('Bayswater',0.5,3.2).
@@ -106,11 +100,12 @@ stazione('Warren Street',5.5,5).
 stazione('Waterloo',5.5,0).
 stazione('Westminster',4.5,1.0).
 
+
+
 fermata(Stazione,Linea):- percorso(Linea,0,P), member(Stazione,P).
 
-
-iniziale([at('Notting Hill Gate'),ground]).
-finale([at('London Bridge'),ground]).
+iniziale([at('Bayswater'),ground]).
+finale([at('Covent Garden'),ground]).
 
 
 % euristiche per azioni
@@ -131,7 +126,6 @@ manhattanSaliScendi(Stazione,F,G_padre,G_nuovo):-
   norma1(X1,X2,Y1,Y2,H),
 	G_nuovo is G_padre,
   sum(G_padre,H,F).
-
 
 manhattanCosto(StazioneA,F,G_padre,G_nuovo):-
 	stazione(StazioneA,X1,Y1),

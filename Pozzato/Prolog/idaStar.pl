@@ -1,5 +1,3 @@
-% ricerca in profonditá limitata
-
 idaStar(Soluzione,Npassi,NNodi):-
 	iniziale(S),
 	assert(numeroNodi(0)),

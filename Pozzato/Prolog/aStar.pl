@@ -1,4 +1,4 @@
-% stato rappresentato da nodo(F,G,S,ListaAzioniPerS)
+% Stato rappresentato da nodo(F,G,S,ListaAzioniPerS)
 
 aStar(Soluzione,NPassi,NNodi):-
   iniziale(S),
@@ -6,7 +6,6 @@ aStar(Soluzione,NPassi,NNodi):-
   reverse(SoluzioneTemp,Soluzione),
   length(Soluzione,NPassi).
 
-% depth(CodaNodiDaEsplorare,NodiEspansi,Soluzione)
 breadth([nodo(F,_,S,ListaAzioniPerS)|_], NodiEspansi,ListaAzioniPerS,NNodi):-
   finale(S),write("F totale: "),write(F),
   length(NodiEspansi,NNodi).
@@ -21,7 +20,6 @@ breadth([nodo(F,G,S,ListaAzioniPerS)|Frontiera], ListaNodiEspansi, Soluzione,NNo
 
 breadth([_|Frontiera], ListaNodiEspansi, Soluzione,NNodi):-
   breadth(Frontiera, ListaNodiEspansi, Soluzione,NNodi).
-
 
 
 generateSons(_,[],_,[]).
