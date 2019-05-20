@@ -1,0 +1,1 @@
+Prima di eseguire il comando (run), si caricano tutti i file eseguendo il comando (batch load)
